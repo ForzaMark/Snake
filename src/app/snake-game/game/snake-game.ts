@@ -3,26 +3,33 @@ import {Food} from './food';
 
 export class SnakeGame {
 
-    private x = 0;
-    private y = 0;
-    private latest = '';
+    private x = 1;
+    private y = 1;
+    private latest = ''; 
 
     constructor(private screenWidth: number, private screenHeight: number) {}
 
     update(command: string) {
 
         if (command === 'right') {
-            this.x += 1;
+            this.x += 5;
         }
 
         if (command === 'up') {
-            this.y -= 1;
+            this.y -= 5;
         }
         if (command === 'down') {
-            this.y += 1;
+            this.y += 5;
         }
         if (command === 'left') {
-            this.x -= 1;
+            this.x -= 5;
+        }
+        const PosX: number = this.x;
+        const PosY: number = this.y;
+        
+        if (this.prooveCrash(PosX, PosY)) {
+            // Zurück zum Hauptmenü !!!
+            alert('Crash');
         }
 
     }
@@ -50,6 +57,14 @@ export class SnakeGame {
     onclickRight(x: boolean) {
         if (x) {
             this.update('right');
+        }
+    }
+
+    prooveCrash(PosX: number, PosY: number): Boolean {
+        if (PosX >= this.screenWidth || PosY >= this.screenHeight || PosX <= 0 || PosY <= 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

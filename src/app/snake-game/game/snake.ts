@@ -19,4 +19,5 @@ export class Snake {
         this.positionY += posY;
     }
 
+
 }
