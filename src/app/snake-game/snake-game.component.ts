@@ -1,27 +1,38 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { SnakeGame } from './game/snake-game';
 
 @Component({
   selector: 'app-snake-game',
   templateUrl: './snake-game.component.html',
   styleUrls: ['./snake-game.component.css']
 })
-export class SnakeGameComponent implements OnInit, AfterViewInit {
-
+export class SnakeGameComponent implements AfterViewInit, OnDestroy {
   @ViewChild('mainCanvas') mainCanvasReference: ElementRef;
 
-  constructor() { }
+  private timer: any;
 
-  ngOnInit() {
-  }
+  constructor() { }
 
   ngAfterViewInit(): void {
     const mainCanvas = this.mainCanvasReference.nativeElement as HTMLCanvasElement;
 
-    mainCanvas.width = 800;
-    mainCanvas.height = 600;
+    const framesPerSecond = 30;
+    const screenWidth = 800;
+    const screenHeight = 600;
+
+    mainCanvas.width = screenWidth;
+    mainCanvas.height = screenHeight;
 
     const context = mainCanvas.getContext('2d');
+    const snakeGame = new SnakeGame(screenWidth, screenHeight);
 
-    context.fillRect(0, 0, 100, 100);
+    this.timer = setInterval(() => {
+      snakeGame.update();
+      snakeGame.draw(context);
+    }, 1000 / framesPerSecond);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.timer);
   }
 }
