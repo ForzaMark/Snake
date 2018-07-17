@@ -1,37 +1,43 @@
 import {Snake} from './snake';
 import {Food} from './food';
 
-export class SnakeGame {
+export enum Direction {
+    Left,
+    Right,
+    Up,
+    Down
+}
 
+export class SnakeGame {
     private x = 1;
     private y = 1;
-    private latest = ''; 
+    private direction: Direction = Direction.Right;
+    private latest = '';
+    private food = new Food();
 
     constructor(private screenWidth: number, private screenHeight: number) {}
 
-    update(command: string) {
+    update() {
 
-        if (command === 'right') {
-            this.x += 5;
+        switch(this.direction) {
+            case Direction.Left:
+                this.x -= 5;
+                break;
+            case Direction.Right:
+                this.x += 5;
+                break;
+            case Direction.Down:
+                this.y += 5;
+                break;
+            case Direction.Up:
+                this.y -= 5;
+                break;
         }
 
-        if (command === 'up') {
-            this.y -= 5;
-        }
-        if (command === 'down') {
-            this.y += 5;
-        }
-        if (command === 'left') {
-            this.x -= 5;
-        }
-        const PosX: number = this.x;
-        const PosY: number = this.y;
-        
-        if (this.prooveCrash(PosX, PosY)) {
+        if (this.prooveCrash(this.x, this.y)) {
             // Zurück zum Hauptmenü !!!
             alert('Crash');
         }
-
     }
 
     draw(context: CanvasRenderingContext2D) {
@@ -39,24 +45,18 @@ export class SnakeGame {
         context.fillRect(this.x, this.y, 50, 50);
     }
 
-    onclickUp(x: boolean) {
-        if (x) {
-            this.update('up');
+    onKeyUp(key: KeyboardEvent) {
+        if (key.code === 'ArrowRight') {
+            this.direction = Direction.Right;
         }
-    }
-    onclickDown(x: boolean) {
-        if (x) {
-            this.update('down');
+        if (key.code === 'ArrowUp') {
+            this.direction = Direction.Up;
         }
-    }
-    onclickLeft(x: boolean) {
-        if (x) {
-            this.update('left');
+        if (key.code === 'ArrowDown') {
+            this.direction = Direction.Down;
         }
-    }
-    onclickRight(x: boolean) {
-        if (x) {
-            this.update('right');
+        if (key.code === 'ArrowLeft') {
+            this.direction = Direction.Left;
         }
     }
 
