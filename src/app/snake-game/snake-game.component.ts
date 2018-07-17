@@ -16,7 +16,7 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     const mainCanvas = this.mainCanvasReference.nativeElement as HTMLCanvasElement;
 
-    const framesPerSecond = 30;
+    const framesPerSecond = 5;
     const screenWidth = 800;
     const screenHeight = 600;
 
@@ -24,9 +24,24 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
     mainCanvas.height = screenHeight;
 
     const context = mainCanvas.getContext('2d');
+
+    for (let x = 0; x !== mainCanvas.width ; x += 20) {
+     context.beginPath();
+     context.moveTo(x, 0);
+     context.lineTo(x, screenHeight);
+     context.stroke();
+   }
+
+   for (let y = 0; y !== mainCanvas.width ; y += 20) {
+    context.beginPath();
+    context.moveTo(0, y);
+    context.lineTo(screenWidth, y);
+    context.stroke();
+  }
+
     const snakeGame = new SnakeGame(screenWidth, screenHeight);
 
-    document.addEventListener('keyup', e => snakeGame.onKeyUp(event as KeyboardEvent));
+    document.addEventListener('keyup', e => snakeGame.onKeyUp(e as KeyboardEvent));
 
     this.timer = setInterval(() => {
       snakeGame.update();

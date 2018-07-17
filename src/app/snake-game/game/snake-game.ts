@@ -19,30 +19,30 @@ export class SnakeGame {
 
     update() {
 
-        switch(this.direction) {
+        switch (this.direction) {
             case Direction.Left:
-                this.x -= 5;
+                this.x -= 20;
                 break;
             case Direction.Right:
-                this.x += 5;
+                this.x += 20;
                 break;
             case Direction.Down:
-                this.y += 5;
+                this.y += 15;
                 break;
             case Direction.Up:
-                this.y -= 5;
+                this.y -= 15;
                 break;
         }
 
         if (this.prooveCrash(this.x, this.y)) {
             // Zurück zum Hauptmenü !!!
-            alert('Crash');
+            // alert('Crash');
         }
     }
 
     draw(context: CanvasRenderingContext2D) {
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
-        context.fillRect(this.x, this.y, 50, 50);
+        context.fillRect(this.x, this.y, 20, 15);
     }
 
     onKeyUp(key: KeyboardEvent) {
