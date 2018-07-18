@@ -1,16 +1,8 @@
 import {Food} from './food';
 import {Snake} from './snake';
 
-export enum Direction {
-    Left,
-    Right,
-    Up,
-    Down
-}
-
 export class SnakeGame {
     private snake: Snake;
-    private direction: Direction = Direction.Right;
     private food = new Food();
     private fieldWidth = 20;
     private fieldHeight = 15;
@@ -31,17 +23,17 @@ export class SnakeGame {
             this.snake.getParts()[i].x = this.snake.getParts()[i - 1].x;
             this.snake.getParts()[i].y = this.snake.getParts()[i - 1].y;
         }
-        switch (this.direction) {
-            case Direction.Left:
+        switch (this.snake.getDirection()) {
+            case 'Left':
                 this.snake.getParts()[0].x -= 1;
                 break;
-            case Direction.Right:
+            case 'Right':
                 this.snake.getParts()[0].x += 1;
                 break;
-            case Direction.Down:
+            case 'Down':
                 this.snake.getParts()[0].y += 1;
                 break;
-            case Direction.Up:
+            case 'Up':
                 this.snake.getParts()[0].y -= 1;
                 break;
         }
@@ -71,16 +63,16 @@ export class SnakeGame {
 
     onKeyUp(key: KeyboardEvent) {
         if (key.code === 'ArrowRight') {
-            this.direction = Direction.Right;
+            this.snake.setDirection('Right');
         }
         if (key.code === 'ArrowUp') {
-            this.direction = Direction.Up;
+            this.snake.setDirection('Up');
         }
         if (key.code === 'ArrowDown') {
-            this.direction = Direction.Down;
+            this.snake.setDirection('Down');
         }
         if (key.code === 'ArrowLeft') {
-            this.direction = Direction.Left;
+            this.snake.setDirection('Left');
         }
     }
 }
