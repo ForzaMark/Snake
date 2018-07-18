@@ -9,11 +9,12 @@ export enum Direction {
 }
 
 export class SnakeGame {
-    private x = 1;
-    private y = 1;
+    private x = 0;
+    private y = 0;
     private direction: Direction = Direction.Right;
-    private latest = '';
+    private previously: number[] = [ 0, 0];
     private food = new Food();
+    private length = 0;
 
     constructor(private screenWidth: number, private screenHeight: number) {}
 
@@ -33,16 +34,32 @@ export class SnakeGame {
                 this.y -= 15;
                 break;
         }
+        console.log('coordinate : ' + this.x / 20 + ' ' + this.y / 15);
 
         if (this.prooveCrash(this.x, this.y)) {
             // Zurück zum Hauptmenü !!!
-            // alert('Crash');
+            // console.log('crash');
         }
     }
 
     draw(context: CanvasRenderingContext2D) {
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
+        for (let x = 0; x !== 800 ; x += 20) {
+            context.beginPath();
+            context.moveTo(x, 0);
+            context.lineTo(x, 600);
+            context.stroke();
+          }
+        for (let y = 0; y !== 600 ; y += 15) {
+           context.beginPath();
+           context.moveTo(0, y);
+           context.lineTo(800, y);
+           context.stroke();
+         }
+        // context.clearRect(0, 0, this.screenWidth, this.screenHeight);
         context.fillRect(this.x, this.y, 20, 15);
+        context.fillRect(this.previously[0], this.previously[1], 20, 15);
+        this.previously = [this.x, this.y];
     }
 
     onKeyUp(key: KeyboardEvent) {
@@ -66,5 +83,9 @@ export class SnakeGame {
         } else {
             return false;
         }
+    }
+
+    grow(): void {
+        this.length += 1;
     }
 }
