@@ -1,5 +1,5 @@
 import {Food} from './food';
-import { SnakePart } from './snake-part';
+import {Snake} from './snake';
 
 export enum Direction {
     Left,
@@ -9,7 +9,7 @@ export enum Direction {
 }
 
 export class SnakeGame {
-    private snakeParts: SnakePart[] = [];
+    private snake: Snake;
     private direction: Direction = Direction.Right;
     private food = new Food();
     private fieldWidth = 20;
@@ -18,30 +18,31 @@ export class SnakeGame {
     private cellHeight: number;
 
     constructor(private screenWidth: number, private screenHeight: number) {
-        this.snakeParts.push(new SnakePart(3, 0));
-        this.snakeParts.push(new SnakePart(2, 0));
-        this.snakeParts.push(new SnakePart(1, 0));
+        this.snake = new Snake();
+        this.snake.addParts(1, 0);
+        this.snake.addParts(2, 0);
+        this.snake.addParts(3, 0);
         this.cellWidth = screenWidth / this.fieldWidth;
         this.cellHeight = screenHeight / this.fieldHeight;
     }
 
     update() {
-        for (let i = this.snakeParts.length - 1 ; i > 0; i--) {
-            this.snakeParts[i].x = this.snakeParts[i - 1].x;
-            this.snakeParts[i].y = this.snakeParts[i - 1].y;
+        for (let i = this.snake.getParts().length - 1 ; i > 0; i--) {
+            this.snake.getParts()[i].x = this.snake.getParts()[i - 1].x;
+            this.snake.getParts()[i].y = this.snake.getParts()[i - 1].y;
         }
         switch (this.direction) {
             case Direction.Left:
-                this.snakeParts[0].x -= 1;
+                this.snake.getParts()[0].x -= 1;
                 break;
             case Direction.Right:
-                this.snakeParts[0].x += 1;
+                this.snake.getParts()[0].x += 1;
                 break;
             case Direction.Down:
-                this.snakeParts[0].y += 1;
+                this.snake.getParts()[0].y += 1;
                 break;
             case Direction.Up:
-                this.snakeParts[0].y -= 1;
+                this.snake.getParts()[0].y -= 1;
                 break;
         }
     }
@@ -60,9 +61,9 @@ export class SnakeGame {
            context.lineTo(this.cellWidth * this.fieldWidth, y * this.cellHeight);
            context.stroke();
          }
-         for (let i = 0; i < this.snakeParts.length; i++) {
-            context.fillRect(this.snakeParts[i].x * this.cellWidth,
-                             this.snakeParts[i].y * this.cellHeight,
+         for (let i = 0; i < this.snake.getParts().length; i++) {
+            context.fillRect(this.snake.getParts()[i].x * this.cellWidth,
+                             this.snake.getParts()[i].y * this.cellHeight,
                              this.cellWidth,
                              this.cellHeight);
          }
