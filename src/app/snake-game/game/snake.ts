@@ -6,6 +6,7 @@ export class Snake {
 
     private direction: String = 'Right';
     private snakeParts: SnakePart[] = [];
+    private snakeHead: number[];
 
     addParts(x: number, y: number): void {
         this.snakeParts.push(new SnakePart(x, y));
@@ -23,5 +24,11 @@ export class Snake {
         this.direction = dir;
     }
 
+    setSnakeHead(x: number, y: number) {
+        this.snakeHead = [x, y];
+    }
 
+    getSnakeHead(): number[] {
+        return this.snakeHead;
+    }
 }

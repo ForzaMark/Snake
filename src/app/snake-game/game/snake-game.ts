@@ -11,6 +11,7 @@ export class SnakeGame {
 
     constructor(private screenWidth: number, private screenHeight: number) {
         this.snake = new Snake();
+        this.snake.addParts(0, 0);
         this.snake.addParts(1, 0);
         this.snake.addParts(2, 0);
         this.snake.addParts(3, 0);
@@ -37,6 +38,10 @@ export class SnakeGame {
                 this.snake.getParts()[0].y -= 1;
                 break;
         }
+        this.snake.setSnakeHead(this.snake.getParts()[0].x,
+                                this.snake.getParts()[0].y);
+
+        this.wall();
     }
 
     draw(context: CanvasRenderingContext2D) {
@@ -53,7 +58,7 @@ export class SnakeGame {
            context.lineTo(this.cellWidth * this.fieldWidth, y * this.cellHeight);
            context.stroke();
          }
-         for (let i = 0; i < this.snake.getParts().length; i++) {
+        for (let i = 0; i < this.snake.getParts().length; i++) {
             context.fillRect(this.snake.getParts()[i].x * this.cellWidth,
                              this.snake.getParts()[i].y * this.cellHeight,
                              this.cellWidth,
@@ -73,6 +78,21 @@ export class SnakeGame {
         }
         if (key.code === 'ArrowLeft') {
             this.snake.setDirection('Left');
+        }
+    }
+
+    wall() {
+        if (this.snake.getSnakeHead()[0] === this.fieldWidth) {
+            this.snake.getParts()[0].x = 0;
+        }
+        if (this.snake.getSnakeHead()[1] === this.fieldHeight) {
+            this.snake.getParts()[0].y = 0;
+        }
+        if (this.snake.getSnakeHead()[0] === -1) {
+            this.snake.getParts()[0].x = this.fieldWidth;
+        }
+        if (this.snake.getSnakeHead()[1] === -1) {
+            this.snake.getParts()[0].y = this.fieldWidth;
         }
     }
 }
