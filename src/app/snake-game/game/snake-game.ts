@@ -12,7 +12,8 @@ export class SnakeGame {
     private x = 0;
     private y = 0;
     private direction: Direction = Direction.Right;
-    private previously: number[] = [ 0, 0];
+    private previously: number[]= [0,0];
+    private secPre: number[] = [-1,0]
     private food = new Food();
     private length = 0;
 
@@ -56,10 +57,13 @@ export class SnakeGame {
            context.lineTo(800, y);
            context.stroke();
          }
-        // context.clearRect(0, 0, this.screenWidth, this.screenHeight);
         context.fillRect(this.x, this.y, 20, 15);
         context.fillRect(this.previously[0], this.previously[1], 20, 15);
+        context.fillRect(this.secPre[0], this.secPre[1], 20, 15);
+
+        this.secPre = [this.previously[0], this.previously[1]];
         this.previously = [this.x, this.y];
+        // this.secPre = [this.previously[0], this.previously[1]];
     }
 
     onKeyUp(key: KeyboardEvent) {
@@ -86,6 +90,8 @@ export class SnakeGame {
     }
 
     grow(): void {
+        if (this.length < 5 ) {
         this.length += 1;
+        }
     }
 }
