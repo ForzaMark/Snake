@@ -1,5 +1,5 @@
-import {Snake} from './snake';
 import {Food} from './food';
+import { SnakePart } from './snake-part';
 
 export enum Direction {
     Left,
@@ -9,37 +9,34 @@ export enum Direction {
 }
 
 export class SnakeGame {
-    private x = 0;
-    private y = 0;
+    private snakeParts: SnakePart[] = [];
     private direction: Direction = Direction.Right;
-    private previously: number[] = [0, 0];
-    private secPre: number[] = [-1, 0];
     private food = new Food();
-    private length = 0;
 
-    constructor(private screenWidth: number, private screenHeight: number) {}
+    constructor(private screenWidth: number, private screenHeight: number) {
+        this.snakeParts.push(new SnakePart(3, 0));
+        this.snakeParts.push(new SnakePart(2, 0));
+        this.snakeParts.push(new SnakePart(1, 0));
+    }
 
     update() {
-
+        for (let i = this.snakeParts.length - 1 ; i > 0; i--) {
+            this.snakeParts[i].x = this.snakeParts[i - 1].x;
+            this.snakeParts[i].y = this.snakeParts[i - 1].y;
+        }
         switch (this.direction) {
             case Direction.Left:
-                this.x -= 20;
+                this.snakeParts[0].x -= 1;
                 break;
             case Direction.Right:
-                this.x += 20;
+                this.snakeParts[0].x += 1;
                 break;
             case Direction.Down:
-                this.y += 15;
+                this.snakeParts[0].y += 1;
                 break;
             case Direction.Up:
-                this.y -= 15;
+                this.snakeParts[0].y -= 1;
                 break;
-        }
-        console.log('coordinate : ' + this.x / 20 + ' ' + this.y / 15);
-
-        if (this.prooveCrash(this.x, this.y)) {
-            // Zurück zum Hauptmenü !!!
-            // console.log('crash');
         }
     }
 
@@ -50,21 +47,16 @@ export class SnakeGame {
             context.moveTo(x, 0);
             context.lineTo(x, 600);
             context.stroke();
-          }
+        }
         for (let y = 0; y !== 600 ; y += 15) {
            context.beginPath();
            context.moveTo(0, y);
            context.lineTo(800, y);
            context.stroke();
          }
-        context.fillRect(this.x, this.y, 20, 15);
-        context.fillRect(this.previously[0], this.previously[1], 20, 15);
-        context.fillRect(this.secPre[0], this.secPre[1], 20, 15);
-
-        this.secPre = [this.previously[0], this.previously[1]];
-        this.previously = [this.x, this.y];
-
-
+         for (let i = 0; i < this.snakeParts.length; i++) {
+            context.fillRect(this.snakeParts[i].x * 20, this.snakeParts[i].y * 15, 20, 15);
+         }
     }
 
     onKeyUp(key: KeyboardEvent) {
@@ -79,20 +71,6 @@ export class SnakeGame {
         }
         if (key.code === 'ArrowLeft') {
             this.direction = Direction.Left;
-        }
-    }
-
-    prooveCrash(PosX: number, PosY: number): Boolean {
-        if (PosX >= this.screenWidth || PosY >= this.screenHeight || PosX <= 0 || PosY <= 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    grow(): void {
-        if (this.length < 5 ) {
-        this.length += 1;
         }
     }
 }

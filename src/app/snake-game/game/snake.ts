@@ -1,3 +1,4 @@
+
 export class Snake {
 
     private positionX: number;

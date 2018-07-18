@@ -32,7 +32,6 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
     this.timer = setInterval(() => {
       snakeGame.update();
       snakeGame.draw(context);
-      snakeGame.grow();
     }, 1000 / framesPerSecond);
   }
 
