@@ -12,11 +12,17 @@ export class SnakeGame {
     private snakeParts: SnakePart[] = [];
     private direction: Direction = Direction.Right;
     private food = new Food();
+    private fieldWidth = 20;
+    private fieldHeight = 15;
+    private cellWidth: number;
+    private cellHeight: number;
 
     constructor(private screenWidth: number, private screenHeight: number) {
         this.snakeParts.push(new SnakePart(3, 0));
         this.snakeParts.push(new SnakePart(2, 0));
         this.snakeParts.push(new SnakePart(1, 0));
+        this.cellWidth = screenWidth / this.fieldWidth;
+        this.cellHeight = screenHeight / this.fieldHeight;
     }
 
     update() {
@@ -42,20 +48,23 @@ export class SnakeGame {
 
     draw(context: CanvasRenderingContext2D) {
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
-        for (let x = 0; x !== 800 ; x += 20) {
+        for (let x = 0; x !== this.fieldWidth; x++) {
             context.beginPath();
-            context.moveTo(x, 0);
-            context.lineTo(x, 600);
+            context.moveTo(x * this.cellWidth, 0);
+            context.lineTo(x * this.cellWidth, this.fieldHeight * this.cellHeight);
             context.stroke();
         }
-        for (let y = 0; y !== 600 ; y += 15) {
+        for (let y = 0; y !== this.fieldHeight ; y++) {
            context.beginPath();
-           context.moveTo(0, y);
-           context.lineTo(800, y);
+           context.moveTo(0, y * this.cellHeight);
+           context.lineTo(this.cellWidth * this.fieldWidth, y * this.cellHeight);
            context.stroke();
          }
          for (let i = 0; i < this.snakeParts.length; i++) {
-            context.fillRect(this.snakeParts[i].x * 20, this.snakeParts[i].y * 15, 20, 15);
+            context.fillRect(this.snakeParts[i].x * this.cellWidth,
+                             this.snakeParts[i].y * this.cellHeight,
+                             this.cellWidth,
+                             this.cellHeight);
          }
     }
 
