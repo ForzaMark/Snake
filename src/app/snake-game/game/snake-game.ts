@@ -12,8 +12,8 @@ export class SnakeGame {
     private x = 0;
     private y = 0;
     private direction: Direction = Direction.Right;
-    private previously: number[]= [0,0];
-    private secPre: number[] = [-1,0]
+    private previously: number[] = [0, 0];
+    private secPre: number[] = [-1, 0];
     private food = new Food();
     private length = 0;
 
@@ -63,7 +63,8 @@ export class SnakeGame {
 
         this.secPre = [this.previously[0], this.previously[1]];
         this.previously = [this.x, this.y];
-        // this.secPre = [this.previously[0], this.previously[1]];
+
+
     }
 
     onKeyUp(key: KeyboardEvent) {
