@@ -1,19 +1,21 @@
 export class Food {
-    private positionX: number;
-    private positionY: number;
+    private PosX: number;
+    private PosY: number;
 
-    getPositionX(): number {
-        return this.positionX;
-    }
-    getPositionY(): number {
-        return this.positionY;
-    }
+    constructor(private cellWidth: number, private cellHeight: number, private fieldWidth: number, private fieldHeight: number) {}
 
-    setPositionX(posX: number): void {
-        this.positionX = posX;
+    createNewFood() {
+        this.PosX =  Math.floor(Math.random() * this.fieldWidth) + 0;
+        this.PosY =  Math.floor(Math.random() * this.fieldHeight) + 0;
     }
 
-    setPositionY(posY: number): void {
-        this.positionY = posY;
+    draw(context: CanvasRenderingContext2D): void {
+        context.fillRect(this.PosX * this.cellWidth, this.PosY * this.cellHeight, this.cellWidth, this.cellHeight);
+    }
+    getPosX(): number {
+        return this.PosX;
+    }
+    getPosY(): number {
+        return this.PosY;
     }
 }

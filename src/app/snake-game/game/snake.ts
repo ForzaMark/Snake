@@ -1,4 +1,5 @@
 import {SnakePart} from './snake-part';
+import { Food } from './food';
 
 export class Snake {
 
@@ -32,7 +33,7 @@ export class Snake {
         this.snakeHead.y = y;
     }
 
-    getSnakeHead(): object {
+    getSnakeHead(): any {
         return this.snakeHead;
     }
 
@@ -65,6 +66,22 @@ export class Snake {
         for (let i = this.getParts().length - 1 ; i > 0; i--) {
             this.getParts()[i].x = this.getParts()[i - 1].x;
             this.getParts()[i].y = this.getParts()[i - 1].y;
+        }
+    }
+
+    eat(food: Food): boolean {
+        if (this.getSnakeHead().x === food.getPosX() && this.getSnakeHead().y === food.getPosY()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    crash(): boolean {
+        for (let i = 1; i < this.getParts().length; i++) {
+            if (this.getSnakeHead().x === this.getParts()[i].x && this.getSnakeHead().y === this.getParts()[i].y) {
+                return true;
+            }
         }
     }
 }

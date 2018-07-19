@@ -1,5 +1,5 @@
-import {Food} from './food';
-import {Snake} from './snake';
+import { Food } from './food';
+import { Snake } from './snake';
 import { SnakeGrid } from './grid';
 
 export class SnakeGame {
@@ -16,10 +16,12 @@ export class SnakeGame {
         this.cellHeight = screenHeight / this.fieldHeight;
         this.snake = new Snake();
         this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
-        this.snake.addParts(0, 0);
-        this.snake.addParts(1, 0);
-        this.snake.addParts(2, 0);
+        this.food = new Food(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
+        this.food.createNewFood();
         this.snake.addParts(3, 0);
+        this.snake.addParts(2, 0);
+        this.snake.addParts(1, 0);
+        this.snake.addParts(0, 0);
     }
 
     update() {
@@ -27,13 +29,23 @@ export class SnakeGame {
         this.snake.move();
         this.snake.setSnakeHead(this.snake.getParts()[0].x,
                                 this.snake.getParts()[0].y);
+        if (this.snake.eat(this.food)) {
+            this.snake.addParts(this.snake.getParts()[this.snake.getParts().length - 1].x,
+                                this.snake.getParts()[this.snake.getParts().length - 1].y );
+            this.food.createNewFood();
+        }
+        if (this.snake.crash()) {
+            // zurück zum Hauptmenü !!!
+        }
         this.wall();
+
     }
 
     draw(context: CanvasRenderingContext2D) {
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
         this.grid.drawGrid(context);
         this.snake.draw(context, this.cellWidth, this.cellHeight);
+        this.food.draw(context);
     }
 
     onKeyUp(key: KeyboardEvent) {
