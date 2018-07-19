@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { SnakeGame } from './game/snake-game';
-import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { State } from './game/state' ;
 
 
 @Component({
@@ -15,7 +15,6 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
   private timer: any;
 
   constructor(
-    private route: ActivatedRoute,
     private location: Location
   ) { }
 
@@ -38,7 +37,7 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
     this.timer = setInterval(() => {
       snakeGame.update();
       snakeGame.draw(context);
-      if (snakeGame.kill()) {
+      if (snakeGame.kill() === State.true) {
         this.location.back();
       }
     }, 1000 / framesPerSecond);

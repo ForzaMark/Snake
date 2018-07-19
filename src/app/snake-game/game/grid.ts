@@ -2,7 +2,7 @@ export class SnakeGrid {
     constructor(private cellWidth: number, private cellHeight: number,
                 private fieldWidth: number, private fieldHeight: number) {}
 
-    drawGrid(context: CanvasRenderingContext2D) {
+    draw(context: CanvasRenderingContext2D): void {
         for (let x = 0; x !== this.fieldWidth; x++) {
             context.beginPath();
             context.moveTo(x * this.cellWidth, 0);

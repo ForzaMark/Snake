@@ -1,12 +1,12 @@
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SnakeGameComponent } from './snake-game/snake-game.component';
-import { AppSnakeMenunComponent } from './app-snake-menun/app-snake-menun.component';
+import { SnakeMenuComponent } from './snake-menu/snake-menu.component';
 
 const routes: Routes = [
-  { path: '', component: AppSnakeMenunComponent },
+  { path: '', component: SnakeMenuComponent },
   { path: 'snake-game', component: SnakeGameComponent },
-  { path: 'snake-menu', component: AppSnakeMenunComponent },
+  { path: 'snake-menu', component: SnakeMenuComponent },
 
 ];
 

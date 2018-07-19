@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppSnakeMenunComponent } from './app-snake-menun.component';
+import { AppSnakeMenunComponent } from './snake-menu.component';
 
 describe('AppSnakeMenunComponent', () => {
   let component: AppSnakeMenunComponent;

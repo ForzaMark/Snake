@@ -1,6 +1,7 @@
 import { Food } from './food';
 import { Snake } from './snake';
 import { SnakeGrid } from './grid';
+import { State } from './state';
 
 export class SnakeGame {
     private snake: Snake;
@@ -10,76 +11,38 @@ export class SnakeGame {
     private cellWidth: number;
     private cellHeight: number;
     private grid: SnakeGrid;
-    private state = false;
+    private state = State.false;
 
     constructor(private screenWidth: number, private screenHeight: number) {
         this.cellWidth = screenWidth / this.fieldWidth;
         this.cellHeight = screenHeight / this.fieldHeight;
-        this.snake = new Snake();
+        this.snake = new Snake(this.fieldWidth, this.fieldHeight);
         this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
         this.food = new Food(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
         this.food.createNewFood();
-        this.snake.addParts(3, 0);
-        this.snake.addParts(2, 0);
-        this.snake.addParts(1, 0);
-        this.snake.addParts(0, 0);
     }
 
-    update() {
-        this.snake.sort();
+    update(): void {
         this.snake.move();
-        this.snake.setSnakeHead(this.snake.getParts()[0].x,
-                                this.snake.getParts()[0].y);
-        if (this.snake.eat(this.food)) {
-            this.snake.addParts(this.snake.getParts()[this.snake.getParts().length - 1].x,
-                                this.snake.getParts()[this.snake.getParts().length - 1].y);
-            this.food.createNewFood();
+        this.snake.eat(this.food);
+        if (this.snake.hasCrashed()) {
+            this.state = State.true;
         }
-        if (this.snake.crash()) {
-            this.state = true;
-        }
-        this.wall();
 
     }
 
-    draw(context: CanvasRenderingContext2D) {
+    draw(context: CanvasRenderingContext2D): void {
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
-        this.grid.drawGrid(context);
+        this.grid.draw(context);
         this.snake.draw(context, this.cellWidth, this.cellHeight);
         this.food.draw(context);
     }
 
-    onKeyUp(key: KeyboardEvent) {
-        if (key.code === 'ArrowRight') {
-            this.snake.setDirection('Right');
-        }
-        if (key.code === 'ArrowUp') {
-            this.snake.setDirection('Up');
-        }
-        if (key.code === 'ArrowDown') {
-            this.snake.setDirection('Down');
-        }
-        if (key.code === 'ArrowLeft') {
-            this.snake.setDirection('Left');
-        }
+    onKeyUp(key: KeyboardEvent): void {
+        this.snake.onkey(key);
     }
 
-    wall() {
-        if (this.snake.getSnakeHead().x === this.fieldWidth) {
-            this.snake.getParts()[0].x = 0;
-        }
-        if (this.snake.getSnakeHead().x === -1) {
-            this.snake.getParts()[0].x = this.fieldWidth;
-        }
-        if (this.snake.getSnakeHead().y === this.fieldHeight) {
-            this.snake.getParts()[0].y = 0;
-        }
-        if (this.snake.getSnakeHead().y === -1) {
-            this.snake.getParts()[0].y = this.fieldHeight;
-        }
-    }
-
-    kill(): boolean {
+    kill(): State {
         return this.state;
     }
 }
