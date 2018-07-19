@@ -22,13 +22,15 @@ export class SnakeGame {
         this.food.createNewFood();
     }
 
-    update(): void {
+    update(): boolean {
         this.snake.move();
-        this.snake.eat(this.food);
-        if (this.snake.hasCrashed()) {
-            this.state = State.true;
+        if (this.snake.canEat(this.food)) {
+            this.snake.grow();
+            this.food.createNewFood();
         }
-
+        if (this.snake.hasCrashed()) {
+            return false;
+        }
     }
 
     draw(context: CanvasRenderingContext2D): void {
@@ -40,9 +42,5 @@ export class SnakeGame {
 
     onKeyUp(key: KeyboardEvent): void {
         this.snake.onkey(key);
-    }
-
-    kill(): State {
-        return this.state;
     }
 }

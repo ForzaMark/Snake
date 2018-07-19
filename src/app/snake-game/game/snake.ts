@@ -8,80 +8,71 @@ export class Snake {
     private snakeHead: SnakePart;
 
     constructor(private fieldWidth: number, private fieldHeight: number) {
-        this.addParts(3, 0);
-        this.addParts(2, 0);
+        this.addPart(3, 0);
+        this.snakeHead = this.snakeParts[0];
     }
-    addParts(x: number, y: number): void {
+
+    private addPart(x: number, y: number): void {
         this.snakeParts.push(new SnakePart(x, y));
     }
 
-    getParts(): SnakePart[] {
-        return this.snakeParts;
-    }
-
-    getSnakeHead(): SnakePart {
-        return this.snakeParts[0];
-    }
-
     move(): void {
-
         // sort
-        for (let i = this.getParts().length - 1 ; i > 0; i--) {
-            this.getParts()[i].x = this.getParts()[i - 1].x;
-            this.getParts()[i].y = this.getParts()[i - 1].y;
+        for (let i = this.snakeParts.length - 1 ; i > 0; i--) {
+            this.snakeParts[i].x = this.snakeParts[i - 1].x;
+            this.snakeParts[i].y = this.snakeParts[i - 1].y;
         }
 
         // move
         switch (this.direction) {
             case Direction.left:
-                this.getParts()[0].x -= 1;
+                this.snakeParts[0].x -= 1;
                 break;
             case Direction.right:
-                this.getParts()[0].x += 1;
+                this.snakeParts[0].x += 1;
                 break;
             case Direction.down:
-                this.getParts()[0].y += 1;
+                this.snakeParts[0].y += 1;
                 break;
             case Direction.up:
-                this.getParts()[0].y -= 1;
+                this.snakeParts[0].y -= 1;
                 break;
         }
 
         // wall
-        if (this.getSnakeHead().x === this.fieldWidth) {
-            this.getParts()[0].x = 0;
+        if (this.snakeHead.x === this.fieldWidth) {
+            this.snakeParts[0].x = 0;
         }
-        if (this.getSnakeHead().x === -1) {
-            this.getParts()[0].x = this.fieldWidth;
+        if (this.snakeHead.x === -1) {
+            this.snakeParts[0].x = this.fieldWidth;
         }
-        if (this.getSnakeHead().y === this.fieldHeight) {
-            this.getParts()[0].y = 0;
+        if (this.snakeHead.y === this.fieldHeight) {
+            this.snakeParts[0].y = 0;
         }
-        if (this.getSnakeHead().y === -1) {
-            this.getParts()[0].y = this.fieldHeight;
+        if (this.snakeHead.y === -1) {
+            this.snakeParts[0].y = this.fieldHeight;
         }
-
-        this.snakeHead = this.snakeParts[0];
     }
 
     draw(context: CanvasRenderingContext2D, cellWidth: number, cellHeight: number): void {
-        for (let i = 0; i < this.getParts().length; i++) {
-            context.fillRect(this.getParts()[i].x * cellWidth,
-                             this.getParts()[i].y * cellHeight,
+        for (let i = 0; i < this.snakeParts.length; i++) {
+            context.fillRect(this.snakeParts[i].x * cellWidth,
+                             this.snakeParts[i].y * cellHeight,
                              cellWidth, cellHeight);
          }
     }
-    eat(food: Food): void {
-        if (this.snakeHead.x === food.getPosX() && this.snakeHead.y === food.getPosY()) {
-            food.createNewFood();
-            this.addParts(this.getParts()[this.getParts().length - 1].x,
-                          this.getParts()[this.getParts().length - 1].y);
-        }
+
+    canEat(food: Food): boolean {
+       return this.snakeHead.x === food.getPosX() && this.snakeHead.y === food.getPosY();
+    }
+    grow(): void {
+        this.addPart(this.snakeParts[this.snakeParts.length - 1].x,
+                     this.snakeParts[this.snakeParts.length - 1].y);
     }
 
     hasCrashed(): boolean {
-        for (let i = 1; i < this.getParts().length; i++) {
-            if (this.snakeHead.x === this.getParts()[i].x && this.snakeHead.y === this.getParts()[i].y) {
+        for (let i = 1; i < this.snakeParts.length; i++) {
+            if (this.snakeHead.x === this.snakeParts[i].x && this.snakeHead.y === this.snakeParts[i].y && this.snakeParts.length !== 2) {
                 return true;
             }
         }
