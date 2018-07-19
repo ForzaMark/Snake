@@ -1,5 +1,4 @@
 export class SnakeGrid {
-    
     constructor(private cellWidth: number, private cellHeight: number,
                 private fieldWidth: number, private fieldHeight: number) {}
 

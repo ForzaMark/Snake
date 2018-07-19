@@ -10,6 +10,7 @@ export class SnakeGame {
     private cellWidth: number;
     private cellHeight: number;
     private grid: SnakeGrid;
+    private state = false;
 
     constructor(private screenWidth: number, private screenHeight: number) {
         this.cellWidth = screenWidth / this.fieldWidth;
@@ -31,11 +32,11 @@ export class SnakeGame {
                                 this.snake.getParts()[0].y);
         if (this.snake.eat(this.food)) {
             this.snake.addParts(this.snake.getParts()[this.snake.getParts().length - 1].x,
-                                this.snake.getParts()[this.snake.getParts().length - 1].y );
+                                this.snake.getParts()[this.snake.getParts().length - 1].y);
             this.food.createNewFood();
         }
         if (this.snake.crash()) {
-            // zurück zum Hauptmenü !!!
+            this.state = true;
         }
         this.wall();
 
@@ -76,5 +77,9 @@ export class SnakeGame {
         if (this.snake.getSnakeHead().y === -1) {
             this.snake.getParts()[0].y = this.fieldHeight;
         }
+    }
+
+    kill(): boolean {
+        return this.state;
     }
 }

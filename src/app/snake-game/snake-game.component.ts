@@ -1,5 +1,8 @@
 import { Component, AfterViewInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { SnakeGame } from './game/snake-game';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-snake-game',
@@ -11,7 +14,10 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
 
   private timer: any;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location
+  ) { }
 
   ngAfterViewInit(): void {
     const mainCanvas = this.mainCanvasReference.nativeElement as HTMLCanvasElement;
@@ -32,6 +38,9 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
     this.timer = setInterval(() => {
       snakeGame.update();
       snakeGame.draw(context);
+      if (snakeGame.kill()) {
+        this.location.back();
+      }
     }, 1000 / framesPerSecond);
   }
 
