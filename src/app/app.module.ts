@@ -3,14 +3,18 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { SnakeGameComponent } from './snake-game/snake-game.component';
+import { AppSnakeMenunComponent } from './app-snake-menun/app-snake-menun.component';
+import { AppRoutingModule } from './/app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SnakeGameComponent
+    SnakeGameComponent,
+    AppSnakeMenunComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
