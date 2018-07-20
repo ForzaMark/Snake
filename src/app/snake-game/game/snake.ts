@@ -1,7 +1,7 @@
 import {SnakePart} from './snake-part';
 import { Food } from './food';
 import { Direction } from './direction';
-import { Obstacles } from './obstacles';
+import { CellObject } from './cell-object';
 
 export class Snake {
     private direction = Direction.right;
@@ -62,25 +62,9 @@ export class Snake {
                              cellWidth, cellHeight);
          }
     }
-
-    canEat(food: Food): boolean {
-       return this.snakeHead.x === food.getPosX() && this.snakeHead.y === food.getPosY();
-    }
     grow(): void {
         this.addPart(this.snakeParts[this.snakeParts.length - 1].x,
                      this.snakeParts[this.snakeParts.length - 1].y);
-    }
-
-    hasCrashed(obstacle: Obstacles): boolean {
-        for (let i = 1; i < this.snakeParts.length; i++) {
-            if (this.snakeHead.x === this.snakeParts[i].x && this.snakeHead.y === this.snakeParts[i].y && this.snakeParts.length !== 2) {
-                return true;
-            }
-        }
-        if (this.snakeHead.x === obstacle.getPosX() && this.snakeHead.y === obstacle.getPosY()) {
-            return true;
-        }
-        return false;
     }
 
     onkey(key: KeyboardEvent): void {
@@ -99,5 +83,12 @@ export class Snake {
     }
     getSnakeParts(): SnakePart[] {
         return this.snakeParts;
+    }
+    isOnSnake(cellObject: CellObject): Boolean {
+        for (let i = 0; i < this.getSnakeParts().length; i++) {
+            if (cellObject.x === this.snakeHead.x && cellObject.y === this.snakeHead.y) {
+                return true;
+            } else { return false; }
+        }
     }
 }
