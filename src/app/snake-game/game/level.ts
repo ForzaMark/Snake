@@ -7,7 +7,7 @@ import { Obstacles } from './obstacles';
 export class Level implements CellObject {
     x: number;
     y: number;
-    obstacle: Obstacles[];
+    obstacles: Obstacles[];
 
     constructor(private cellWidth: number,
         private cellHeight: number,
