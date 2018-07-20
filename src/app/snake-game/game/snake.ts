@@ -1,6 +1,7 @@
 import {SnakePart} from './snake-part';
 import { Food } from './food';
 import { Direction } from './direction';
+import { Obstacles } from './obstacles';
 
 export class Snake {
     private direction = Direction.right;
@@ -70,11 +71,14 @@ export class Snake {
                      this.snakeParts[this.snakeParts.length - 1].y);
     }
 
-    hasCrashed(): boolean {
+    hasCrashed(obstacle: Obstacles): boolean {
         for (let i = 1; i < this.snakeParts.length; i++) {
             if (this.snakeHead.x === this.snakeParts[i].x && this.snakeHead.y === this.snakeParts[i].y && this.snakeParts.length !== 2) {
                 return true;
             }
+        }
+        if (this.snakeHead.x === obstacle.getPosX() && this.snakeHead.y === obstacle.getPosY()) {
+            return true;
         }
         return false;
     }
