@@ -35,7 +35,7 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
     document.addEventListener('keyup', e => snakeGame.onKeyUp(e as KeyboardEvent));
 
     this.timer = setInterval(() => {
-      if (!snakeGame.update()) {
+      if (snakeGame.update()) {
         snakeGame.draw(context);
       } else {
           this.location.back();

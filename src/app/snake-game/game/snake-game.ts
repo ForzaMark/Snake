@@ -30,6 +30,8 @@ export class SnakeGame {
         }
         if (this.snake.hasCrashed()) {
             return false;
+        } else {
+            return true;
         }
     }
 
