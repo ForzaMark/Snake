@@ -49,4 +49,7 @@ export class SnakeGame {
     onKeyUp(key: KeyboardEvent): void {
         this.snake.onkey(key);
     }
+    getLength(): number {
+        return this.snake.getLength();
+    }
 }

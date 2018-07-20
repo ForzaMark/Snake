@@ -97,4 +97,7 @@ export class Snake {
             this.direction = Direction.left;
         }
     }
+    getLength(): number {
+        return this.snakeParts.length;
+    }
 }

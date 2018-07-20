@@ -11,6 +11,7 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
   @ViewChild('mainCanvas') mainCanvasReference: ElementRef;
 
   private timer: any;
+  private Score = 0;
 
   constructor(
     private location: Location
@@ -38,6 +39,7 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
       } else {
           this.location.back();
       }
+      this.Score = snakeGame.getLength();
     }, 1000 / framesPerSecond);
   }
 
