@@ -1,7 +1,6 @@
 import { Food } from './food';
 import { Snake } from './snake';
 import { SnakeGrid } from './grid';
-import { State } from './state';
 
 export class SnakeGame {
     private snake: Snake;
@@ -11,7 +10,6 @@ export class SnakeGame {
     private cellWidth: number;
     private cellHeight: number;
     private grid: SnakeGrid;
-    private state = State.false;
 
     constructor(private screenWidth: number, private screenHeight: number) {
         this.cellWidth = screenWidth / this.fieldWidth;

@@ -1,8 +1,6 @@
 import { Component, AfterViewInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { SnakeGame } from './game/snake-game';
 import { Location } from '@angular/common';
-import { State } from './game/state' ;
-
 
 @Component({
   selector: 'app-snake-game',
