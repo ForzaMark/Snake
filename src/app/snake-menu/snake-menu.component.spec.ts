@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppSnakeMenunComponent } from './snake-menu.component';
+import { SnakeMenuComponent } from './snake-menu.component';
 
 describe('AppSnakeMenunComponent', () => {
-  let component: AppSnakeMenunComponent;
-  let fixture: ComponentFixture<AppSnakeMenunComponent>;
+  let component: SnakeMenuComponent;
+  let fixture: ComponentFixture<SnakeMenuComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppSnakeMenunComponent ]
+      declarations: [ SnakeMenuComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppSnakeMenunComponent);
+    fixture = TestBed.createComponent(SnakeMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
