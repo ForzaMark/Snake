@@ -10,7 +10,8 @@ import { Location } from '@angular/common';
 export class SnakeGameComponent implements AfterViewInit, OnDestroy {
   @ViewChild('mainCanvas') mainCanvasReference: ElementRef;
 
-  private timer: any;
+  private DrawTimer: any;
+  private SpeedTimer: any;
   private Score = 0;
 
   constructor(
@@ -20,7 +21,8 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     const mainCanvas = this.mainCanvasReference.nativeElement as HTMLCanvasElement;
 
-    const framesPerSecond = 10;
+    const framesPerSecond = 30;
+    const speed = 7;
     const screenWidth = 800;
     const screenHeight = 600;
 
@@ -33,17 +35,23 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
 
     document.addEventListener('keyup', e => snakeGame.onKeyUp(e as KeyboardEvent));
 
-    this.timer = setInterval(() => {
-      if (snakeGame.update()) {
+    // drawTimer 30 mal pro sekunde
+    this.DrawTimer = setInterval(() => {
         snakeGame.draw(context);
+    }, 1000 / framesPerSecond);
+
+    // speedTimer 7 mal pro Sekunde
+    this.SpeedTimer = setInterval(() => {
+      if (snakeGame.update()) {
       } else {
           this.location.back();
       }
       this.Score = snakeGame.getLength();
-    }, 1000 / framesPerSecond);
+    }, 1000 / speed);
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.timer);
+    clearInterval(this.DrawTimer);
+    clearInterval(this.SpeedTimer);
   }
 }

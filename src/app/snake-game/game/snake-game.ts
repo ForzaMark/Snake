@@ -21,15 +21,16 @@ export class SnakeGame {
         this.food = new Food(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
         this.obstacle = new Obstacles(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
 
-        this.food.createNewFood();
-        this.obstacle.createNewObstacles();
+        this.food.createNewFood(this.snake.getSnakeParts());
+        this.obstacle.createNewObstacles(this.snake.getSnakeParts(), this.food);
     }
 
     update(): boolean {
         this.snake.move();
         if (this.snake.canEat(this.food)) {
             this.snake.grow();
-            this.food.createNewFood();
+            this.food.createNewFood(this.snake.getSnakeParts());
+            this.obstacle.createNewObstacles(this.snake.getSnakeParts(), this.food);
         }
         if (this.snake.hasCrashed(this.obstacle)) {
             return false;
@@ -50,6 +51,6 @@ export class SnakeGame {
         this.snake.onkey(key);
     }
     getLength(): number {
-        return this.snake.getLength();
+        return this.snake.getSnakeParts().length;
     }
 }

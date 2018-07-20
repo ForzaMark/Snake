@@ -1,3 +1,6 @@
+import { SnakePart } from './snake-part';
+import { Food } from './food';
+
 export class Obstacles {
     private PosX: number;
     private PosY: number;
@@ -7,9 +10,22 @@ export class Obstacles {
         private fieldWidth: number,
         private fieldHeight: number) {}
 
-    createNewObstacles(): void {
-        this.PosX =  Math.floor(Math.random() * this.fieldWidth);
-        this.PosY =  Math.floor(Math.random() * this.fieldHeight);
+    createNewObstacles(SnakeParts: SnakePart[], food: Food): void {
+        this.PosX = undefined;
+        while (!this.PosX) {
+            const propPosX = Math.floor(Math.random() * this.fieldWidth);
+            const propPosy = Math.floor(Math.random() * this.fieldHeight);
+
+            for (let i = 0; i < SnakeParts.length; i++) {
+                if (propPosX !== food.getPosX()
+                    && propPosX !== SnakeParts[i].x
+                    && propPosy !== food.getPosY()
+                    && propPosy !== SnakeParts[i].y) {
+                        this.PosX = propPosX;
+                        this.PosY = propPosy;
+                }
+            }
+        }
     }
 
     draw(context: CanvasRenderingContext2D): void {
