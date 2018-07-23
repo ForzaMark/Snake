@@ -20,8 +20,8 @@ export class SnakeGame {
         this.fieldHeight = ConfigData[1];
         this.snakeSize = ConfigData[2];
         this.wallenabled = ConfigData[3];
-        this.cellWidth = Math.trunc(screenWidth / this.fieldWidth);
-        this.cellHeight = Math.trunc(screenHeight / this.fieldHeight);
+        this.cellWidth = screenWidth / this.fieldWidth;
+        this.cellHeight = screenHeight / this.fieldHeight;
 
         this.snake = new Snake(this.fieldWidth, this.fieldHeight, this.snakeSize);
         this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);

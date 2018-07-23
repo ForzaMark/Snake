@@ -1,9 +1,13 @@
+
 <h1>Snake-Game</h1>
-<p>Levelgröße : </p><input #width type="number">x<input #height type="number">
-<p>Schlangengröße : </p><input #snakelength type="number">
+<p>Levelgröße : </p><input #width type="number" value="20" [formControl]= "numberInput">x<input #height type="number" value="15">
+<p>Schlangengröße : </p><input #snakelength type="number" value="1">
 <p>Durch Wände laufen ? (Auswählen für Ja!)</p>
-<input #wall type="checkbox">
-<p>Zweiter Spieler ? (Auswählen für ja!)</p>
-<input #multiplayer type="checkbox">
+<input #wall type="checkbox" checked>
+<p #multiplayer >Zweiter Spieler ? (Auswählen für ja!)</p>
+<!-- <select #mulitplayer>
+    <option value="single">SinglePlayer</option>
+    <option value="multi">MultiPlayer</option>
+</select> -->
 <p>Press Button to Start</p>
 <button routerLink =  '/snake-game' (click) = "startGame(width.value,height.value,snakelength.value,wall.checked,multiplayer.value)">Click !</button>
