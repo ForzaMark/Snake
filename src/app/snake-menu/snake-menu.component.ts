@@ -12,7 +12,7 @@ export class SnakeMenuComponent implements OnInit {
 
   constructor(private data: ConfigDataService) { }
 
-  startGame(width: number, height: number, snakelength: number, wall: number, multiplayer: number) {
+  startGame(width: number, height: number, snakelength: number, wall: boolean, multiplayer: number) {
     this.data.changeData(width, height, snakelength, wall, multiplayer);
   }
 
