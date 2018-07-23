@@ -7,7 +7,7 @@ import { Obstacles } from './obstacles';
 export class Level implements CellObject {
     x: number;
     y: number;
-    obstacles: Obstacles[];
+    obstacles: Obstacles[] = [];
 
     constructor(private cellWidth: number,
         private cellHeight: number,
@@ -15,7 +15,7 @@ export class Level implements CellObject {
         private fieldHeight: number) {
         }
 
-    createNewLevel(SnakeParts: SnakePart[], food: Food): void {
+    addObstacle(SnakeParts: SnakePart[], food: Food): void {
         this.x = undefined;
         while (!this.x) {
             const propx = Math.floor(Math.random() * this.fieldWidth);
@@ -28,6 +28,7 @@ export class Level implements CellObject {
                     && propy !== SnakeParts[i].y) {
                         this.x = propx;
                         this.y = propy;
+                        this.obstacles.push(new Obstacles(this.x, this.y));
                 }
             }
         }
@@ -35,7 +36,9 @@ export class Level implements CellObject {
 
     draw(context: CanvasRenderingContext2D): void {
         context.fillStyle = '#00FFFF';
-        context.fillRect(this.x * this.cellWidth, this.y * this.cellHeight, this.cellWidth, this.cellHeight);
+        for (let i = 0; i < this.obstacles.length; i++) {
+            context.fillRect(this.obstacles[i].x * this.cellWidth, this.obstacles[i].y * this.cellHeight, this.cellWidth, this.cellHeight);
+        }
         context.fillStyle = 'black';
     }
 
@@ -45,5 +48,8 @@ export class Level implements CellObject {
 
     gety(): number {
         return this.y;
+    }
+    getObstacles(): Obstacles[] {
+        return this.obstacles;
     }
 }
