@@ -1,5 +1,4 @@
-import {SnakePart} from './snake-part';
-import { Food } from './food';
+import { SnakePart } from './snake-part';
 import { Direction } from './direction';
 import { CellObject } from './cell-object';
 

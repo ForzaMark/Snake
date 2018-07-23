@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { SnakeGame } from './game/snake-game';
 import { Location } from '@angular/common';
+import { ConfigDataService } from '../config-data.service';
 
 @Component({
   selector: 'app-snake-game',
@@ -13,14 +14,16 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
   private DrawTimer: any;
   private SpeedTimer: any;
   private Score = 0;
+  private ConfigData: number[];
+  message: string;
 
   constructor(
-    private location: Location
+    private location: Location,
+    private data: ConfigDataService
   ) { }
 
   ngAfterViewInit(): void {
     const mainCanvas = this.mainCanvasReference.nativeElement as HTMLCanvasElement;
-
     const framesPerSecond = 30;
     const speed = 7;
     const screenWidth = 800;
@@ -48,6 +51,10 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
       }
       this.Score = snakeGame.getLength();
     }, 1000 / speed);
+    this.ConfigData =  this.data.getData();
+    for (let i = 0; i < this.ConfigData.length; i++) {
+      console.log(this.ConfigData[i]);
+    }
   }
 
   ngOnDestroy(): void {

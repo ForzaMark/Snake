@@ -1,3 +1,9 @@
 <h1>Snake-Game</h1>
+<p>Levelgröße : </p><input #width type="number">x<input #height type="number">
+<p>Schlangengröße : </p><input #snakelength type="number">
+<p>Durch Wände laufen ? (Auswählen für Ja!)</p>
+<input #wall type="checkbox">
+<p>Zweiter Spieler ? (Auswählen für ja!)</p>
+<input #multiplayer type="checkbox">
 <p>Press Button to Start</p>
-<button routerLink = '/snake-game'>Click !</button>
+<button routerLink =  '/snake-game' (click) = "startGame(width.value,height.value,snakelength.value,wall.value,multiplayer.value)">Click !</button>

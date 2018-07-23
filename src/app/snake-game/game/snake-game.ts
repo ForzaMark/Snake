@@ -28,6 +28,7 @@ export class SnakeGame {
         if (this.snake.isOnSnake(this.food)) {
             this.snake.grow();
             this.food.createNewFood(this.snake.getSnakeParts());
+
             if (Number.isInteger(this.snake.getSnakeParts().length / 10)
                 || this.snake.getSnakeParts().length / 10 === 0.2) {
                 this.level.addObstacle(this.snake.getSnakeParts(), this.food);
