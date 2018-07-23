@@ -2,6 +2,7 @@ import { Food } from './food';
 import { Snake } from './snake';
 import { SnakeGrid } from './grid';
 import { Level } from './Level';
+import { ConfigDataService } from '../../config-data.service';
 
 export class SnakeGame {
     private snake: Snake;
@@ -12,12 +13,25 @@ export class SnakeGame {
     private cellHeight: number;
     private grid: SnakeGrid;
     private level: Level;
+    private ConfigData: number;
+    private data: ConfigDataService;
+    private snakeSize = 1;
+    private wall = false;
+    private multiplayer = false;
 
-    constructor(private screenWidth: number, private screenHeight: number) {
-        this.cellWidth = screenWidth / this.fieldWidth;
-        this.cellHeight = screenHeight / this.fieldHeight;
+    constructor(private screenWidth: number, private screenHeight: number, ConfigData: number[]) {
+        this.fieldWidth = ConfigData[0];
+        this.fieldHeight = ConfigData[1];
+        this.snakeSize = ConfigData[2];
+        if (ConfigData[3].toString() === 'on') { this.wall = true; }
+        if (ConfigData[4].toString() === 'on') { this.multiplayer = true; }
+
+        this.cellWidth = Math.trunc(screenWidth / this.fieldWidth);
+        this.cellHeight = Math.trunc(screenHeight / this.fieldHeight);
+
         this.snake = new Snake(this.fieldWidth, this.fieldHeight);
         this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
+
         this.food = new Food(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
         this.level = new Level(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
         this.food.createNewFood(this.snake.getSnakeParts());

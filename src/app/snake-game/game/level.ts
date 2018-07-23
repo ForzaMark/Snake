@@ -16,7 +16,6 @@ export class Level implements CellObject {
         }
 
     addObstacle(SnakeParts: SnakePart[], food: Food): void {
-        console.log('added');
         this.x = undefined;
         while (!this.x) {
             const propx = Math.floor(Math.random() * this.fieldWidth);
@@ -55,7 +54,6 @@ export class Level implements CellObject {
     }
 
     changeObstaclePosition(): void {
-        console.log(this.obstacles.length);
         for (let i = 0; i < this.obstacles.length; i++) {
             const propx = Math.floor(Math.random() * this.fieldWidth);
             const propy = Math.floor(Math.random() * this.fieldHeight);
