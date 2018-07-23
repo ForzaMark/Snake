@@ -2,7 +2,6 @@ import { Food } from './food';
 import { Snake } from './snake';
 import { SnakeGrid } from './grid';
 import { Level } from './Level';
-import { ConfigDataService } from '../../config-data.service';
 
 export class SnakeGame {
     private snake: Snake;
@@ -13,10 +12,8 @@ export class SnakeGame {
     private cellHeight: number;
     private grid: SnakeGrid;
     private level: Level;
-    private data: ConfigDataService;
     private snakeSize = 1;
     private wallenabled = 1;
-    private multiplayer = false;
 
     constructor(private screenWidth: number, private screenHeight: number, ConfigData: number[]) {
         this.fieldWidth = ConfigData[0];
@@ -35,7 +32,6 @@ export class SnakeGame {
     }
 
     update(): boolean {
-        console.log(this.wallenabled);
         if (!this.snake.move(this.wallenabled)) {
             return false;
         }

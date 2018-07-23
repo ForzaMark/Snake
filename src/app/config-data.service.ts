@@ -10,7 +10,6 @@ export class ConfigDataService {
   constructor() { }
 
   changeData(width: number, height: number, snakelength: number, wall: boolean, multiplayer: number): void {
-    console.log(wall);
      if (!width) {
        width = 20;
      }
