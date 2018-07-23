@@ -40,16 +40,16 @@ export class Snake {
         }
 
         // wall
-        if (this.snakeHead.x === this.fieldWidth) {
+        if (this.snakeHead.x > this.fieldWidth) {
             this.snakeParts[0].x = 0;
         }
-        if (this.snakeHead.x === -1) {
+        if (this.snakeHead.x < -1) {
             this.snakeParts[0].x = this.fieldWidth;
         }
-        if (this.snakeHead.y === this.fieldHeight) {
+        if (this.snakeHead.y > this.fieldHeight) {
             this.snakeParts[0].y = 0;
         }
-        if (this.snakeHead.y === -1) {
+        if (this.snakeHead.y < -1) {
             this.snakeParts[0].y = this.fieldHeight;
         }
     }

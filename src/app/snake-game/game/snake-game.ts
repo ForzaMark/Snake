@@ -23,6 +23,7 @@ export class SnakeGame {
         this.fieldWidth = ConfigData[0];
         this.fieldHeight = ConfigData[1];
         this.snakeSize = ConfigData[2];
+        console.log(ConfigData[3]);
         if (ConfigData[3].toString() === 'on') { this.wall = true; }
         if (ConfigData[4].toString() === 'on') { this.multiplayer = true; }
 
