@@ -16,6 +16,7 @@ export class Level implements CellObject {
         }
 
     addObstacle(SnakeParts: SnakePart[], food: Food): void {
+        console.log('added');
         this.x = undefined;
         while (!this.x) {
             const propx = Math.floor(Math.random() * this.fieldWidth);
@@ -28,10 +29,10 @@ export class Level implements CellObject {
                     && propy !== SnakeParts[i].y) {
                         this.x = propx;
                         this.y = propy;
-                        this.obstacles.push(new Obstacles(this.x, this.y));
                 }
             }
         }
+        this.obstacles.push(new Obstacles(this.x, this.y));
     }
 
     draw(context: CanvasRenderingContext2D): void {
@@ -51,5 +52,15 @@ export class Level implements CellObject {
     }
     getObstacles(): Obstacles[] {
         return this.obstacles;
+    }
+
+    changeObstaclePosition(): void {
+        console.log(this.obstacles.length);
+        for (let i = 0; i < this.obstacles.length; i++) {
+            const propx = Math.floor(Math.random() * this.fieldWidth);
+            const propy = Math.floor(Math.random() * this.fieldHeight);
+            this.obstacles[i].x = propx;
+            this.obstacles[i].y = propy;
+        }
     }
 }

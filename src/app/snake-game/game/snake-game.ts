@@ -20,7 +20,6 @@ export class SnakeGame {
         this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
         this.food = new Food(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
         this.level = new Level(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
-
         this.food.createNewFood(this.snake.getSnakeParts());
     }
 
@@ -29,27 +28,21 @@ export class SnakeGame {
         if (this.snake.isOnSnake(this.food)) {
             this.snake.grow();
             this.food.createNewFood(this.snake.getSnakeParts());
-            console.log('1 ' + Number.isInteger(this.snake.getSnakeParts().length / 10));
-            console.log('2 ' + this.snake.getSnakeParts().length / 10);
-            if (Number.isInteger(this.snake.getSnakeParts().length / 10) || this.snake.getSnakeParts().length / 10 === 0.2) {
+            if (Number.isInteger(this.snake.getSnakeParts().length / 10)
+                || this.snake.getSnakeParts().length / 10 === 0.2) {
                 this.level.addObstacle(this.snake.getSnakeParts(), this.food);
+            } else {
+                this.level.changeObstaclePosition();
             }
         }
-        for (let i = 1; i < this.level.getObstacles().length; i++) {
-            console.log('3 ' + this.level.getObstacles()[i]);
-            // console.log(this.level.getObstacles()[i]);
-            // console.log(this.snake.getSnakeParts()[i]);
+        for (let i = 0; i < this.level.getObstacles().length; i++) {
             if (this.snake.isOnSnake(this.level.getObstacles()[i])) {
-                console.log('eins');
-                
                 return false;
             }
         }
 
         for (let i = 1; i < this.snake.getSnakeParts().length; i++) {
             if ((this.snake.isOnSnake(this.snake.getSnakeParts()[i]) && this.snake.getSnakeParts().length > 2)) {
-                console.log('zwo');
-                
                 return false;
             }
         }
