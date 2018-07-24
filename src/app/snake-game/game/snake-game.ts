@@ -18,6 +18,7 @@ export class SnakeGame {
     private SkillLevel = 10;
     private multiplayer: boolean;
     score: number;
+    private multiSnake: Snake[];
 
     constructor(private screenWidth: number, private screenHeight: number, private configuration: SnakeGameConfiguration) {
         
@@ -32,6 +33,8 @@ export class SnakeGame {
         this.cellHeight = screenHeight / this.fieldHeight;
 
         this.snake = new Snake(this.fieldWidth, this.fieldHeight, this.snakeSize);
+        this.multiSnake.push(this.snake,this.snake);
+
         this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
 
         this.food = new Food(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
