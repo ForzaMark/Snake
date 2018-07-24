@@ -78,18 +78,36 @@ export class Snake {
                      this.snakeParts[this.snakeParts.length - 1].y);
     }
 
-    onkey(key: KeyboardEvent): void {
-        if (key.code === 'ArrowRight' && this.direction !== Direction.left) {
-           this.direction = Direction.right;
+    onkey(key: KeyboardEvent, x: number): void {
+        console.log(key.code + " " + x);
+        
+        if(x === 0){
+            if (key.code === 'ArrowRight' && this.direction !== Direction.left) {
+            this.direction = Direction.right;
+            }
+            if (key.code === 'ArrowUp' && this.direction !== Direction.down) {
+                this.direction = Direction.up;
+            }
+            if (key.code === 'ArrowDown' && this.direction !== Direction.up) {
+                this.direction = Direction.down;
+            }
+            if (key.code === 'ArrowLeft' && this.direction !== Direction.right) {
+                this.direction = Direction.left;
+            }
         }
-        if (key.code === 'ArrowUp' && this.direction !== Direction.down) {
-            this.direction = Direction.up;
-        }
-        if (key.code === 'ArrowDown' && this.direction !== Direction.up) {
-            this.direction = Direction.down;
-        }
-        if (key.code === 'ArrowLeft' && this.direction !== Direction.right) {
-            this.direction = Direction.left;
+        if (x === 1) {
+            if (key.code === 'KeyD' && this.direction !== Direction.left) {
+                this.direction = Direction.right;
+                }
+                if (key.code === 'KeyW' && this.direction !== Direction.down) {
+                    this.direction = Direction.up;
+                }
+                if (key.code === 'KeyS' && this.direction !== Direction.up) {
+                    this.direction = Direction.down;
+                }
+                if (key.code === 'KeyA' && this.direction !== Direction.right) {
+                    this.direction = Direction.left;
+                }
         }
     }
     isOnSnake(cellObject: CellObject): boolean {

@@ -50,7 +50,7 @@ export class SnakeGame {
             
             
             if (!this.multiSnake[i].move(this.wallenabled)) {
-                console.log('1false');
+               
                 
                 return false;
             }
@@ -67,19 +67,17 @@ export class SnakeGame {
             }
 
             if (this.level.collidesWith(this.multiSnake[i])) {
-                console.log('2false');
-                
+                         
                 return false;
             }
 
             if (this.multiSnake[i].collidesWithItself()) {
-                console.log('3false');
+                
                 
                 return false;
             }
-            console.log(i);
+            
         }
-        console.log('truen');
         
         return true;
     }   
@@ -94,6 +92,9 @@ export class SnakeGame {
     }
 
     onKeyUp(key: KeyboardEvent): void {
-        this.firstSnake.onkey(key);
+        this.firstSnake.onkey(key,0);
+        this.secondSnake.onkey(key,1)
+        console.log(key);
+        
     }
 }
