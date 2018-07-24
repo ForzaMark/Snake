@@ -1,7 +1,11 @@
 
 <h1>Snake-Game</h1>
-<p>Levelgröße : </p><input #width type="number" value="20" [formControl]= "numberInput">x<input #height type="number" value="15">
-<p>Schlangengröße : </p><input #snakelength type="number" value="1">
+<p>Levelgröße : </p><input
+                    #width type="number" value="20" required min="7"
+                    max="50">x
+                    
+                    <input #height type="number" value="15" required min="7" max="50">
+<p>Schlangengröße : </p><input #snakelength type="number" value="1" required min="1" max="6">
 <p>Durch Wände laufen ? (Auswählen für Ja!)</p>
 <input #wall type="checkbox" checked>
 <p #multiplayer >Zweiter Spieler ? (Auswählen für ja!)</p>
