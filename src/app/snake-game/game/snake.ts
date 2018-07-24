@@ -7,11 +7,12 @@ export class Snake {
     private snakeParts: SnakePart[] = [];
     private snakeHead: SnakePart;
 
-    constructor(private fieldWidth: number, private fieldHeight: number, snakeSize: number) {
+    constructor(private fieldWidth: number, private fieldHeight: number, snakeSize: number, startPos:number) {
         for (let i = 0; i < snakeSize; i++) {
-            this.addPart(snakeSize - i, 0);
+            this.addPart(startPos, 0);
         }
         this.snakeHead = this.snakeParts[0];
+        
     }
 
     private addPart(x: number, y: number): void {
@@ -43,7 +44,6 @@ export class Snake {
 
         // wall
         if (this.snakeHead.x >= this.fieldWidth && wallEnabled) {
-            console.log('jwetzt');
             this.snakeParts[0].x = 0;
         } else if (this.snakeHead.x > this.fieldWidth && wallEnabled) {
             return false;

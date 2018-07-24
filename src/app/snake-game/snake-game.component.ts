@@ -24,7 +24,7 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     const mainCanvas = this.mainCanvasReference.nativeElement as HTMLCanvasElement;
     const framesPerSecond = 30;
-    const speed = 7;
+    const speed = 1;
     const screenWidth = 800;
     const screenHeight = 600;
 
