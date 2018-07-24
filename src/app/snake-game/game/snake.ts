@@ -42,22 +42,23 @@ export class Snake {
         }
 
         // wall
-        if (this.snakeHead.x > this.fieldWidth && wallEnabled === 1) {
+        if (this.snakeHead.x >= this.fieldWidth && wallEnabled === 1) {
+            console.log('jwetzt');
             this.snakeParts[0].x = 0;
         } else if (this.snakeHead.x > this.fieldWidth && wallEnabled === 0) {
             return false;
         }
-        if (this.snakeHead.x < -1 && wallEnabled === 1) {
+        if (this.snakeHead.x < 0 && wallEnabled === 1) {
             this.snakeParts[0].x = this.fieldWidth;
         } else if (this.snakeHead.x < -1 && wallEnabled === 0) {
             return false;
         }
-        if (this.snakeHead.y > this.fieldHeight && wallEnabled === 1) {
+        if (this.snakeHead.y >= this.fieldHeight && wallEnabled === 1) {
             this.snakeParts[0].y = 0;
         } else if (this.snakeHead.y > this.fieldHeight && wallEnabled === 0) {
             return false;
         }
-        if (this.snakeHead.y < -1 && wallEnabled === 1) {
+        if (this.snakeHead.y < 0 && wallEnabled === 1) {
             this.snakeParts[0].y = this.fieldHeight;
         } else if (this.snakeHead.y < -1 && wallEnabled === 0) {
             return false;

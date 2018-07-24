@@ -53,12 +53,23 @@ export class Level implements CellObject {
         return this.obstacles;
     }
 
-    changeObstaclePosition(): void {
+    changeObstaclePosition(SnakeParts: SnakePart[], food: Food): void {
         for (let i = 0; i < this.obstacles.length; i++) {
+            this.x = undefined;
+        while (!this.x) {
             const propx = Math.floor(Math.random() * this.fieldWidth);
             const propy = Math.floor(Math.random() * this.fieldHeight);
-            this.obstacles[i].x = propx;
-            this.obstacles[i].y = propy;
+
+            for (let j = 0; i < SnakeParts.length; j++) {
+                if (propx !== food.getx()
+                    && propx !== SnakeParts[i].x
+                    && propy !== food.gety()
+                    && propy !== SnakeParts[i].y) {
+                        this.x = propx;
+                        this.y = propy;
+                }
+            }
+        }
         }
     }
 }

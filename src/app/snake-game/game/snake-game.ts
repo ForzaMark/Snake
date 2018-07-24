@@ -45,7 +45,7 @@ export class SnakeGame {
                 || this.snake.getSnakeParts().length === parseInt(this.snakeSize) + 1) {
                 this.level.addObstacle(this.snake.getSnakeParts(), this.food);
             } else {
-                this.level.changeObstaclePosition();
+                this.level.changeObstaclePosition(this.snake.getSnakeParts(), this.food);
             }
         }
         for (let i = 0; i < this.level.getObstacles().length; i++) {
