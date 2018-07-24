@@ -41,8 +41,8 @@ export class Snake {
                 this.snakeParts[0].y -= 1;
                 break;
         }
+        //wall
 
-        // wall
         if (this.snakeHead.x >= this.fieldWidth && wallEnabled) {
             this.snakeParts[0].x = 0;
         } else if (this.snakeHead.x > this.fieldWidth && wallEnabled) {
@@ -129,5 +129,14 @@ export class Snake {
 
     getSnakeLength(): number {
         return this.snakeParts.length;
+    }
+
+    collidesWithOtherSnake(otherSnake: this): boolean {
+        for (let i = 0; i < otherSnake.snakeParts.length; i++) {
+            if(this.snakeHead.x === otherSnake.snakeParts[i].x && this.snakeHead.y === otherSnake.snakeParts[i].y){
+                return true
+            }
+        }
+        return false;
     }
 }

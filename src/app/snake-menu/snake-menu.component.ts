@@ -34,17 +34,17 @@ export class SnakeMenuComponent implements OnInit {
         wall: true,
         skillLevel: 10,
         playerCount: 1,
-        speed: 0.4
+        speed: 0.25
       };
     }
 
     this.configurationData.levelWidth = this.service.data.levelWidth.toString();
     this.configurationData.levelHeight = this.service.data.levelHeight.toString();
     this.configurationData.snakeLength = this.service.data.snakeLength.toString();
-    this.configurationData.wall = this.service.data.wall.toString();
     this.configurationData.skillLevel = this.service.data.skillLevel.toString();
     this.configurationData.playerCount = this.service.data.playerCount.toString();
-    this.configurationData.speed = this.service.data.speed.toString.toString();
+    this.configurationData.speed = this.service.data.speed.toString();
+    this.configurationData.wall = this.service.data.wall ? "checked" : "unchecked";
   }
 
   startGame() {

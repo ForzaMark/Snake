@@ -87,9 +87,16 @@ export class SnakeGame {
             }
 
             if (this.multiSnake[i].collidesWithItself()) {
-                
-                
                 return false;
+            }
+            //refactoring
+            for (let j = 0; j < this.multiSnake.length; j++) {
+                if(this.multiSnake[j] !== this.multiSnake[i]){
+                    if (this.multiSnake[i].collidesWithOtherSnake(this.multiSnake[j])) {
+                        return false;
+                    }
+                }
+                
             }
             
         }
