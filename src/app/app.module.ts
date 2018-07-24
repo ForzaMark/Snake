@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import {FormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { SnakeGameComponent } from './snake-game/snake-game.component';
@@ -16,7 +16,7 @@ import { AppRoutingModule } from './/app-routing.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

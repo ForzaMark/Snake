@@ -1,17 +1,35 @@
 
 <h1>Snake-Game</h1>
 <p>Levelgröße : </p><input
-                    #width type="number" value="20" required min="7"
-                    max="50">x
-                    
-                    <input #height type="number" value="15" required min="7" max="50">
-<p>Schlangengröße : </p><input #snakelength type="number" value="1" required min="1" max="6">
+                    #LevelWidth="ngModel" type="number" value="20" required min="7"
+                    max="50" maxlength="2" minlength="1" [(ngModel)]="defaultWidth" >
+                    <input #LevelHeight="ngModel" type="number" value="15" required 
+                    min="7" max="50" maxlength="2" minlength="1" 
+                    [(ngModel)]="defaultHeight">
+<p>Schlangengröße : </p><input #snakelength="ngModel" 
+                        type="number" value="1" required min="1" max="6"
+                        maxlength="1" minlength="1" [(ngModel)]="defaultSnakeLength">
+
+<p style="color: 'red';" *ngIf="LevelWidth.invalid || LevelHeight.invalid || snakelength.invalid">Bitte prüfe deinen Input</p>
 <p>Durch Wände laufen ? (Auswählen für Ja!)</p>
 <input #wall type="checkbox" checked>
+
+Schwierigkeitsgrad : 
+<select #SkillLevel>
+    <option value="10">Einfach</option>
+    <option value="5">Mittel</option>
+    <option value="2">Schwer</option>
+</select>
+
 <p #multiplayer >Zweiter Spieler ? (Auswählen für ja!)</p>
-<!-- <select #mulitplayer>
-    <option value="single">SinglePlayer</option>
-    <option value="multi">MultiPlayer</option>
-</select> -->
-<p>Press Button to Start</p>
-<button routerLink =  '/snake-game' (click) = "startGame(width.value,height.value,snakelength.value,wall.checked,multiplayer.value)">Click !</button>
+<select>
+    <option value="SinglePlayer">Singleplayer</option>
+    <option value="Multiplayer">Multiplayer</option>
+</select>
+<p style="color: red;" *ngIf="LevelWidth.invalid || LevelHeight.invalid || snakelength.invalid">Bitte prüfe deinen Input</p>
+
+<p *ngIf="LevelWidth.valid && LevelHeight.valid && snakelength.valid">Press Button to Start</p>
+<button *ngIf="LevelWidth.valid && LevelHeight.valid && snakelength.valid" 
+        routerLink =  '/snake-game' 
+        (click) = "startGame(LevelWidth.value,LevelHeight.value,snakelength.value,wall.checked,SkillLevel.value,multiplayer.value)">
+        Click !</button>

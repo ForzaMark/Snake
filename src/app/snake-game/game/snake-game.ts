@@ -14,12 +14,15 @@ export class SnakeGame {
     private level: Level;
     private snakeSize = 1;
     private wallenabled = 1;
+    private SkillLevel = 10;
 
     constructor(private screenWidth: number, private screenHeight: number, ConfigData: number[]) {
         this.fieldWidth = ConfigData[0];
         this.fieldHeight = ConfigData[1];
         this.snakeSize = ConfigData[2];
         this.wallenabled = ConfigData[3];
+        this.SkillLevel = ConfigData[4];
+
         this.cellWidth = screenWidth / this.fieldWidth;
         this.cellHeight = screenHeight / this.fieldHeight;
 
@@ -38,9 +41,8 @@ export class SnakeGame {
         if (this.snake.isOnSnake(this.food)) {
             this.snake.grow();
             this.food.createNewFood(this.snake.getSnakeParts());
-
-            if ((this.snake.getSnakeParts().length % 5 === 0)
-                || this.snake.getSnakeParts().length / 10 === this.snakeSize  / 10 + 0.1) {
+            if ((this.snake.getSnakeParts().length % this.SkillLevel === 0)
+                || this.snake.getSnakeParts().length === parseInt(this.snakeSize) + 1) {
                 this.level.addObstacle(this.snake.getSnakeParts(), this.food);
             } else {
                 this.level.changeObstaclePosition();

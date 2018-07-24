@@ -9,7 +9,7 @@ export class ConfigDataService {
   private wallEnabled = 0;
   constructor() { }
 
-  changeData(width: number, height: number, snakelength: number, wall: boolean, multiplayer: number): void {
+  changeData(width: number, height: number, snakelength: number, wall: boolean, skillLevel: number, multiplayer: number): void {
      if (!width) {
        width = 20;
      }
