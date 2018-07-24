@@ -6,9 +6,6 @@ import { SnakeGameConfiguration } from './snake-game-configuration';
 
 export class SnakeGame {
     private elapsedTimeSeconds: number;
-
-    private firstSnake: Snake;
-    private secondSnake: Snake;
     private food: Food;
     private fieldWidth = 20;
     private fieldHeight = 15;
@@ -19,7 +16,7 @@ export class SnakeGame {
     private snakeSize = 1;
     private wallenabled :boolean;
     private SkillLevel = 10;
-    private multiplayer: number;
+    private playerCount: number;
     private speed: number;
     score: number;
     private multiSnake: Snake[] = [];
@@ -31,21 +28,24 @@ export class SnakeGame {
         this.snakeSize = configuration.snakeLength;
         this.wallenabled = configuration.wall;
         this.SkillLevel = configuration.skillLevel;
-        this.multiplayer = configuration.playerCount;
+        this.playerCount = configuration.playerCount;
         this.speed = configuration.speed;
 
         this.cellWidth = screenWidth / this.fieldWidth;
         this.cellHeight = screenHeight / this.fieldHeight;
+        
+        
+        for (let i = 0; i < this.playerCount; i++) {
+            this.multiSnake.push(new Snake(this.fieldWidth,this.fieldHeight,this.snakeSize,i*2));    
+        }
 
-        this.firstSnake = new Snake(this.fieldWidth, this.fieldHeight, this.snakeSize,4);
-        this.secondSnake = new Snake(this.fieldWidth, this.fieldHeight, this.snakeSize,2);
-        this.multiSnake.push(this.firstSnake,this.secondSnake);
-
+        
         this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
 
         this.food = new Food(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
         this.level = new Level(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
-        this.food.createNewFood(this.firstSnake);
+        this.food.createNewFood(this.multiSnake[0]);
+
 
         this.elapsedTimeSeconds = 0;
     }
@@ -61,12 +61,10 @@ export class SnakeGame {
             this.elapsedTimeSeconds -= updateThresholdSeconds;
         }
 
-        for(let i = 0; i < 2; i++) {
+        for(let i = 0; i < this.multiSnake.length; i++) {
             
             
             if (!this.multiSnake[i].move(this.wallenabled)) {
-               
-                
                 return false;
             }
             if (this.multiSnake[i].isOnSnake(this.food)) {
@@ -107,14 +105,17 @@ export class SnakeGame {
     draw(context: CanvasRenderingContext2D): void {
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
         this.grid.draw(context);
-        this.firstSnake.draw(context, this.cellWidth, this.cellHeight);
-        this.secondSnake.draw(context, this.cellWidth, this.cellHeight)
+        for (let i = 0; i < this.multiSnake.length; i++) {
+            this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight)
+        }
         this.food.draw(context);
         this.level.draw(context);
     }
 
     onKeyUp(key: KeyboardEvent): void {
-        this.firstSnake.onkey(key,0);
-        this.secondSnake.onkey(key,1)
+
+        for (let i = 0; i < this.multiSnake.length; i++) {
+            this.multiSnake[i].onkey(key,i)   
+        }
     }
 }

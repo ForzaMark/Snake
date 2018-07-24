@@ -33,7 +33,7 @@ Geschwindigkeit :
 
 <p>Zweiter Spieler ? (Auswählen für ja!)</p>
 <select #playerCount="ngModel" [(ngModel)]="configurationData.multiplayer" required>
-    <option value="1">Singleplayer</option>
+    <option value="2">Singleplayer</option>
     <option value="2">Multiplayer</option>
 </select>
 <p style="color: red;" *ngIf="LevelWidth.invalid || LevelHeight.invalid || snakelength.invalid">Bitte prüfe deinen Input</p>
