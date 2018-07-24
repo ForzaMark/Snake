@@ -79,7 +79,7 @@ export class Snake {
     }
 
     onkey(key: KeyboardEvent, x: number): void {
-        console.log(key.code + " " + x);
+        
         
         if(x === 0){
             if (key.code === 'ArrowRight' && this.direction !== Direction.left) {

@@ -4,5 +4,6 @@ export class SnakeGameConfiguration {
     snakeLength: number;
     wall: boolean;
     skillLevel: number;
-    multiplayer: boolean;
+    playerCount: number;
+    speed: number;
 }

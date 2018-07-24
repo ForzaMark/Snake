@@ -5,7 +5,7 @@ import { SnakeGameConfiguration } from './snake-game/game/snake-game-configurati
   providedIn: 'root'
 })
 export class ConfigDataService {
-
-  data: SnakeGameConfiguration = new SnakeGameConfiguration();
+  data: SnakeGameConfiguration;
+  
   constructor() { }
 }

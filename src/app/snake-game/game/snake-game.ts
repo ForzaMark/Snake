@@ -5,6 +5,8 @@ import { Level } from './Level';
 import { SnakeGameConfiguration } from './snake-game-configuration';
 
 export class SnakeGame {
+    private elapsedTimeSeconds: number;
+
     private firstSnake: Snake;
     private secondSnake: Snake;
     private food: Food;
@@ -17,7 +19,8 @@ export class SnakeGame {
     private snakeSize = 1;
     private wallenabled :boolean;
     private SkillLevel = 10;
-    private multiplayer: boolean;
+    private multiplayer: number;
+    private speed: number;
     score: number;
     private multiSnake: Snake[] = [];
 
@@ -28,7 +31,8 @@ export class SnakeGame {
         this.snakeSize = configuration.snakeLength;
         this.wallenabled = configuration.wall;
         this.SkillLevel = configuration.skillLevel;
-        this.multiplayer = configuration.multiplayer;
+        this.multiplayer = configuration.playerCount;
+        this.speed = configuration.speed;
 
         this.cellWidth = screenWidth / this.fieldWidth;
         this.cellHeight = screenHeight / this.fieldHeight;
@@ -42,9 +46,20 @@ export class SnakeGame {
         this.food = new Food(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
         this.level = new Level(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
         this.food.createNewFood(this.firstSnake);
+
+        this.elapsedTimeSeconds = 0;
     }
 
-    update(): boolean {
+    update(deltaSeconds: number): boolean {
+        const updateThresholdSeconds = this.speed;
+
+        this.elapsedTimeSeconds += deltaSeconds;
+        if (this.elapsedTimeSeconds < updateThresholdSeconds) {
+            return true;
+        }
+        else {
+            this.elapsedTimeSeconds -= updateThresholdSeconds;
+        }
 
         for(let i = 0; i < 2; i++) {
             
@@ -94,7 +109,5 @@ export class SnakeGame {
     onKeyUp(key: KeyboardEvent): void {
         this.firstSnake.onkey(key,0);
         this.secondSnake.onkey(key,1)
-        console.log(key);
-        
     }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { ConfigDataService } from '../config-data.service';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { SnakeGameConfiguration } from '../snake-game/game/snake-game-configuration';
 
 export class SnakeGameConfigurationData {
   levelWidth: string;
@@ -8,7 +9,8 @@ export class SnakeGameConfigurationData {
   snakeLength: string;
   wall: string;
   skillLevel: string;
-  multiplayer: string; 
+  playerCount: string;
+  speed: string;
 }
 
 @Component({
@@ -20,36 +22,46 @@ export class SnakeMenuComponent implements OnInit {
 
   configurationData: SnakeGameConfigurationData = new SnakeGameConfigurationData();
 
-  constructor(private service: ConfigDataService) { 
-    this.configurationData.levelWidth = '20';
-    this.configurationData.levelHeight = '15';
-    this.configurationData.snakeLength = '1';
-    this.configurationData.wall = 'checked';
-    this.configurationData.skillLevel = '10';
-    this.configurationData.multiplayer = 'SinglePlayer';
+  constructor(private service: ConfigDataService, private router: Router) { 
+  }
 
+  ngOnInit() {
+    if (!this.service.data) {
+      this.service.data = {
+        levelWidth: 20,
+        levelHeight: 15,
+        snakeLength: 1,
+        wall: true,
+        skillLevel: 10,
+        playerCount: 1,
+        speed: 0.4
+      };
+    }
+
+    this.configurationData.levelWidth = this.service.data.levelWidth.toString();
+    this.configurationData.levelHeight = this.service.data.levelHeight.toString();
+    this.configurationData.snakeLength = this.service.data.snakeLength.toString();
+    this.configurationData.wall = this.service.data.wall.toString();
+    this.configurationData.skillLevel = this.service.data.skillLevel.toString();
+    this.configurationData.playerCount = this.service.data.playerCount.toString();
+    this.configurationData.speed = this.service.data.speed.toString.toString();
   }
 
   startGame() {
     this.service.data.levelWidth = parseInt(this.configurationData.levelWidth);
     this.service.data.levelHeight = parseInt(this.configurationData.levelHeight);
     this.service.data.snakeLength = parseInt(this.configurationData.snakeLength);
-    this.service.data.skillLevel = parseInt(this.configurationData.skillLevel)
+    this.service.data.skillLevel = parseInt(this.configurationData.skillLevel);
+    this.service.data.playerCount = parseInt(this.configurationData.playerCount);
+    this.service.data.speed = parseFloat(this.configurationData.speed);
 
-    if(this.configurationData.wall === "checked"){
+    if(this.configurationData.wall === "checked") {
       this.service.data.wall = true;
-    }else {
+    } else {
       this.service.data.wall = false
     }
-    if (this.configurationData.multiplayer === 'SinglePlayer') {
-      this.service.data.multiplayer = false;
-    } else {
-      this.service.data.multiplayer = true;
-    }
+    this.router.navigate(['/snake-game']);
   }
 
-
-  ngOnInit() {
-  }
-
+  
 }

@@ -1,6 +1,8 @@
 <h1>Snake-Game</h1>
-<p>Levelgröße : </p><input
-                    #LevelWidth="ngModel" type="number" value="20" required min="7"
+<p>Levelgröße : </p>
+<input #LevelWidth="ngModel" 
+        type="number" 
+        value="20" required min="7"
                     max="50" maxlength="2" minlength="1" [(ngModel)]="configurationData.levelWidth" >
                     <input #LevelHeight="ngModel" type="number" value="15" required 
                     min="7" max="50" maxlength="2" minlength="1" 
@@ -9,27 +11,34 @@
                         type="number" value="1" required min="1" max="6"
                         maxlength="1" minlength="1" [(ngModel)]="configurationData.snakeLength">
 
-<p style="color: 'red';" *ngIf="configurationData.levelWidth.invalid || configurationData.levelHeight.invalid || configurationData.snakeLength.invalid">Bitte prüfe deinen Input</p>
+
 <p>Durch Wände laufen ? (Auswählen für Ja!)</p>
-<input #wall="ngModel" [(ngModel)]="configurationData.wall" type="checkbox" checked>
+<input #wall="ngModel" [(ngModel)]="configurationData.wall" type="checkbox" checked required>
 <br>
 
 Schwierigkeitsgrad : 
-<select #SkillLevel="ngModel" [(ngModel)]="configurationData.skillLevel">
+<select #SkillLevel="ngModel" [(ngModel)]="configurationData.skillLevel" required>
     <option value="10">Einfach</option>
     <option value="5">Mittel</option>
     <option value="2">Schwer</option>
 </select>
 
+Geschwindigkeit : 
+<select #Speed="ngModel" [(ngModel)]="configurationData.speed" required>
+    <option value="0.5">Langsam</option>
+    <option value="0.25">Mittel</option>
+    <option value="0.1">Schnell</option>
+</select>
+
+
 <p>Zweiter Spieler ? (Auswählen für ja!)</p>
-<select #multiplayer="ngModel" [(ngModel)]="configurationData.multiplayer">
-    <option value="SinglePlayer">Singleplayer</option>
-    <option value="Multiplayer">Multiplayer</option>
+<select #multiplayer="ngModel" [(ngModel)]="configurationData.multiplayer" required>
+    <option value="1">Singleplayer</option>
+    <option value="2">Multiplayer</option>
 </select>
 <p style="color: red;" *ngIf="LevelWidth.invalid || LevelHeight.invalid || snakelength.invalid">Bitte prüfe deinen Input</p>
 
 <p *ngIf="LevelWidth.valid && LevelHeight.valid && snakelength.valid">Press Button to Start</p>
-<button *ngIf="LevelWidth.valid && LevelHeight.valid && snakelength.valid" 
-        routerLink =  '/snake-game' 
-        (click) = "startGame()">
+<button *ngIf="LevelWidth.valid && LevelHeight.valid && snakelength.valid"  
+        (click)="startGame()">
         Click !</button> 
