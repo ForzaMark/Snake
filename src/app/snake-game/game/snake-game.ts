@@ -14,7 +14,7 @@ export class SnakeGame {
     private grid: SnakeGrid;
     private level: Level;
     private snakeSize = 1;
-    private wallenabled = 1;
+    private wallenabled :boolean;
     private SkillLevel = 10;
     private multiplayer: boolean;
     score: number;
@@ -24,7 +24,7 @@ export class SnakeGame {
         this.fieldWidth = configuration.levelWidth;
         this.fieldHeight = configuration.levelHeight;
         this.snakeSize = configuration.snakeLength;
-        //this.wallenabled = configuration.wall;
+        this.wallenabled = configuration.wall;
         this.SkillLevel = configuration.skillLevel;
         this.multiplayer = configuration.multiplayer;
 

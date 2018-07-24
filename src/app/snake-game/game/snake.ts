@@ -18,7 +18,7 @@ export class Snake {
         this.snakeParts.push(new SnakePart(x, y));
     }
 
-    move(wallEnabled: number): boolean {
+    move(wallEnabled: boolean): boolean {
         // sort
         for (let i = this.snakeParts.length - 1 ; i > 0; i--) {
             this.snakeParts[i].x = this.snakeParts[i - 1].x;
@@ -42,25 +42,25 @@ export class Snake {
         }
 
         // wall
-        if (this.snakeHead.x >= this.fieldWidth && wallEnabled === 1) {
+        if (this.snakeHead.x >= this.fieldWidth && wallEnabled) {
             console.log('jwetzt');
             this.snakeParts[0].x = 0;
-        } else if (this.snakeHead.x > this.fieldWidth && wallEnabled === 0) {
+        } else if (this.snakeHead.x > this.fieldWidth && wallEnabled) {
             return false;
         }
-        if (this.snakeHead.x < 0 && wallEnabled === 1) {
+        if (this.snakeHead.x < 0 && wallEnabled) {
             this.snakeParts[0].x = this.fieldWidth;
-        } else if (this.snakeHead.x < -1 && wallEnabled === 0) {
+        } else if (this.snakeHead.x < -1 && wallEnabled) {
             return false;
         }
-        if (this.snakeHead.y >= this.fieldHeight && wallEnabled === 1) {
+        if (this.snakeHead.y >= this.fieldHeight && wallEnabled) {
             this.snakeParts[0].y = 0;
-        } else if (this.snakeHead.y > this.fieldHeight && wallEnabled === 0) {
+        } else if (this.snakeHead.y > this.fieldHeight && wallEnabled) {
             return false;
         }
-        if (this.snakeHead.y < 0 && wallEnabled === 1) {
+        if (this.snakeHead.y < 0 && wallEnabled) {
             this.snakeParts[0].y = this.fieldHeight;
-        } else if (this.snakeHead.y < -1 && wallEnabled === 0) {
+        } else if (this.snakeHead.y < -1 && wallEnabled) {
             return false;
         }
         return true;

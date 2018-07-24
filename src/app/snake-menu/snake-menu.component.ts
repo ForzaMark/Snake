@@ -31,16 +31,21 @@ export class SnakeMenuComponent implements OnInit {
   }
 
   startGame() {
-
-    console.log(this.configurationData.levelHeight);
     this.service.data.levelWidth = parseInt(this.configurationData.levelWidth);
     this.service.data.levelHeight = parseInt(this.configurationData.levelHeight);
     this.service.data.snakeLength = parseInt(this.configurationData.snakeLength);
-    
-    
-    
+    this.service.data.skillLevel = parseInt(this.configurationData.skillLevel)
 
-
+    if(this.configurationData.wall === "checked"){
+      this.service.data.wall = true;
+    }else {
+      this.service.data.wall = false
+    }
+    if (this.configurationData.multiplayer === 'SinglePlayer') {
+      this.service.data.multiplayer = false;
+    } else {
+      this.service.data.multiplayer = true;
+    }
   }
 
 
