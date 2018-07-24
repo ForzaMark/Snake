@@ -1,4 +1,3 @@
-
 <h1>Snake-Game</h1>
 <p>Levelgröße : </p><input
                     #LevelWidth="ngModel" type="number" value="20" required min="7"
@@ -33,4 +32,4 @@ Schwierigkeitsgrad :
 <button *ngIf="LevelWidth.valid && LevelHeight.valid && snakelength.valid" 
         routerLink =  '/snake-game' 
         (click) = "startGame()">
-        Click !</button>
+        Click !</button> 
