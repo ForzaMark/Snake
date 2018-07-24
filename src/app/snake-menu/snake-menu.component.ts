@@ -2,22 +2,45 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { ConfigDataService } from '../config-data.service';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+export class SnakeGameConfigurationData {
+  levelWidth: string;
+  levelHeight: string;
+  snakeLength: string;
+  wall: string;
+  skillLevel: string;
+  multiplayer: string; 
+}
+
 @Component({
   selector: 'app-snake-menu',
   templateUrl: './snake-menu.component.html',
   styleUrls: ['./snake-menu.component.css']
 })
-
 export class SnakeMenuComponent implements OnInit {
 
-  defaultWidth = '20';
-  defaultHeight = '15';
-  defaultSnakeLength = '1';
+  configurationData: SnakeGameConfigurationData = new SnakeGameConfigurationData();
 
-  constructor(private data: ConfigDataService) { }
+  constructor(private service: ConfigDataService) { 
+    this.configurationData.levelWidth = '20';
+    this.configurationData.levelHeight = '15';
+    this.configurationData.snakeLength = '1';
+    this.configurationData.wall = 'checked';
+    this.configurationData.skillLevel = '10';
+    this.configurationData.multiplayer = 'SinglePlayer';
 
-  startGame(width: number, height: number, snakelength: number, wall: boolean, SkillLevel: number, multiplayer: number) {
-    this.data.changeData(width, height, snakelength, wall, SkillLevel, multiplayer);
+  }
+
+  startGame() {
+
+    console.log(this.configurationData.levelHeight);
+    this.service.data.levelWidth = parseInt(this.configurationData.levelWidth);
+    this.service.data.levelHeight = parseInt(this.configurationData.levelHeight);
+    this.service.data.snakeLength = parseInt(this.configurationData.snakeLength);
+    
+    
+    
+
+
   }
 
 

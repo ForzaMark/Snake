@@ -14,12 +14,11 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
   private DrawTimer: any;
   private SpeedTimer: any;
   private Score = 0;
-  private ConfigData: number[] = [];
   message: string;
 
   constructor(
     private location: Location,
-    private data: ConfigDataService
+    private configData: ConfigDataService
   ) { }
 
   ngAfterViewInit(): void {
@@ -28,14 +27,15 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
     const speed = 7;
     const screenWidth = 800;
     const screenHeight = 600;
-    this.ConfigData =  this.data.getData();
 
     mainCanvas.width = screenWidth;
     mainCanvas.height = screenHeight;
 
     const context = mainCanvas.getContext('2d');
+    console.log(this.configData.data);
+    
 
-    const snakeGame = new SnakeGame(screenWidth, screenHeight, this.ConfigData);
+    const snakeGame = new SnakeGame(screenWidth, screenHeight, this.configData.data);
 
     document.addEventListener('keyup', e => snakeGame.onKeyUp(e as KeyboardEvent));
 
@@ -50,7 +50,7 @@ export class SnakeGameComponent implements AfterViewInit, OnDestroy {
       } else {
           this.location.back();
       }
-      this.Score = snakeGame.getLength();
+      this.Score = snakeGame.score;
     }, 1000 / speed);
   }
 

@@ -1,6 +1,7 @@
-import { SnakePart } from './snake-part';
+import { Snake } from './snake';
+import { CellObject } from './cell-object';
 
-export class Food {
+export class Food implements CellObject {
     x: number;
     y: number;
 
@@ -9,19 +10,12 @@ export class Food {
                 private fieldWidth: number,
                 private fieldHeight: number) {}
 
-    createNewFood(Snakeparts: SnakePart[]): void {
-
-        this.x = undefined;
-        while (!this.x) {
-            const propx = Math.floor(Math.random() * this.fieldWidth);
-            const propy = Math.floor(Math.random() * this.fieldHeight);
-
-            for (let i = 0; i < Snakeparts.length; i++) {
-                if (propx !== Snakeparts[i].x && propy !== Snakeparts[i].y) {
-                        this.x = propx;
-                        this.y = propy;
-                }
-            }
+    createNewFood(snake: Snake): void {
+        let isOnSnake = true;
+        while (isOnSnake) {
+            this.x = Math.floor(Math.random() * this.fieldWidth);
+            this.y = Math.floor(Math.random() * this.fieldHeight);
+            isOnSnake = snake.isOnSnake(this);
         }
     }
 

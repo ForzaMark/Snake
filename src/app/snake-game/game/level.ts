@@ -1,13 +1,9 @@
-import { SnakePart } from './snake-part';
+import { Snake } from './snake';
 import { Food } from './food';
-import { CellObject } from './cell-object';
-import { Obstacles } from './obstacles';
+import { Obstacle } from './obstacle';
 
-
-export class Level implements CellObject {
-    x: number;
-    y: number;
-    obstacles: Obstacles[] = [];
+export class Level {
+    private obstacles: Obstacle[] = [];
 
     constructor(private cellWidth: number,
         private cellHeight: number,
@@ -15,23 +11,17 @@ export class Level implements CellObject {
         private fieldHeight: number) {
         }
 
-    addObstacle(SnakeParts: SnakePart[], food: Food): void {
-        this.x = undefined;
-        while (!this.x) {
+    addObstacle(snake: Snake, food: Food): void {
+        let isOnSnakeOrFood = true;
+        let obstacle: Obstacle;
+        while (isOnSnakeOrFood) {
+
             const propx = Math.floor(Math.random() * this.fieldWidth);
             const propy = Math.floor(Math.random() * this.fieldHeight);
-
-            for (let i = 0; i < SnakeParts.length; i++) {
-                if (propx !== food.getx()
-                    && propx !== SnakeParts[i].x
-                    && propy !== food.gety()
-                    && propy !== SnakeParts[i].y) {
-                        this.x = propx;
-                        this.y = propy;
-                }
-            }
+            obstacle = new Obstacle(propx, propy);
+            isOnSnakeOrFood = snake.isOnSnake(obstacle) || propx === food.getx() && propy === food.gety();
         }
-        this.obstacles.push(new Obstacles(this.x, this.y));
+        this.obstacles.push(obstacle);
     }
 
     draw(context: CanvasRenderingContext2D): void {
@@ -42,34 +32,21 @@ export class Level implements CellObject {
         context.fillStyle = 'black';
     }
 
-    getx(): number {
-        return this.x;
-    }
-
-    gety(): number {
-        return this.y;
-    }
-    getObstacles(): Obstacles[] {
-        return this.obstacles;
-    }
-
-    changeObstaclePosition(SnakeParts: SnakePart[], food: Food): void {
+    collidesWith(snake: Snake): boolean {
         for (let i = 0; i < this.obstacles.length; i++) {
-            this.x = undefined;
-        while (!this.x) {
-            const propx = Math.floor(Math.random() * this.fieldWidth);
-            const propy = Math.floor(Math.random() * this.fieldHeight);
-
-            for (let j = 0; i < SnakeParts.length; j++) {
-                if (propx !== food.getx()
-                    && propx !== SnakeParts[i].x
-                    && propy !== food.gety()
-                    && propy !== SnakeParts[i].y) {
-                        this.x = propx;
-                        this.y = propy;
-                }
+            if (snake.isOnSnake(this.obstacles[i])) {
+                return true;
             }
         }
+        return false;
+    }
+
+    changeObstaclePosition(snake: Snake, food: Food): void {
+        let obstacleCounter = this.obstacles.length;
+        this.obstacles = [];
+
+        for (let i = 0; i < obstacleCounter; i++) {
+            this.addObstacle(snake, food);
         }
     }
 }

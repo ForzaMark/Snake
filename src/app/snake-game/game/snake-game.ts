@@ -2,6 +2,7 @@ import { Food } from './food';
 import { Snake } from './snake';
 import { SnakeGrid } from './grid';
 import { Level } from './Level';
+import { SnakeGameConfiguration } from './snake-game-configuration';
 
 export class SnakeGame {
     private snake: Snake;
@@ -15,13 +16,17 @@ export class SnakeGame {
     private snakeSize = 1;
     private wallenabled = 1;
     private SkillLevel = 10;
+    private multiplayer: boolean;
+    score: number;
 
-    constructor(private screenWidth: number, private screenHeight: number, ConfigData: number[]) {
-        this.fieldWidth = ConfigData[0];
-        this.fieldHeight = ConfigData[1];
-        this.snakeSize = ConfigData[2];
-        this.wallenabled = ConfigData[3];
-        this.SkillLevel = ConfigData[4];
+    constructor(private screenWidth: number, private screenHeight: number, private configuration: SnakeGameConfiguration) {
+        
+        this.fieldWidth = configuration.levelWidth;
+        this.fieldHeight = configuration.levelHeight;
+        this.snakeSize = configuration.snakeLength;
+        //this.wallenabled = configuration.wall;
+        this.SkillLevel = configuration.skillLevel;
+        this.multiplayer = configuration.multiplayer;
 
         this.cellWidth = screenWidth / this.fieldWidth;
         this.cellHeight = screenHeight / this.fieldHeight;
@@ -31,7 +36,7 @@ export class SnakeGame {
 
         this.food = new Food(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
         this.level = new Level(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
-        this.food.createNewFood(this.snake.getSnakeParts());
+        this.food.createNewFood(this.snake);
     }
 
     update(): boolean {
@@ -39,25 +44,23 @@ export class SnakeGame {
             return false;
         }
         if (this.snake.isOnSnake(this.food)) {
+            this.score++;
             this.snake.grow();
-            this.food.createNewFood(this.snake.getSnakeParts());
-            if ((this.snake.getSnakeParts().length % this.SkillLevel === 0)
-                || this.snake.getSnakeParts().length === parseInt(this.snakeSize) + 1) {
-                this.level.addObstacle(this.snake.getSnakeParts(), this.food);
+            this.food.createNewFood(this.snake);
+            if ((this.snake.getSnakeLength() % this.SkillLevel === 0)
+                || this.snake.getSnakeLength() === this.snakeSize + 1) {
+                this.level.addObstacle(this.snake, this.food);
             } else {
-                this.level.changeObstaclePosition(this.snake.getSnakeParts(), this.food);
-            }
-        }
-        for (let i = 0; i < this.level.getObstacles().length; i++) {
-            if (this.snake.isOnSnake(this.level.getObstacles()[i])) {
-                return false;
+                this.level.changeObstaclePosition(this.snake, this.food);
             }
         }
 
-        for (let i = 1; i < this.snake.getSnakeParts().length; i++) {
-            if ((this.snake.isOnSnake(this.snake.getSnakeParts()[i]) && this.snake.getSnakeParts().length > 2)) {
-                return false;
-            }
+        if (this.level.collidesWith(this.snake)) {
+            return false;
+        }
+
+        if (this.snake.collidesWithItself()) {
+            return false;
         }
         return true;
     }
@@ -72,8 +75,5 @@ export class SnakeGame {
 
     onKeyUp(key: KeyboardEvent): void {
         this.snake.onkey(key);
-    }
-    getLength(): number {
-        return this.snake.getSnakeParts().length;
     }
 }

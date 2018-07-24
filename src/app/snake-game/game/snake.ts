@@ -92,14 +92,24 @@ export class Snake {
             this.direction = Direction.left;
         }
     }
-    getSnakeParts(): SnakePart[] {
-        return this.snakeParts;
-    }
-    isOnSnake(cellObject: CellObject): Boolean {
-        for (let i = 0; i < this.getSnakeParts().length; i++) {
+    isOnSnake(cellObject: CellObject): boolean {
+        for (let i = 0; i < this.snakeParts.length; i++) {
             if (cellObject.x === this.snakeHead.x && cellObject.y === this.snakeHead.y) {
                 return true;
             } else { return false; }
         }
+    }
+
+    collidesWithItself(): boolean {
+        for (let i = 1; i < this.snakeParts.length; i++) {
+            if ((this.isOnSnake(this.snakeParts[i]) && this.snakeParts.length > 2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    getSnakeLength(): number {
+        return this.snakeParts.length;
     }
 }
