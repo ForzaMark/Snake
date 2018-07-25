@@ -1,7 +1,6 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { ConfigDataService } from '../config-data.service';
 import { Router } from '@angular/router';
-import { SnakeGameConfiguration } from '../snake-game/game/snake-game-configuration';
 
 export class SnakeGameConfigurationData {
   levelWidth: string;

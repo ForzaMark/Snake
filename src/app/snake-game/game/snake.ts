@@ -9,7 +9,7 @@ export class Snake {
 
     constructor(private fieldWidth: number, private fieldHeight: number, snakeSize: number, startPos:number) {
         for (let i = 0; i < snakeSize; i++) {
-            this.addPart(startPos, 0);
+            this.addPart(0, startPos);
         }
         this.snakeHead = this.snakeParts[0];
         

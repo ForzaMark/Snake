@@ -18,7 +18,7 @@ export class SnakeGame {
     private SkillLevel = 10;
     private playerCount: number;
     private speed: number;
-    score: number;
+    score: number[] = [];
     private multiSnake: Snake[] = [];
 
     constructor(private screenWidth: number, private screenHeight: number, private configuration: SnakeGameConfiguration) {
@@ -34,10 +34,12 @@ export class SnakeGame {
         this.cellWidth = screenWidth / this.fieldWidth;
         this.cellHeight = screenHeight / this.fieldHeight;
         
-        
         for (let i = 0; i < this.playerCount; i++) {
-            this.multiSnake.push(new Snake(this.fieldWidth,this.fieldHeight,this.snakeSize,i*2));    
+            this.multiSnake.push(new Snake(this.fieldWidth,this.fieldHeight,this.snakeSize,i*2)); 
+            this.score[i] = this.snakeSize   
         }
+
+        
 
         
         this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
@@ -68,7 +70,7 @@ export class SnakeGame {
                 return false;
             }
             if (this.multiSnake[i].isOnSnake(this.food)) {
-                this.score++;
+                this.score[i]++;
                 this.multiSnake[i].grow();
                 this.food.createNewFood(this.multiSnake[i]);
                 if ((this.multiSnake[i].getSnakeLength() % this.SkillLevel === 0)
@@ -80,17 +82,19 @@ export class SnakeGame {
             }
 
             if (this.level.collidesWith(this.multiSnake[i])) {
-                         
+                alert("Beendet : Mit Hinderniss kollidiert ---> Score : "+ this.score[i]);         
                 return false;
             }
 
             if (this.multiSnake[i].collidesWithItself()) {
+                alert("Beendet : Mit sich selbst kollidiert ---> Score : "+ this.score[i]);        
                 return false;
             }
             //refactoring
             for (let j = 0; j < this.multiSnake.length; j++) {
                 if(this.multiSnake[j] !== this.multiSnake[i]){
                     if (this.multiSnake[i].collidesWithOtherSnake(this.multiSnake[j])) {
+                        alert("Beendet : Mit anderer Schlange kollidiert --> Score : "+ this.score[i]);
                         return false;
                     }
                 }

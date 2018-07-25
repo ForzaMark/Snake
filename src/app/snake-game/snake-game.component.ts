@@ -13,7 +13,7 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('mainCanvas') mainCanvasReference: ElementRef;
 
   private drawTimer: any;
-  private Score = 0;
+  Score: number[] = [];
   message: string;
 
   constructor(
@@ -38,6 +38,9 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy {
     const speed = 1;
     const screenWidth = 800;
     const screenHeight = 600;
+    for (let i = 0; i < this.configData.data.snakeLength; i++) {
+      this.Score.push(this.configData.data.snakeLength);
+    }
 
     mainCanvas.width = screenWidth;
     mainCanvas.height = screenHeight;
@@ -47,8 +50,6 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy {
     const snakeGame = new SnakeGame(screenWidth, screenHeight, this.configData.data);
 
     document.addEventListener('keyup', e => snakeGame.onKeyUp(e as KeyboardEvent));
-
-    // drawTimer 30 mal pro sekunde
 
     let lastTimeStamp = Date.now();
 
@@ -60,7 +61,9 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
           this.location.back();
       }
-      this.Score = snakeGame.score;
+      for (let i = 0; i < snakeGame.score.length; i++) {
+        this.Score[i] = snakeGame.score[i];
+      }
         snakeGame.draw(context);
     }, 1000 / framesPerSecond);
   }

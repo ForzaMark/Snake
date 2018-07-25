@@ -1,4 +1,6 @@
 <h1>Snake-Game</h1>
 <canvas #mainCanvas></canvas>
-<h1>Score : {{Score}}</h1>
+<ul>
+    <li *ngFor="let Points of Score">Score : {{Points}}</li>
+</ul>
 <button routerLink= '/snake-menu'>Back to </button>
