@@ -30,7 +30,7 @@ export class SnakeGame {
         this.SkillLevel = configuration.skillLevel;
         this.playerCount = configuration.playerCount;
         this.speed = configuration.speed;
-
+        this.elapsedTimeSeconds = 0;
         this.cellWidth = screenWidth / this.fieldWidth;
         this.cellHeight = screenHeight / this.fieldHeight;
         
@@ -39,17 +39,10 @@ export class SnakeGame {
             this.score[i] = this.snakeSize   
         }
 
-        
-
-        
         this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
-
         this.food = new Food(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
         this.level = new Level(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
         this.food.createNewFood(this.multiSnake[0]);
-
-
-        this.elapsedTimeSeconds = 0;
     }
 
     update(deltaSeconds: number): boolean {
@@ -64,9 +57,8 @@ export class SnakeGame {
         }
 
         for(let i = 0; i < this.multiSnake.length; i++) {
-            
-            
             if (!this.multiSnake[i].move(this.wallenabled)) {
+                alert("Beendet : mit Wand kollidiert --> Score : " + this.score[i]);
                 return false;
             }
             if (this.multiSnake[i].isOnSnake(this.food)) {
@@ -82,21 +74,20 @@ export class SnakeGame {
             }
 
             if (this.level.collidesWith(this.multiSnake[i])) {
-                alert("Beendet : Mit Hinderniss kollidiert ---> Score : "+ this.score[i]);         
+                alert("Beendet : Mit Hinderniss kollidiert ---> Score : " + this.score[i]);         
                 return false;
             }
 
             if (this.multiSnake[i].collidesWithItself()) {
-                alert("Beendet : Mit sich selbst kollidiert ---> Score : "+ this.score[i]);        
+                alert("Beendet : Mit sich selbst kollidiert ---> Score : " + this.score[i]);        
                 return false;
             }
             //refactoring
             for (let j = 0; j < this.multiSnake.length; j++) {
-                if(this.multiSnake[j] !== this.multiSnake[i]){
-                    if (this.multiSnake[i].collidesWithOtherSnake(this.multiSnake[j])) {
+                if(this.multiSnake[j] !== this.multiSnake[i] &&
+                   this.multiSnake[i].collidesWithOtherSnake(this.multiSnake[j])){
                         alert("Beendet : Mit anderer Schlange kollidiert --> Score : "+ this.score[i]);
                         return false;
-                    }
                 }
                 
             }
