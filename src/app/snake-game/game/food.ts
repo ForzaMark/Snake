@@ -25,18 +25,9 @@ export class Food implements CellObject {
                     this.y * this.cellHeight + this.cellHeight / 2,
                     this.cellWidth/2,0,2* Math.PI,false);
                     
-                    
         context.fillStyle = 'green';
         context.fill();
         context.stroke();
         context.fillStyle = 'black';
-    }
-
-    getx(): number {
-        return this.x;
-    }
-
-    gety(): number {
-        return this.y;
     }
 }

@@ -68,6 +68,4 @@ export class SnakeMenuComponent implements OnInit {
     }
     this.router.navigate(['/snake-game']);
   }
-
-  
 }

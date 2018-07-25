@@ -48,8 +48,8 @@ export class Snake {
                 this.snakeParts[0].y -= 1;
                 break;
         }
-        //wall
 
+        //wall
         if (this.snakeHead.x >= this.fieldWidth && wallEnabled) {
             this.snakeParts[0].x = 0;
         } else if (this.snakeHead.x > this.fieldWidth && !wallEnabled) {
@@ -86,9 +86,7 @@ export class Snake {
     }
 
     onkey(key: KeyboardEvent, x: number): void {
-        
-     
-        if(x === 0){
+        if(x === 0) {
             if (key.code === 'ArrowRight' && this.direction !== Direction.left && this.changeCounter[x] === 0) {
             this.direction = Direction.right;
             }
@@ -103,6 +101,7 @@ export class Snake {
             }
             this.changeCounter[x]++;
         }
+
         if (x === 1) {
             if (key.code === 'KeyD' && this.direction !== Direction.left &&  this.changeCounter[x] === 0) {
                 this.direction = Direction.right;
@@ -119,21 +118,13 @@ export class Snake {
                 this.changeCounter[x]++;
         }
     }
+
     isOnSnake(cellObject: CellObject): boolean {
-        for (let i = 0; i < this.snakeParts.length; i++) {
-            if (cellObject.x === this.snakeHead.x && cellObject.y === this.snakeHead.y) {
-                return true;
-            } else { return false; }
-        }
+        return this.isOnSnakeInternal(cellObject, 0);
     }
 
     collidesWithItself(): boolean {
-        for (let i = 1; i < this.snakeParts.length; i++) {
-            if ((this.isOnSnake(this.snakeParts[i]) && this.snakeParts.length > 2)) {
-                return true;
-            }
-        }
-        return false;
+        return this.isOnSnakeInternal(this.snakeHead, 1);
     }
 
     getSnakeLength(): number {
@@ -141,10 +132,13 @@ export class Snake {
     }
 
     collidesWithOtherSnake(otherSnake: this): boolean {
-        for (let i = 0; i < otherSnake.snakeParts.length; i++) {
-            if(this.snakeHead.x === otherSnake.snakeParts[i].x &&
-               this.snakeHead.y === otherSnake.snakeParts[i].y){
-                return true
+        return otherSnake.isOnSnake(this.snakeHead);
+    }
+
+    private isOnSnakeInternal(cellObject: CellObject, startIndex: number) {
+        for (let i = startIndex; i < this.snakeParts.length; i++) {
+            if (cellObject.x === this.snakeParts[i].x && cellObject.y === this.snakeParts[i].y) {
+                return true;
             }
         }
         return false;

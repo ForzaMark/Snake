@@ -1,15 +1,13 @@
 <div class="container">
     <div class="jumbotron">
-        <h1>Let`s Go !</h1>
+        <h1>Let`s Go!</h1>
     </div>
     <div class="panel panel-primary">
-        <div class="panel-heading">Snake-Game</div>
+        <div class="panel-heading">Snake Game</div>
         <div class="panel-body">
-            <div class="container">
-                <canvas #mainCanvas class="text-center"></canvas>
-                <h1 *ngFor="let Points of Score">Score : {{Points}}</h1>
-                <button routerLink= '/snake-menu' class="btn btn-primary btn-block">Back to </button>
-            </div>
+            <canvas #mainCanvas class="text-center"></canvas>
+            <h1 *ngFor="let Points of Score">Score: {{Points}}</h1>
+            <button routerLink='/snake-menu' class="btn btn-primary btn-block">Back to Main Menu</button>
         </div>   
     </div>
 </div>

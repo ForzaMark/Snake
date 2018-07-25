@@ -19,7 +19,7 @@ export class Level {
             const propx = Math.floor(Math.random() * this.fieldWidth);
             const propy = Math.floor(Math.random() * this.fieldHeight);
             obstacle = new Obstacle(propx, propy);
-            isOnSnakeOrFood = snake.isOnSnake(obstacle) || propx === food.getx() && propy === food.gety();
+            isOnSnakeOrFood = snake.isOnSnake(obstacle) || propx === food.x && propy === food.y;
         }
         this.obstacles.push(obstacle);
     }

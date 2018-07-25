@@ -7,8 +7,6 @@ import { SnakeGameConfiguration } from './snake-game-configuration';
 export class SnakeGame {
     private elapsedTimeSeconds: number;
     private food: Food;
-    private fieldWidth = 20;
-    private fieldHeight = 15;
     private cellWidth: number;
     private cellHeight: number;
     private grid: SnakeGrid;
@@ -18,38 +16,35 @@ export class SnakeGame {
     private SkillLevel = 10;
     private playerCount: number;
     private speed: number;
-    score: number[] = [];
     private multiSnake: Snake[] = [];
     private gridenabled: boolean;
 
+    score: number[] = [];
+
     constructor(private screenWidth: number, private screenHeight: number, private configuration: SnakeGameConfiguration) {
-        
-        this.fieldWidth = configuration.levelWidth;
-        this.fieldHeight = configuration.levelHeight;
         this.snakeSize = configuration.snakeLength;
         this.wallenabled = configuration.wall;
         this.SkillLevel = configuration.skillLevel;
         this.playerCount = configuration.playerCount;
         this.speed = configuration.speed;
         this.gridenabled = configuration.grid;
+
         this.elapsedTimeSeconds = 0;
-        this.cellWidth = screenWidth / this.fieldWidth;
-        this.cellHeight = screenHeight / this.fieldHeight;
+        this.cellWidth = screenWidth / this.configuration.levelWidth;
+        this.cellHeight = screenHeight / this.configuration.levelHeight;
         
         for (let i = 0; i < this.playerCount; i++) {
-            this.multiSnake.push(new Snake(this.fieldWidth,this.fieldHeight,this.snakeSize,i)); 
+            this.multiSnake.push(new Snake(this.configuration.levelWidth,this.configuration.levelHeight,this.snakeSize,i)); 
             this.score[i] = this.snakeSize   
         }
 
-        this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
-        this.food = new Food(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
-        this.level = new Level(this.cellWidth, this.cellHeight, this.fieldWidth, this.fieldHeight);
+        this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.configuration.levelWidth, this.configuration.levelHeight);
+        this.food = new Food(this.cellWidth, this.cellHeight, this.configuration.levelWidth, this.configuration.levelHeight);
+        this.level = new Level(this.cellWidth, this.cellHeight, this.configuration.levelWidth, this.configuration.levelHeight);
         this.food.createNewFood(this.multiSnake[0]);
     }
 
     update(deltaSeconds: number): boolean {
-        
-        
         const updateThresholdSeconds = this.speed;
 
         this.elapsedTimeSeconds += deltaSeconds;
@@ -86,16 +81,14 @@ export class SnakeGame {
                 alert("Beendet : Mit sich selbst kollidiert ---> Score : " + this.score[i]);        
                 return false;
             }
-            //refactoring
+
             for (let j = 0; j < this.multiSnake.length; j++) {
                 if(this.multiSnake[j] !== this.multiSnake[i] &&
-                   this.multiSnake[i].collidesWithOtherSnake(this.multiSnake[j])){
+                   this.multiSnake[i].collidesWithOtherSnake(this.multiSnake[j])) {
                         alert("Beendet : Mit anderer Schlange kollidiert --> Score : " + this.score[i]);
                         return false;
                 }
-                
             }
-            
         }
         
         return true;
@@ -103,12 +96,15 @@ export class SnakeGame {
 
     draw(context: CanvasRenderingContext2D): void {
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
-        if(this.gridenabled){
+
+        if(this.gridenabled) {
             this.grid.draw(context);
         }
+
         for (let i = 0; i < this.multiSnake.length; i++) {
             this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight)
         }
+
         this.food.draw(context);
         this.level.draw(context);
     }
