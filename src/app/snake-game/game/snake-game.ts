@@ -61,7 +61,7 @@ export class SnakeGame {
         }
 
         for(let i = 0; i < this.multiSnake.length; i++) {
-            if (!this.multiSnake[i].move(this.wallenabled)) {
+            if (!this.multiSnake[i].move(this.wallenabled,i)) {
                 alert("Beendet : mit Wand kollidiert --> Score : " + this.score[i]);
                 return false;
             }

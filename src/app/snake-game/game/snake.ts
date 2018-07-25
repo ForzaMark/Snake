@@ -6,6 +6,7 @@ export class Snake {
     private direction = Direction.right;
     private snakeParts: SnakePart[] = [];
     private snakeHead: SnakePart;
+    private changeCounter: number[] = [0,0];
 
     constructor(private fieldWidth: number, private fieldHeight: number, snakeSize: number, startPos:number) {
         for (let i = 0; i < snakeSize; i++) {
@@ -24,14 +25,15 @@ export class Snake {
         this.snakeParts.push(new SnakePart(x, y));
     }
 
-    move(wallEnabled: boolean): boolean {
+    move(wallEnabled: boolean, snakeNumber: number): boolean {
         // sort
+        this.changeCounter[snakeNumber] = 0
         for (let i = this.snakeParts.length - 1 ; i > 0; i--) {
             this.snakeParts[i].x = this.snakeParts[i - 1].x;
             this.snakeParts[i].y = this.snakeParts[i - 1].y;
         }
 
-        // move
+        // move   
         switch (this.direction) {
             case Direction.left:
                 this.snakeParts[0].x -= 1;
@@ -85,36 +87,36 @@ export class Snake {
 
     onkey(key: KeyboardEvent, x: number): void {
         
-        
+     
         if(x === 0){
-            console.log(this.direction);
-            
-            if (key.code === 'ArrowRight' && this.direction !== Direction.left) {
+            if (key.code === 'ArrowRight' && this.direction !== Direction.left && this.changeCounter[x] === 0) {
             this.direction = Direction.right;
             }
-            if (key.code === 'ArrowUp' && this.direction !== Direction.down) {
+            if (key.code === 'ArrowUp' && this.direction !== Direction.down && this.changeCounter[x] === 0) {
                 this.direction = Direction.up;
             }
-            if (key.code === 'ArrowDown' && this.direction !== Direction.up) {
+            if (key.code === 'ArrowDown' && this.direction !== Direction.up && this.changeCounter[x] === 0) {
                 this.direction = Direction.down;
             }
-            if (key.code === 'ArrowLeft' && this.direction !== Direction.right) {
+            if (key.code === 'ArrowLeft' && this.direction !== Direction.right && this.changeCounter[x] === 0) {
                 this.direction = Direction.left;
             }
+            this.changeCounter[x]++;
         }
         if (x === 1) {
-            if (key.code === 'KeyD' && this.direction !== Direction.left) {
+            if (key.code === 'KeyD' && this.direction !== Direction.left &&  this.changeCounter[x] === 0) {
                 this.direction = Direction.right;
                 }
-                if (key.code === 'KeyW' && this.direction !== Direction.down) {
+                if (key.code === 'KeyW' && this.direction !== Direction.down &&  this.changeCounter[x] === 0) {
                     this.direction = Direction.up;
                 }
-                if (key.code === 'KeyS' && this.direction !== Direction.up) {
+                if (key.code === 'KeyS' && this.direction !== Direction.up &&  this.changeCounter[x] === 0) {
                     this.direction = Direction.down;
                 }
-                if (key.code === 'KeyA' && this.direction !== Direction.right) {
+                if (key.code === 'KeyA' && this.direction !== Direction.right &&  this.changeCounter[x] === 0) {
                     this.direction = Direction.left;
                 }
+                this.changeCounter[x]++;
         }
     }
     isOnSnake(cellObject: CellObject): boolean {
