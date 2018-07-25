@@ -35,7 +35,7 @@ export class SnakeGame {
         this.cellHeight = screenHeight / this.fieldHeight;
         
         for (let i = 0; i < this.playerCount; i++) {
-            this.multiSnake.push(new Snake(this.fieldWidth,this.fieldHeight,this.snakeSize,i*2)); 
+            this.multiSnake.push(new Snake(this.fieldWidth,this.fieldHeight,this.snakeSize,i)); 
             this.score[i] = this.snakeSize   
         }
 

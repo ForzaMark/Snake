@@ -38,7 +38,7 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy {
     const speed = 1;
     const screenWidth = 800;
     const screenHeight = 600;
-    for (let i = 0; i < this.configData.data.snakeLength; i++) {
+    for (let i = 0; i < this.configData.data.playerCount; i++) {
       this.Score.push(this.configData.data.snakeLength);
     }
 

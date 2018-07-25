@@ -53,7 +53,11 @@ export class SnakeMenuComponent implements OnInit {
     this.service.data.skillLevel = parseInt(this.configurationData.skillLevel);
     this.service.data.playerCount = parseInt(this.configurationData.playerCount);
     this.service.data.speed = parseFloat(this.configurationData.speed);
-    this.service.data.wall = this.configurationData.wall === "checked" ? true : false;
+    if(this.configurationData.wall === "checked" || this.configurationData.wall) {
+      this.service.data.wall = true;
+    } else {
+      this.service.data.wall = false
+    }
     this.router.navigate(['/snake-game']);
   }
 

@@ -20,7 +20,15 @@ export class Food implements CellObject {
     }
 
     draw(context: CanvasRenderingContext2D): void {
-        context.fillRect(this.x * this.cellWidth, this.y * this.cellHeight, this.cellWidth, this.cellHeight);
+        //context.fillRect(this.x * this.cellWidth, this.y * this.cellHeight, this.cellWidth, this.cellHeight);
+        context.beginPath()
+        context.arc(this.x* this.cellWidth + this.cellWidth/2,
+                    this.y * this.cellHeight + this.cellHeight / 2,
+                    15,0,2* Math.PI,false);
+        context.fillStyle = 'green';
+        context.fill();
+        context.stroke();
+        context.fillStyle = 'black';
     }
 
     getx(): number {

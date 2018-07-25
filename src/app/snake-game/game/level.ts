@@ -25,7 +25,7 @@ export class Level {
     }
 
     draw(context: CanvasRenderingContext2D): void {
-        context.fillStyle = '#00FFFF';
+        context.fillStyle = 'red';
         for (let i = 0; i < this.obstacles.length; i++) {
             context.fillRect(this.obstacles[i].x * this.cellWidth, this.obstacles[i].y * this.cellHeight, this.cellWidth, this.cellHeight);
         }
