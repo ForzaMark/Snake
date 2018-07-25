@@ -4,7 +4,7 @@ import { CellObject } from './cell-object';
 export class Food implements CellObject {
     x: number;
     y: number;
-
+//git
     constructor(private cellWidth: number,
                 private cellHeight: number,
                 private fieldWidth: number,
