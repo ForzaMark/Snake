@@ -1,44 +1,128 @@
-<h1>Snake-Game</h1>
-<p>Levelgröße : </p>
-<input #LevelWidth="ngModel" 
-        type="number" 
-        value="20" required min="7"
-                    max="50" maxlength="2" minlength="1" [(ngModel)]="configurationData.levelWidth" >
-                    <input #LevelHeight="ngModel" type="number" value="15" required 
-                    min="7" max="50" maxlength="2" minlength="1" 
-                    [(ngModel)]="configurationData.levelHeight">
-<p>Schlangengröße : </p><input #snakelength="ngModel" 
-                        type="number" value="1" required min="1" max="6"
-                        maxlength="1" minlength="1" [(ngModel)]="configurationData.snakeLength">
+<div class="container">
+    <div class="jumbotron">
+        <h1>Welcome to the Snake-Game</h1>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Setup your Game !</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="number">Levelwidth : </label>
+                <div class="col-sm-10">
+                    <input #LevelWidth="ngModel" 
+                           type="number" 
+                           class="form-control"
+                           value="20" 
+                           required 
+                           min="7"
+                           max="50" 
+                           maxlength="2" 
+                           minlength="1" 
+                           [(ngModel)]="configurationData.levelWidth">
+                </div>
+            </div>
+            <br><br>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="number">LevelHeight : </label>
+                <div class="col-sm-10">
+                    <input #LevelHeight="ngModel"
+                            class="form-control"
+                            type="number" 
+                            value="15" 
+                            required 
+                            min="7" 
+                            max="50" 
+                            maxlength="2" 
+                            minlength="1" 
+                            [(ngModel)]="configurationData.levelHeight">
+                </div>
+            </div>
+            <br><br>
+            <div class="form-group">
+                    <label class="control-label col-sm-2" for="number">default Snakelength : </label>
+                    <div class="col-sm-10">
+                            <input #snakelength="ngModel" 
+                                    type="number" 
+                                    class="form-control"
+                                    value="1" 
+                                    required 
+                                    min="1" 
+                                    max="6"
+                                    maxlength="1" 
+                                    minlength="1" 
+                                    [(ngModel)]="configurationData.snakeLength">
+                    </div>
+            </div>
+            <br><br>
+            <div class="form-group">
+                    <label class="control-label col-sm-2" for="checkbox">walk through walls : </label>
+                    <div class="col-sm-10">
+                            <input #wall="ngModel" 
+                                   [(ngModel)]="configurationData.wall" 
+                                   type="checkbox" 
+                                   class="form-control"
+                                   checked>
+                    </div>
+            </div>
+            <br><br>
+            <div class="form-group">
+                    <label class="control-label col-sm-2">Difficulty : </label>
+                    <div class="col-sm-10">
+                            <select #SkillLevel="ngModel" 
+                                    [(ngModel)]="configurationData.skillLevel" 
+                                    class="form-control"
+                                    required>
+                                    <option value="10">Easy</option>
+                                    <option value="5">Medium</option>
+                                    <option value="2">Hard</option>
+                            </select>
+                    </div>
+            </div>
+            <br><br>
+            <div class="form-group">
+                    <label class="control-label col-sm-2">Speed : </label>
+                    <div class="col-sm-10">
+                            <select #Speed="ngModel" 
+                                    [(ngModel)]="configurationData.speed" 
+                                    required
+                                    class="form-control">
+                                    <option value="0.5">Slow</option>
+                                    <option value="0.25">Medium</option>
+                                    <option value="0.1">Fast</option>
+                                </select>
+                    </div>
+            </div>
+            <br><br>
+            <div class="form-group">
+                    <label class="control-label col-sm-2">GameMode : </label>
+                    <div class="col-sm-10">
+                            <select #playerCount="ngModel" 
+                                    [(ngModel)]="configurationData.playerCount" 
+                                    required
+                                    class="form-control">
+                                    <option value="1">Singleplayer</option>
+                                    <option value="2">Multiplayer</option>
+                            </select>
+                    </div>
+            </div>
+            <br><br>
+            <div class="form-group">        
+                <div class="col-sm-offset-2 col-sm-10">
+                    <p style="color: red;" 
+                       *ngIf="LevelWidth.invalid || LevelHeight.invalid || snakelength.invalid">
+                        This Input is not valid
+                    </p>
+                    <p *ngIf="LevelWidth.valid && LevelHeight.valid && snakelength.valid">
+                        Press Button to Start
+                    </p>
+                    <input type="submit" value="Submit" class="btn btn-primary btn btn-block" *ngIf="LevelWidth.valid && LevelHeight.valid && snakelength.valid"  
+                            (click)="startGame()">
+                </div>
+            </div>
 
 
-<p>Durch Wände laufen ? (Auswählen für Ja!)</p>
-<input #wall="ngModel" [(ngModel)]="configurationData.wall" type="checkbox" checked required>
-<br>
-
-Schwierigkeitsgrad : 
-<select #SkillLevel="ngModel" [(ngModel)]="configurationData.skillLevel" required>
-    <option value="10">Einfach</option>
-    <option value="5">Mittel</option>
-    <option value="2">Schwer</option>
-</select>
-
-Geschwindigkeit : 
-<select #Speed="ngModel" [(ngModel)]="configurationData.speed" required>
-    <option value="0.5">Langsam</option>
-    <option value="0.25">Mittel</option>
-    <option value="0.1">Schnell</option>
-</select>
 
 
-<p>Zweiter Spieler ? (Auswählen für ja!)</p>
-<select #playerCount="ngModel" [(ngModel)]="configurationData.playerCount" required>
-    <option value="1">Singleplayer</option>
-    <option value="2">Multiplayer</option>
-</select>
-<p style="color: red;" *ngIf="LevelWidth.invalid || LevelHeight.invalid || snakelength.invalid">Bitte prüfe deinen Input</p>
-
-<p *ngIf="LevelWidth.valid && LevelHeight.valid && snakelength.valid">Press Button to Start</p>
-<button *ngIf="LevelWidth.valid && LevelHeight.valid && snakelength.valid"  
-        (click)="startGame()">
-        Click !</button> 
+        </div>
+    </div>
+</div>
