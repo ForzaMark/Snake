@@ -6,4 +6,5 @@ export class SnakeGameConfiguration {
     skillLevel: number;
     playerCount: number;
     speed: number;
+    grid: boolean;
 }

@@ -87,6 +87,8 @@ export class Snake {
         
         
         if(x === 0){
+            console.log(this.direction);
+            
             if (key.code === 'ArrowRight' && this.direction !== Direction.left) {
             this.direction = Direction.right;
             }

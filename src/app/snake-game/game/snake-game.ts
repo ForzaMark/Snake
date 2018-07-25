@@ -20,6 +20,7 @@ export class SnakeGame {
     private speed: number;
     score: number[] = [];
     private multiSnake: Snake[] = [];
+    private gridenabled: boolean;
 
     constructor(private screenWidth: number, private screenHeight: number, private configuration: SnakeGameConfiguration) {
         
@@ -30,6 +31,7 @@ export class SnakeGame {
         this.SkillLevel = configuration.skillLevel;
         this.playerCount = configuration.playerCount;
         this.speed = configuration.speed;
+        this.gridenabled = configuration.grid;
         this.elapsedTimeSeconds = 0;
         this.cellWidth = screenWidth / this.fieldWidth;
         this.cellHeight = screenHeight / this.fieldHeight;
@@ -46,6 +48,8 @@ export class SnakeGame {
     }
 
     update(deltaSeconds: number): boolean {
+        
+        
         const updateThresholdSeconds = this.speed;
 
         this.elapsedTimeSeconds += deltaSeconds;
@@ -86,7 +90,7 @@ export class SnakeGame {
             for (let j = 0; j < this.multiSnake.length; j++) {
                 if(this.multiSnake[j] !== this.multiSnake[i] &&
                    this.multiSnake[i].collidesWithOtherSnake(this.multiSnake[j])){
-                        alert("Beendet : Mit anderer Schlange kollidiert --> Score : "+ this.score[i]);
+                        alert("Beendet : Mit anderer Schlange kollidiert --> Score : " + this.score[i]);
                         return false;
                 }
                 
@@ -99,7 +103,9 @@ export class SnakeGame {
 
     draw(context: CanvasRenderingContext2D): void {
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
-        this.grid.draw(context);
+        if(this.gridenabled){
+            this.grid.draw(context);
+        }
         for (let i = 0; i < this.multiSnake.length; i++) {
             this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight)
         }

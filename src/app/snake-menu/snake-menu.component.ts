@@ -10,6 +10,7 @@ export class SnakeGameConfigurationData {
   skillLevel: string;
   playerCount: string;
   speed: string;
+  grid: string;
 }
 
 @Component({
@@ -33,7 +34,8 @@ export class SnakeMenuComponent implements OnInit {
         wall: true,
         skillLevel: 10,
         playerCount: 1,
-        speed: 0.25
+        speed: 0.25,
+        grid: true
       };
     }
 
@@ -44,6 +46,7 @@ export class SnakeMenuComponent implements OnInit {
     this.configurationData.playerCount = this.service.data.playerCount.toString();
     this.configurationData.speed = this.service.data.speed.toString();
     this.configurationData.wall = this.service.data.wall ? "checked" : "unchecked";
+    this.configurationData.grid = this.service.data.grid ? "checked" : "unchecked";
   }
 
   startGame() {
@@ -57,6 +60,11 @@ export class SnakeMenuComponent implements OnInit {
       this.service.data.wall = true;
     } else {
       this.service.data.wall = false
+    }
+    if(this.configurationData.grid === "checked" || this.configurationData.grid) {
+      this.service.data.grid = true;
+    } else {
+      this.service.data.grid = false
     }
     this.router.navigate(['/snake-game']);
   }
