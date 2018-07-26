@@ -78,6 +78,17 @@
                         <div class="panel-heading">Game Mode</div>
                         <div class="panel-body">
                                 <div class="form-group mt-5">
+                                        <label class="control-label">Dificulty</label>
+                                        <select #skillLevel="ngModel" 
+                                                [(ngModel)]="configurationData.skillLevel" 
+                                                required
+                                                class="form-control">
+                                                <option value="10">Easy</option>
+                                                <option value="5">Medium</option>
+                                                <option value="2">Hard</option>
+                                                </select>
+                                </div>
+                                <div class="form-group mt-5">
                                         <label class="control-label">Speed</label>
                                         <select #Speed="ngModel" 
                                                 [(ngModel)]="configurationData.speed" 

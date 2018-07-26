@@ -25,7 +25,7 @@ export class Level {
     }
 
     draw(context: CanvasRenderingContext2D): void {
-        context.fillStyle = 'red';
+        context.fillStyle = '#FF0040';
         for (let i = 0; i < this.obstacles.length; i++) {
             context.fillRect(this.obstacles[i].x * this.cellWidth, this.obstacles[i].y * this.cellHeight, this.cellWidth, this.cellHeight);
         }
@@ -42,7 +42,7 @@ export class Level {
     }
 
     changeObstaclePosition(snake: Snake, food: Food): void {
-        let obstacleCounter = this.obstacles.length;
+        const obstacleCounter = this.obstacles.length;
         this.obstacles = [];
 
         for (let i = 0; i < obstacleCounter; i++) {

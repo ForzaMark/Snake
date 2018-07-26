@@ -4,7 +4,7 @@ import { CellObject } from './cell-object';
 export class Food implements CellObject {
     x: number;
     y: number;
-//git
+
     constructor(private cellWidth: number,
                 private cellHeight: number,
                 private fieldWidth: number,
@@ -20,12 +20,11 @@ export class Food implements CellObject {
     }
 
     draw(context: CanvasRenderingContext2D): void {
-        context.beginPath()
-        context.arc(this.x* this.cellWidth + this.cellWidth/2,
+        context.beginPath();
+        context.arc(this.x * this.cellWidth + this.cellWidth / 2,
                     this.y * this.cellHeight + this.cellHeight / 2,
-                    this.cellWidth/2,0,2* Math.PI,false);
-                    
-        context.fillStyle = 'green';
+                    this.cellWidth / 2, 0, 2 * Math.PI, false);
+        context.fillStyle = '#088A29';
         context.fill();
         context.stroke();
         context.fillStyle = 'black';

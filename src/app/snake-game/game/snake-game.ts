@@ -90,7 +90,7 @@ export class SnakeGame {
         }
 
         for (let i = 0; i < this.multiSnake.length; i++) {
-            this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight);
+            this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight, i);
         }
 
         this.food.draw(context);
