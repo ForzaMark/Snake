@@ -38,6 +38,7 @@ export class Snake {
          }
     }
     grow(): void {
+        console.log('growe');
         this.addPart(this.snakeParts[this.snakeParts.length - 1].x,
                      this.snakeParts[this.snakeParts.length - 1].y);
     }
@@ -81,7 +82,7 @@ export class Snake {
     }
 
     collidesWithItself(): boolean {
-        return this.isOnSnakeInternal(this.snakeHead, 1);
+        return this.isOnSnakeInternal(this.snakeHead, 2);
     }
 
     getSnakeLength(): number {
@@ -93,7 +94,7 @@ export class Snake {
     }
 
     private isOnSnakeInternal(cellObject: CellObject, startIndex: number) {
-        for (let i = startIndex; i < this.snakeParts.length; i++) {
+        for (let i = startIndex; i < this.snakeParts.length ; i++) {
             if (cellObject.x === this.snakeParts[i].x && cellObject.y === this.snakeParts[i].y) {
                 return true;
             }

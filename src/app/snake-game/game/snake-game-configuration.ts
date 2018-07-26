@@ -1,10 +1,14 @@
+import { Keys } from './enumKeys';
+
 export class SnakeGameConfiguration {
-    levelWidth: number; 
-    levelHeight: number; 
+    levelWidth: number;
+    levelHeight: number;
     snakeLength: number;
     wall: boolean;
     skillLevel: number;
     playerCount: number;
     speed: number;
     grid: boolean;
+    player1Keys: Keys[];
+    player2Keys: Keys[];
 }
