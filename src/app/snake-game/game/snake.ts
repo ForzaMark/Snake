@@ -49,10 +49,12 @@ export class Snake {
             if ( i === 0 && this.snakeParts.length > 1) {
                 this.drawHead(context, cellHeight, cellWidth);
                 this.drawEyes(context, cellHeight, cellWidth);
+
             } else {
                 context.fillRect(this.headCenter[0],
                                  this.headCenter[1],
                                  cellWidth, cellHeight);
+                this.drawTail(context, cellWidth, cellHeight);
             }
          }
     }
@@ -213,5 +215,34 @@ export class Snake {
                             3, 0 * Math.PI, (2 * Math.PI), false);
         }
         context.fill();
+    }
+    private drawTail(context: CanvasRenderingContext2D, cellWidth: number, cellHeight: number) {
+        context.beginPath();
+            switch (this.direction) {
+                case Direction.right:
+                   context.arc(this.snakeParts[this.snakeParts.length - 1].x,
+                               this.snakeParts[this.snakeParts.length - 1].y ,
+                               cellWidth / 2,
+                               0.5 * Math.PI, 1.5 * Math.PI);
+                    break;
+                case Direction.left:
+                    context.arc(this.snakeParts[this.snakeParts.length - 1].x,
+                                this.snakeParts[this.snakeParts.length - 1].y ,
+                                cellWidth / 2,
+                                1.5 * Math.PI, 0.5 * Math.PI);
+                    break;
+                case Direction.down:
+                    context.arc(this.snakeParts[this.snakeParts.length - 1].x,
+                                this.snakeParts[this.snakeParts.length - 1].y ,
+                                cellWidth / 2,
+                                1 * Math.PI, 0 * Math.PI);
+                    break;
+                case Direction.up:
+                    context.arc(this.snakeParts[this.snakeParts.length - 1].x,
+                                this.snakeParts[this.snakeParts.length - 1].y ,
+                                cellWidth / 2,
+                                0 * Math.PI, 1 * Math.PI);
+            }
+            context.fill();
     }
 }
