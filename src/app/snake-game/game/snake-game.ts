@@ -20,7 +20,13 @@ export class SnakeGame {
         this.cellHeight = screenHeight / this.configuration.levelHeight;
 
         for (let i = 0; i < this.configuration.playerCount; i++) {
-            this.multiSnake.push(new Snake(this.configuration.levelWidth, this.configuration.levelHeight, configuration.snakeLength,i)); 
+            this.multiSnake.push(new Snake(this.configuration.levelWidth,
+                                           this.configuration.levelHeight,
+                                           configuration.snakeLength,
+                                           i,
+                                           configuration.player1Keys,
+                                           configuration.player2Keys,
+                                           ));
             this.score[i] = configuration.snakeLength;
         }
 
@@ -41,7 +47,7 @@ export class SnakeGame {
         }
 
         for (let i = 0; i < this.multiSnake.length; i++) {
-            if (!this.multiSnake[i].move(this.configuration.wall, i)) {
+            if (!this.multiSnake[i].move(this.configuration.wall)) {
                 alert('Beendet : mit Wand kollidiert --> Score : ' + this.score[i]);
                 return false;
             }
@@ -86,7 +92,7 @@ export class SnakeGame {
         }
 
         for (let i = 0; i < this.multiSnake.length; i++) {
-            this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight)
+            this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight);
         }
 
         this.food.draw(context);

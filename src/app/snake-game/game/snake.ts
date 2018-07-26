@@ -1,14 +1,21 @@
 import { SnakePart } from './snake-part';
 import { Direction } from './direction';
 import { CellObject } from './cell-object';
+import { Keys } from './enumKeys';
 
 export class Snake {
     private direction = Direction.right;
     private snakeParts: SnakePart[] = [];
     private snakeHead: SnakePart;
-    private changeCounter: number[] = [0, 0];
+    private changeCounter = 0;
 
-    constructor(private fieldWidth: number, private fieldHeight: number, snakeSize: number, startPos: number) {
+    constructor(private fieldWidth: number,
+                private fieldHeight: number,
+                snakeSize: number,
+                startPos: number,
+                private player1Keys: Keys[] = [],
+                private player2Keys: Keys[] = []) {
+
         for (let i = 0; i < snakeSize; i++) {
             if (startPos === 0) {
                 this.addPart(0, startPos);
@@ -24,8 +31,8 @@ export class Snake {
         this.snakeParts.push(new SnakePart(x, y));
     }
 
-    move(wallEnabled: boolean, snakeNumber: number): boolean {
-        this.sort(snakeNumber);
+    move(wallEnabled: boolean): boolean {
+        this.sort();
         this.makeaStep();
        return this.wall(wallEnabled);
     }
@@ -38,42 +45,15 @@ export class Snake {
          }
     }
     grow(): void {
-        console.log('growe');
         this.addPart(this.snakeParts[this.snakeParts.length - 1].x,
                      this.snakeParts[this.snakeParts.length - 1].y);
     }
 
     onkey(key: KeyboardEvent, x: number): void {
         if (x === 0) {
-            if (key.code === 'ArrowRight' && this.direction !== Direction.left && this.changeCounter[x] === 0) {
-            this.direction = Direction.right;
-            }
-            if (key.code === 'ArrowUp' && this.direction !== Direction.down && this.changeCounter[x] === 0) {
-                this.direction = Direction.up;
-            }
-            if (key.code === 'ArrowDown' && this.direction !== Direction.up && this.changeCounter[x] === 0) {
-                this.direction = Direction.down;
-            }
-            if (key.code === 'ArrowLeft' && this.direction !== Direction.right && this.changeCounter[x] === 0) {
-                this.direction = Direction.left;
-            }
-            this.changeCounter[x]++;
-        }
-
-        if (x === 1) {
-            if (key.code === 'KeyD' && this.direction !== Direction.left &&  this.changeCounter[x] === 0) {
-                this.direction = Direction.right;
-                }
-                if (key.code === 'KeyW' && this.direction !== Direction.down &&  this.changeCounter[x] === 0) {
-                    this.direction = Direction.up;
-                }
-                if (key.code === 'KeyS' && this.direction !== Direction.up &&  this.changeCounter[x] === 0) {
-                    this.direction = Direction.down;
-                }
-                if (key.code === 'KeyA' && this.direction !== Direction.right &&  this.changeCounter[x] === 0) {
-                    this.direction = Direction.left;
-                }
-                this.changeCounter[x]++;
+            this.setDirection(this.player1Keys, key);
+        } else {
+            this.setDirection(this.player2Keys, key);
         }
     }
 
@@ -101,8 +81,8 @@ export class Snake {
         }
         return false;
     }
-    private sort(snakeNumber: number): void {
-        this.changeCounter[snakeNumber] = 0;
+    private sort(): void {
+        this.changeCounter = 0;
         for (let i = this.snakeParts.length - 1 ; i > 0; i--) {
             this.snakeParts[i].x = this.snakeParts[i - 1].x;
             this.snakeParts[i].y = this.snakeParts[i - 1].y;
@@ -147,5 +127,21 @@ export class Snake {
             return false;
         }
         return true;
+    }
+    private setDirection(keySet: Keys[], key: KeyboardEvent): void {
+
+            if (key.code === keySet[3].toString()  && this.direction !== Direction.left && this.changeCounter === 0) {
+            this.direction = Direction.right;
+            }
+            if (key.code === this.player1Keys[0].toString() && this.direction !== Direction.down && this.changeCounter === 0) {
+                this.direction = Direction.up;
+            }
+            if (key.code === this.player1Keys[1].toString() && this.direction !== Direction.up && this.changeCounter === 0) {
+                this.direction = Direction.down;
+            }
+            if (key.code === this.player1Keys[2].toString() && this.direction !== Direction.right && this.changeCounter === 0) {
+                this.direction = Direction.left;
+            }
+            this.changeCounter++;
     }
 }

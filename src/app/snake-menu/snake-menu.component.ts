@@ -73,6 +73,8 @@ export class SnakeMenuComponent implements OnInit {
     } else {
       this.service.data.grid = false;
     }
+    this.service.data.player1Keys = this.configurationData.player1Keys;
+    this.service.data.player2Keys = this.configurationData.player2Keys;
     this.router.navigate(['/snake-game']);
   }
 }
