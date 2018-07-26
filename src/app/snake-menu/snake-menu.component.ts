@@ -1,7 +1,6 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { ConfigDataService } from '../config-data.service';
 import { Router } from '@angular/router';
-import { Keys } from '../snake-game/game/enumKeys';
 
 export class SnakeGameConfigurationData {
   levelWidth: string;
@@ -12,8 +11,8 @@ export class SnakeGameConfigurationData {
   playerCount: string;
   speed: string;
   grid: string;
-  player1Keys: Keys[];
-  player2Keys: Keys[];
+  player1Keys: string[];
+  player2Keys: string[];
 }
 
 @Component({
@@ -39,8 +38,20 @@ export class SnakeMenuComponent implements OnInit {
         playerCount: 1,
         speed: 0.25,
         grid: true,
-        player1Keys : [Keys[0], Keys[1], Keys[2], Keys[3]],
-        player2Keys: [Keys[4], Keys[5], Keys[6], Keys[7]]
+        playerInputs: [
+          {
+            up: 'ArrowUp',
+            down: 'ArrowDown',
+            left: 'ArrowLeft',
+            right: 'ArrowRight'
+          },
+          {
+            up: 'KeyW',
+            down: 'KeyS',
+            left: 'KeyA',
+            right: 'KeyD',
+          }
+        ],
       };
     }
 
@@ -52,8 +63,14 @@ export class SnakeMenuComponent implements OnInit {
     this.configurationData.speed = this.service.data.speed.toString();
     this.configurationData.wall = this.service.data.wall ? 'checked' : 'unchecked';
     this.configurationData.grid = this.service.data.grid ? 'checked' : 'unchecked';
-    this.configurationData.player1Keys = this.service.data.player1Keys;
-    this.configurationData.player2Keys = this.service.data.player2Keys;
+    this.configurationData.player1Keys = [this.service.data.playerInputs[0].up,
+                                          this.service.data.playerInputs[0].down,
+                                          this.service.data.playerInputs[0].left,
+                                          this.service.data.playerInputs[0].right];
+    this.configurationData.player2Keys = [this.service.data.playerInputs[1].up,
+                                          this.service.data.playerInputs[1].down,
+                                          this.service.data.playerInputs[1].left,
+                                          this.service.data.playerInputs[1].right];
   }
 
   startGame() {
@@ -73,8 +90,22 @@ export class SnakeMenuComponent implements OnInit {
     } else {
       this.service.data.grid = false;
     }
-    this.service.data.player1Keys = this.configurationData.player1Keys;
-    this.service.data.player2Keys = this.configurationData.player2Keys;
+
+    this.service.data.playerInputs = [
+      {
+        up: this.configurationData.player1Keys[0],
+        down: this.configurationData.player1Keys[1],
+        left: this.configurationData.player1Keys[2],
+        right: this.configurationData.player1Keys[3]
+      },
+      {
+        up: this.configurationData.player2Keys[0],
+        down: this.configurationData.player2Keys[1],
+        left: this.configurationData.player2Keys[2],
+        right: this.configurationData.player2Keys[3]
+      }
+    ];
+
     this.router.navigate(['/snake-game']);
   }
 }

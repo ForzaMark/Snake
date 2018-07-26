@@ -18,19 +18,13 @@ export class SnakeGame {
         this.elapsedTimeSeconds = 0;
         this.cellWidth = screenWidth / this.configuration.levelWidth;
         this.cellHeight = screenHeight / this.configuration.levelHeight;
-        console.log(configuration.player1Keys);
-        console.log(configuration.player2Keys);
-        
-        
 
         for (let i = 0; i < this.configuration.playerCount; i++) {
             this.multiSnake.push(new Snake(this.configuration.levelWidth,
                                            this.configuration.levelHeight,
-                                           configuration.snakeLength,
+                                           this.configuration.snakeLength,
                                            i,
-                                           configuration.player1Keys,
-                                           configuration.player2Keys,
-                                           ));
+                                           this.configuration.playerInputs[i]));
             this.score[i] = configuration.snakeLength;
         }
 
@@ -104,9 +98,8 @@ export class SnakeGame {
     }
 
     onKeyUp(key: KeyboardEvent): void {
-
         for (let i = 0; i < this.multiSnake.length; i++) {
-            this.multiSnake[i].onkey(key, i);
+            this.multiSnake[i].onkey(key);
         }
     }
 }

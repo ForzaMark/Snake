@@ -1,7 +1,7 @@
 import { SnakePart } from './snake-part';
 import { Direction } from './direction';
 import { CellObject } from './cell-object';
-import { Keys } from './enumKeys';
+import { SnakeInputConfiguration } from './snake-game-configuration';
 
 export class Snake {
     private direction = Direction.right;
@@ -13,9 +13,9 @@ export class Snake {
                 private fieldHeight: number,
                 snakeSize: number,
                 startPos: number,
-                private player1Keys: Keys[] = [],
-                private player2Keys: Keys[] = []) {
+                private input: SnakeInputConfiguration) {
 
+        console.log(input);
         for (let i = 0; i < snakeSize; i++) {
             if (startPos === 0) {
                 this.addPart(0, startPos);
@@ -49,12 +49,23 @@ export class Snake {
                      this.snakeParts[this.snakeParts.length - 1].y);
     }
 
-    onkey(key: KeyboardEvent, x: number): void {
-        if (x === 0) {
-            this.setDirection(this.player1Keys, key);
-        } else {
-            this.setDirection(this.player2Keys, key);
+    onkey(key: KeyboardEvent): void {
+        if (this.changeCounter === 0) {
+            if (key.code === this.input.right && this.direction !== Direction.left) {
+                this.direction = Direction.right;
+            }
+            if (key.code === this.input.up && this.direction !== Direction.down) {
+                this.direction = Direction.up;
+            }
+            if (key.code === this.input.down && this.direction !== Direction.up) {
+                this.direction = Direction.down;
+            }
+            if (key.code === this.input.left && this.direction !== Direction.right) {
+                this.direction = Direction.left;
+            }
         }
+
+        this.changeCounter++;
     }
 
     isOnSnake(cellObject: CellObject): boolean {
@@ -127,21 +138,5 @@ export class Snake {
             return false;
         }
         return true;
-    }
-    private setDirection(keySet: Keys[], key: KeyboardEvent): void {
-
-            if (key.code === keySet[3].toString()  && this.direction !== Direction.left && this.changeCounter === 0) {
-            this.direction = Direction.right;
-            }
-            if (key.code === keySet[0].toString() && this.direction !== Direction.down && this.changeCounter === 0) {
-                this.direction = Direction.up;
-            }
-            if (key.code === keySet[1].toString() && this.direction !== Direction.up && this.changeCounter === 0) {
-                this.direction = Direction.down;
-            }
-            if (key.code === keySet[2].toString() && this.direction !== Direction.right && this.changeCounter === 0) {
-                this.direction = Direction.left;
-            }
-            this.changeCounter++;
     }
 }

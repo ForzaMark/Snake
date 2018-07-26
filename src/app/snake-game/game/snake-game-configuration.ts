@@ -1,4 +1,9 @@
-import { Keys } from './enumKeys';
+export class SnakeInputConfiguration {
+    left: string;
+    right: string;
+    up: string;
+    down: string;
+}
 
 export class SnakeGameConfiguration {
     levelWidth: number;
@@ -9,6 +14,5 @@ export class SnakeGameConfiguration {
     playerCount: number;
     speed: number;
     grid: boolean;
-    player1Keys: Keys[];
-    player2Keys: Keys[];
+    playerInputs: SnakeInputConfiguration[];
 }
