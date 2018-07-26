@@ -10,3 +10,6 @@ canvas{
 #checkbox{
     float: left;
 }
+.keep-margin{
+    margin-top: 100rem;
+}

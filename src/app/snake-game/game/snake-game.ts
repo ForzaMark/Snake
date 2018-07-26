@@ -11,31 +11,17 @@ export class SnakeGame {
     private cellHeight: number;
     private grid: SnakeGrid;
     private level: Level;
-    private snakeSize = 1;
-    private wallenabled :boolean;
-    private SkillLevel = 10;
-    private playerCount: number;
-    private speed: number;
     private multiSnake: Snake[] = [];
-    private gridenabled: boolean;
-
     score: number[] = [];
 
     constructor(private screenWidth: number, private screenHeight: number, private configuration: SnakeGameConfiguration) {
-        this.snakeSize = configuration.snakeLength;
-        this.wallenabled = configuration.wall;
-        this.SkillLevel = configuration.skillLevel;
-        this.playerCount = configuration.playerCount;
-        this.speed = configuration.speed;
-        this.gridenabled = configuration.grid;
-
         this.elapsedTimeSeconds = 0;
         this.cellWidth = screenWidth / this.configuration.levelWidth;
         this.cellHeight = screenHeight / this.configuration.levelHeight;
-        
-        for (let i = 0; i < this.playerCount; i++) {
-            this.multiSnake.push(new Snake(this.configuration.levelWidth,this.configuration.levelHeight,this.snakeSize,i)); 
-            this.score[i] = this.snakeSize   
+
+        for (let i = 0; i < this.configuration.playerCount; i++) {
+            this.multiSnake.push(new Snake(this.configuration.levelWidth, this.configuration.levelHeight, configuration.snakeLength,i)); 
+            this.score[i] = configuration.snakeLength;
         }
 
         this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.configuration.levelWidth, this.configuration.levelHeight);
@@ -45,27 +31,26 @@ export class SnakeGame {
     }
 
     update(deltaSeconds: number): boolean {
-        const updateThresholdSeconds = this.speed;
+        const updateThresholdSeconds = this.configuration.speed;
 
         this.elapsedTimeSeconds += deltaSeconds;
         if (this.elapsedTimeSeconds < updateThresholdSeconds) {
             return true;
-        }
-        else {
+        } else {
             this.elapsedTimeSeconds -= updateThresholdSeconds;
         }
 
-        for(let i = 0; i < this.multiSnake.length; i++) {
-            if (!this.multiSnake[i].move(this.wallenabled,i)) {
-                alert("Beendet : mit Wand kollidiert --> Score : " + this.score[i]);
+        for (let i = 0; i < this.multiSnake.length; i++) {
+            if (!this.multiSnake[i].move(this.configuration.wall, i)) {
+                alert('Beendet : mit Wand kollidiert --> Score : ' + this.score[i]);
                 return false;
             }
             if (this.multiSnake[i].isOnSnake(this.food)) {
                 this.score[i]++;
                 this.multiSnake[i].grow();
                 this.food.createNewFood(this.multiSnake[i]);
-                if ((this.multiSnake[i].getSnakeLength() % this.SkillLevel === 0)
-                    || this.multiSnake[i].getSnakeLength() === this.snakeSize + 1) {
+                if ((this.multiSnake[i].getSnakeLength() % this.configuration.skillLevel === 0)
+                    || this.multiSnake[i].getSnakeLength() === this.configuration.snakeLength + 1) {
                     this.level.addObstacle(this.multiSnake[i], this.food);
                 } else {
                     this.level.changeObstaclePosition(this.multiSnake[i], this.food);
@@ -73,31 +58,30 @@ export class SnakeGame {
             }
 
             if (this.level.collidesWith(this.multiSnake[i])) {
-                alert("Beendet : Mit Hinderniss kollidiert ---> Score : " + this.score[i]);         
+                alert('Beendet : Mit Hinderniss kollidiert ---> Score : ' + this.score[i]);
                 return false;
             }
 
             if (this.multiSnake[i].collidesWithItself()) {
-                alert("Beendet : Mit sich selbst kollidiert ---> Score : " + this.score[i]);        
+                alert('Beendet : Mit sich selbst kollidiert ---> Score : ' + this.score[i]);
                 return false;
             }
 
             for (let j = 0; j < this.multiSnake.length; j++) {
-                if(this.multiSnake[j] !== this.multiSnake[i] &&
+                if (this.multiSnake[j] !== this.multiSnake[i] &&
                    this.multiSnake[i].collidesWithOtherSnake(this.multiSnake[j])) {
-                        alert("Beendet : Mit anderer Schlange kollidiert --> Score : " + this.score[i]);
+                        alert('Beendet : Mit anderer Schlange kollidiert --> Score : ' + this.score[i]);
                         return false;
                 }
             }
         }
-        
         return true;
-    }   
+    }
 
     draw(context: CanvasRenderingContext2D): void {
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
 
-        if(this.gridenabled) {
+        if (this.configuration.grid) {
             this.grid.draw(context);
         }
 
@@ -112,7 +96,7 @@ export class SnakeGame {
     onKeyUp(key: KeyboardEvent): void {
 
         for (let i = 0; i < this.multiSnake.length; i++) {
-            this.multiSnake[i].onkey(key,i)   
+            this.multiSnake[i].onkey(key, i);
         }
     }
 }

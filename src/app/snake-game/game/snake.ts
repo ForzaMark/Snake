@@ -6,19 +6,18 @@ export class Snake {
     private direction = Direction.right;
     private snakeParts: SnakePart[] = [];
     private snakeHead: SnakePart;
-    private changeCounter: number[] = [0,0];
+    private changeCounter: number[] = [0, 0];
 
-    constructor(private fieldWidth: number, private fieldHeight: number, snakeSize: number, startPos:number) {
+    constructor(private fieldWidth: number, private fieldHeight: number, snakeSize: number, startPos: number) {
         for (let i = 0; i < snakeSize; i++) {
             if (startPos === 0) {
                 this.addPart(0, startPos);
             } else {
-                this.addPart(fieldWidth,fieldHeight-1)
+                this.addPart(fieldWidth, fieldHeight - 1);
                 this.direction = Direction.left;
             }
         }
         this.snakeHead = this.snakeParts[0];
-        
     }
 
     private addPart(x: number, y: number): void {
@@ -26,51 +25,9 @@ export class Snake {
     }
 
     move(wallEnabled: boolean, snakeNumber: number): boolean {
-        // sort
-        this.changeCounter[snakeNumber] = 0
-        for (let i = this.snakeParts.length - 1 ; i > 0; i--) {
-            this.snakeParts[i].x = this.snakeParts[i - 1].x;
-            this.snakeParts[i].y = this.snakeParts[i - 1].y;
-        }
-
-        // move   
-        switch (this.direction) {
-            case Direction.left:
-                this.snakeParts[0].x -= 1;
-                break;
-            case Direction.right:
-                this.snakeParts[0].x += 1;
-                break;
-            case Direction.down:
-                this.snakeParts[0].y += 1;
-                break;
-            case Direction.up:
-                this.snakeParts[0].y -= 1;
-                break;
-        }
-
-        //wall
-        if (this.snakeHead.x >= this.fieldWidth && wallEnabled) {
-            this.snakeParts[0].x = 0;
-        } else if (this.snakeHead.x > this.fieldWidth && !wallEnabled) {
-            return false;
-        }
-        if (this.snakeHead.x < 0 && wallEnabled) {
-            this.snakeParts[0].x = this.fieldWidth;
-        } else if (this.snakeHead.x < -1 && !wallEnabled) {
-            return false;
-        }
-        if (this.snakeHead.y >= this.fieldHeight && wallEnabled) {
-            this.snakeParts[0].y = 0;
-        } else if (this.snakeHead.y > this.fieldHeight && !wallEnabled) {
-            return false;
-        }
-        if (this.snakeHead.y < 0 && wallEnabled) {
-            this.snakeParts[0].y = this.fieldHeight;
-        } else if (this.snakeHead.y < -1 && !wallEnabled) {
-            return false;
-        }
-        return true;
+        this.sort(snakeNumber);
+        this.makeaStep();
+       return this.wall(wallEnabled);
     }
 
     draw(context: CanvasRenderingContext2D, cellWidth: number, cellHeight: number): void {
@@ -86,7 +43,7 @@ export class Snake {
     }
 
     onkey(key: KeyboardEvent, x: number): void {
-        if(x === 0) {
+        if (x === 0) {
             if (key.code === 'ArrowRight' && this.direction !== Direction.left && this.changeCounter[x] === 0) {
             this.direction = Direction.right;
             }
@@ -142,5 +99,52 @@ export class Snake {
             }
         }
         return false;
+    }
+    private sort(snakeNumber: number): void {
+        this.changeCounter[snakeNumber] = 0;
+        for (let i = this.snakeParts.length - 1 ; i > 0; i--) {
+            this.snakeParts[i].x = this.snakeParts[i - 1].x;
+            this.snakeParts[i].y = this.snakeParts[i - 1].y;
+        }
+    }
+
+    private makeaStep(): void {
+        switch (this.direction) {
+            case Direction.left:
+                this.snakeParts[0].x -= 1;
+                break;
+            case Direction.right:
+                this.snakeParts[0].x += 1;
+                break;
+            case Direction.down:
+                this.snakeParts[0].y += 1;
+                break;
+            case Direction.up:
+                this.snakeParts[0].y -= 1;
+                break;
+        }
+    }
+    private wall(wallenabled: boolean): boolean {
+        if (this.snakeHead.x >= this.fieldWidth && wallenabled) {
+            this.snakeParts[0].x = 0;
+        } else if (this.snakeHead.x > this.fieldWidth && !wallenabled) {
+            return false;
+        }
+        if (this.snakeHead.x < 0 && wallenabled) {
+            this.snakeParts[0].x = this.fieldWidth;
+        } else if (this.snakeHead.x < -1 && !wallenabled) {
+            return false;
+        }
+        if (this.snakeHead.y >= this.fieldHeight && wallenabled) {
+            this.snakeParts[0].y = 0;
+        } else if (this.snakeHead.y > this.fieldHeight && !wallenabled) {
+            return false;
+        }
+        if (this.snakeHead.y < 0 && wallenabled) {
+            this.snakeParts[0].y = this.fieldHeight;
+        } else if (this.snakeHead.y < -1 && !wallenabled) {
+            return false;
+        }
+        return true;
     }
 }
