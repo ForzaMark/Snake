@@ -16,7 +16,6 @@ export class Snake {
                 startPos: number,
                 private input: SnakeInputConfiguration) {
 
-        console.log(input);
         for (let i = 0; i < snakeSize; i++) {
             if (startPos === 0) {
                 this.addPart(0, startPos);
@@ -47,35 +46,13 @@ export class Snake {
             }
             this.headCenter[0] =  this.snakeParts[i].x * cellWidth;
             this.headCenter[1] =  this.snakeParts[i].y * cellHeight;
-            context.beginPath();
             if ( i === 0 && this.snakeParts.length > 1) {
-                switch (this.direction) {
-                    case Direction.right:
-                        context.arc((this.headCenter[0]),
-                        (this.headCenter[1] + cellHeight / 2),
-                        (cellWidth / 2), 1.5 * Math.PI, (0.5 * Math.PI), false);
-                        break;
-                    case Direction.left:
-                        context.arc((this.headCenter[0] + cellWidth ),
-                        (this.headCenter[1] + cellHeight / 2),
-                        (cellWidth / 2), 0.5 * Math.PI, (1.5 * Math.PI), false);
-                        break;
-                    case Direction.down:
-                        context.arc((this.headCenter[0] + cellWidth / 2),
-                        (this.headCenter[1] ),
-                        (cellWidth / 2), 0 * Math.PI, (1 * Math.PI), false);
-                        break;
-                    case Direction.up:
-                        context.arc((this.headCenter[0] + cellWidth / 2),
-                        (this.headCenter[1] + cellHeight),
-                        (cellWidth / 2), 1 * Math.PI, (0 * Math.PI), false);
-                }
+                this.drawHead(context, cellHeight, cellWidth);
             } else {
                 context.fillRect(this.headCenter[0],
-                             this.headCenter[1],
-                             cellWidth, cellHeight);
+                                 this.headCenter[1],
+                                 cellWidth, cellHeight);
             }
-            context.fill();
          }
     }
     grow(): void {
@@ -173,4 +150,29 @@ export class Snake {
         }
         return true;
     }
+    drawHead(context: CanvasRenderingContext2D, cellWidth: number, cellHeight: number): void {
+        context.beginPath();
+            switch (this.direction) {
+                case Direction.right:
+                    context.arc((this.headCenter[0]),
+                    (this.headCenter[1] + cellHeight / 2),
+                    (cellWidth / 2), 1.5 * Math.PI, (0.5 * Math.PI), false);
+                    break;
+                case Direction.left:
+                    context.arc((this.headCenter[0] + cellWidth ),
+                    (this.headCenter[1] + cellHeight / 2),
+                    (cellWidth / 2), 0.5 * Math.PI, (1.5 * Math.PI), false);
+                    break;
+                case Direction.down:
+                    context.arc((this.headCenter[0] + cellWidth / 2),
+                    (this.headCenter[1] ),
+                    (cellWidth / 2), 0 * Math.PI, (1 * Math.PI), false);
+                    break;
+                case Direction.up:
+                    context.arc((this.headCenter[0] + cellWidth / 2),
+                    (this.headCenter[1] + cellHeight),
+                    (cellWidth / 2), 1 * Math.PI, (0 * Math.PI), false);
+            }
+            context.fill();
+        }
 }
