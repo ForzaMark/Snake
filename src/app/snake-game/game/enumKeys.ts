@@ -4,7 +4,7 @@ export enum Keys {
     ArrowLeft,
     ArrowRight,
     KeyW,
-    KeyA,
     KeyS,
+    KeyA,
     KeyD
 }

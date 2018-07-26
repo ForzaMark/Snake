@@ -18,6 +18,10 @@ export class SnakeGame {
         this.elapsedTimeSeconds = 0;
         this.cellWidth = screenWidth / this.configuration.levelWidth;
         this.cellHeight = screenHeight / this.configuration.levelHeight;
+        console.log(configuration.player1Keys);
+        console.log(configuration.player2Keys);
+        
+        
 
         for (let i = 0; i < this.configuration.playerCount; i++) {
             this.multiSnake.push(new Snake(this.configuration.levelWidth,

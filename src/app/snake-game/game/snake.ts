@@ -133,13 +133,13 @@ export class Snake {
             if (key.code === keySet[3].toString()  && this.direction !== Direction.left && this.changeCounter === 0) {
             this.direction = Direction.right;
             }
-            if (key.code === this.player1Keys[0].toString() && this.direction !== Direction.down && this.changeCounter === 0) {
+            if (key.code === keySet[0].toString() && this.direction !== Direction.down && this.changeCounter === 0) {
                 this.direction = Direction.up;
             }
-            if (key.code === this.player1Keys[1].toString() && this.direction !== Direction.up && this.changeCounter === 0) {
+            if (key.code === keySet[1].toString() && this.direction !== Direction.up && this.changeCounter === 0) {
                 this.direction = Direction.down;
             }
-            if (key.code === this.player1Keys[2].toString() && this.direction !== Direction.right && this.changeCounter === 0) {
+            if (key.code === keySet[2].toString() && this.direction !== Direction.right && this.changeCounter === 0) {
                 this.direction = Direction.left;
             }
             this.changeCounter++;
