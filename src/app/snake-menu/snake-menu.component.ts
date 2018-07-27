@@ -23,11 +23,15 @@ export class SnakeGameConfigurationData {
 export class SnakeMenuComponent implements OnInit {
 
   configurationData: SnakeGameConfigurationData = new SnakeGameConfigurationData();
-
+  alertState = false;
+  score: number;
+  reason: string;
   constructor(private service: ConfigDataService, private router: Router) {
   }
-
   ngOnInit() {
+    if (this.service.data) {
+      this.alertState = true;
+    }
     if (!this.service.data) {
       this.service.data = {
         levelWidth: 20,
