@@ -189,38 +189,21 @@ export class Snake {
     private drawEyes(context: CanvasRenderingContext2D, cellWidth: number, cellHeight: number) {
         context.beginPath();
         context.fillStyle = 'red';
-        switch (this.direction) {
-            case Direction.right:
-                context.arc((this.RectCenter[0] + cellWidth / 2),
-                            (this.RectCenter[1] + cellHeight / 2) - cellWidth / 4,
-                            3, 0 * Math.PI, (2 * Math.PI), false);
-                context.arc((this.RectCenter[0] + cellWidth / 2),
-                            (this.RectCenter[1] + cellHeight / 2) + cellWidth / 4,
-                            3, 0 * Math.PI, (2 * Math.PI), false);
-                break;
-            case Direction.left:
-                context.arc((this.RectCenter[0] + cellWidth / 2  ),
-                            (this.RectCenter[1] + cellHeight / 2) - cellWidth / 4,
-                            3, 0 * Math.PI, (2 * Math.PI), false);
-                context.arc((this.RectCenter[0] + cellWidth / 2 ),
-                            (this.RectCenter[1] + cellHeight / 2) + cellWidth / 4,
-                            3, 0 * Math.PI, (2 * Math.PI), false);
-                break;
-            case Direction.down:
-                context.arc((this.RectCenter[0] + cellWidth / 2) - cellWidth / 4,
-                            (this.RectCenter[1] + cellHeight / 2),
-                            3, 0 * Math.PI, (2 * Math.PI), false);
-                context.arc((this.RectCenter[0] + cellWidth / 2) + cellWidth / 4,
-                            (this.RectCenter[1] + cellHeight / 2),
-                            3, 0 * Math.PI, (2 * Math.PI), false);
-                break;
-            case Direction.up:
-                context.arc((this.RectCenter[0] + cellWidth / 2) - cellWidth / 4,
-                            (this.RectCenter[1] + cellHeight / 2),
-                            3, 0 * Math.PI, (2 * Math.PI), false);
-                context.arc((this.RectCenter[0] + cellWidth / 2) + cellWidth / 4,
-                            (this.RectCenter[1] + cellHeight / 2),
-                            3, 0 * Math.PI, (2 * Math.PI), false);
+        if (this.direction === Direction.right || this.direction === Direction.left) {
+            context.arc((this.RectCenter[0] + cellWidth / 2  ),
+                        (this.RectCenter[1] + cellHeight / 2) - cellWidth / 4,
+                        3, 0 * Math.PI, (2 * Math.PI), false);
+            context.arc((this.RectCenter[0] + cellWidth / 2 ),
+                        (this.RectCenter[1] + cellHeight / 2) + cellWidth / 4,
+                        3, 0 * Math.PI, (2 * Math.PI), false);
+        }
+        if (this.direction === Direction.up || this.direction === Direction.down) {
+            context.arc((this.RectCenter[0] + cellWidth / 2) - cellWidth / 4,
+                        (this.RectCenter[1] + cellHeight / 2),
+                        3, 0 * Math.PI, (2 * Math.PI), false);
+            context.arc((this.RectCenter[0] + cellWidth / 2) + cellWidth / 4,
+                        (this.RectCenter[1] + cellHeight / 2),
+                        3, 0 * Math.PI, (2 * Math.PI), false);
         }
         context.fill();
     }
