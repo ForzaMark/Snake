@@ -54,6 +54,8 @@ export class Snake {
                 this.drawHead(context, cellHeight, cellWidth);
                 this.drawEyes(context, cellHeight, cellWidth);
 
+            } else if (i === this.snakeParts.length - 1) {
+                this.drawTail(context, cellHeight, cellWidth);
             } else {
                 context.fillRect(this.partCenter.x,
                                  this.partCenter.y,
@@ -207,6 +209,55 @@ export class Snake {
             context.arc((this.partCenter.x + cellWidth / 2) + cellWidth / 4,
                         (this.partCenter.y + cellHeight / 2),
                         3, 0 * Math.PI, (2 * Math.PI), false);
+        }
+        context.fill();
+    }
+
+    private drawTail(context: CanvasRenderingContext2D, cellWidth: number, cellHeight: number) {
+        context.beginPath();
+        if (this.direction === Direction.left) {
+            context.fillRect(this.partCenter.x,
+                            this.partCenter.y,
+                            cellWidth / 2,
+                            cellHeight);
+            context.arc(this.partCenter.x + cellWidth / 2,
+                        this.partCenter.y +  cellHeight / 2,
+                        cellWidth / 2,
+                        1.5 * Math.PI,
+                        0.5 * Math.PI);
+        }
+        if (this.direction === Direction.right) {
+            context.fillRect(this.partCenter.x + cellWidth / 2,
+                             this.partCenter.y,
+                             cellWidth / 2,
+                             cellHeight);
+            context.arc(this.partCenter.x + cellWidth / 2,
+                        this.partCenter.y + cellHeight / 2,
+                        cellWidth / 2,
+                        0.5 * Math.PI,
+                        1.5 * Math.PI);
+        }
+        if (this.direction === Direction.up) {
+            context.fillRect(this.partCenter.x,
+                            this.partCenter.y - cellHeight / 2,
+                            cellWidth ,
+                            cellHeight);
+            context.arc(this.partCenter.x + cellWidth / 2,
+                        this.partCenter.y + cellHeight / 2,
+                        cellWidth / 2,
+                        0,
+                        Math.PI);
+        }
+        if (this.direction === Direction.down) {
+            context.fillRect(this.partCenter.x,
+                            this.partCenter.y + cellHeight / 2,
+                            cellWidth ,
+                            cellHeight);
+            context.arc(this.partCenter.x + cellWidth / 2,
+                        this.partCenter.y + cellHeight / 2,
+                        cellWidth / 2,
+                        Math.PI,
+                        0);
         }
         context.fill();
     }
