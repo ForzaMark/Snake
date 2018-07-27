@@ -15,4 +15,5 @@ export class SnakeGameConfiguration {
     speed: number;
     grid: boolean;
     playerInputs: SnakeInputConfiguration[];
+    color: string;
 }
