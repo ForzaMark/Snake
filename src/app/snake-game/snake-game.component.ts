@@ -37,12 +37,11 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy {
     const mainCanvas = this.mainCanvasReference.nativeElement as HTMLCanvasElement;
     const container = this.divContainer.nativeElement as HTMLDivElement;
     const framesPerSecond = 30;
-    const screenWidth = container.offsetWidth;
-    const screenHeight = screenWidth / 1.33333333333333333333;
+    const screenWidth = 800;
+    const screenHeight = 600;
     for (let i = 0; i < this.configData.data.playerCount; i++) {
       this.Score.push(this.configData.data.snakeLength);
     }
-
     mainCanvas.width = screenWidth;
     mainCanvas.height = screenHeight;
 
