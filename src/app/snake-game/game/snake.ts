@@ -8,7 +8,10 @@ export class Snake {
     private snakeParts: SnakePart[] = [];
     private snakeHead: SnakePart;
     private changeCounter = 0;
-    private RectCenter: number[] = [0, 0];
+    private RectCenter = {
+        x : 0,
+        y : 0
+    };
 
     constructor(private fieldWidth: number,
                 private fieldHeight: number,
@@ -44,16 +47,16 @@ export class Snake {
             } else {
                 context.fillStyle = '#B18904';
             }
-            this.RectCenter[0] =  this.snakeParts[i].x * cellWidth;
-            this.RectCenter[1] =  this.snakeParts[i].y * cellHeight;
+            this.RectCenter.x =  this.snakeParts[i].x * cellWidth;
+            this.RectCenter.y =  this.snakeParts[i].y * cellHeight;
 
             if ( i === 0 ) {
                 this.drawHead(context, cellHeight, cellWidth);
                 this.drawEyes(context, cellHeight, cellWidth);
 
             } else {
-                context.fillRect(this.RectCenter[0],
-                                 this.RectCenter[1],
+                context.fillRect(this.RectCenter.x,
+                                 this.RectCenter.y,
                                  cellWidth, cellHeight);
             }
          }
@@ -157,31 +160,31 @@ export class Snake {
         context.beginPath();
             switch (this.direction) {
                 case Direction.right:
-                    context.arc((this.RectCenter[0] + cellWidth / 2),
-                                (this.RectCenter[1] + cellHeight / 2 ),
+                    context.arc((this.RectCenter.x + cellWidth / 2),
+                                (this.RectCenter.y + cellHeight / 2 ),
                                 (cellWidth / 2), 1.5 * Math.PI, (0.5 * Math.PI), false);
-                    context.fillRect(this.RectCenter[0], this.RectCenter[1], cellWidth / 2, cellHeight);
+                    context.fillRect(this.RectCenter.x, this.RectCenter.y, cellWidth / 2, cellHeight);
                     break;
                 case Direction.left:
-                    context.arc((this.RectCenter[0]  + cellWidth / 2 ),
-                                (this.RectCenter[1] + cellHeight / 2),
+                    context.arc((this.RectCenter.x  + cellWidth / 2 ),
+                                (this.RectCenter.y + cellHeight / 2),
                                 (cellWidth / 2), 0.5 * Math.PI, (1.5 * Math.PI), false);
-                    context.fillRect(this.RectCenter[0] + cellWidth / 2, this.RectCenter[1], cellWidth / 2, cellHeight);
+                    context.fillRect(this.RectCenter.x + cellWidth / 2, this.RectCenter.y, cellWidth / 2, cellHeight);
                     break;
                 case Direction.down:
-                    context.arc((this.RectCenter[0] + cellWidth / 2),
-                                (this.RectCenter[1] + cellHeight / 2),
+                    context.arc((this.RectCenter.x + cellWidth / 2),
+                                (this.RectCenter.y + cellHeight / 2),
                                 (cellWidth / 2), 0 * Math.PI, (1 * Math.PI), false);
-                    context.fillRect(this.RectCenter[0],
-                                    this.RectCenter[1], cellWidth ,
+                    context.fillRect(this.RectCenter.x,
+                                    this.RectCenter.y, cellWidth ,
                                     cellHeight / 2 );
                     break;
                 case Direction.up:
-                    context.arc((this.RectCenter[0] + cellWidth / 2),
-                                (this.RectCenter[1] + cellHeight / 2),
+                    context.arc((this.RectCenter.x + cellWidth / 2),
+                                (this.RectCenter.y + cellHeight / 2),
                                 (cellWidth / 2), 1 * Math.PI, (0 * Math.PI), false);
-                    context.fillRect(this.RectCenter[0],
-                                    this.RectCenter[1] + cellHeight / 2, cellWidth ,
+                    context.fillRect(this.RectCenter.x,
+                                    this.RectCenter.y + cellHeight / 2, cellWidth ,
                                     cellHeight / 2 );
             }
             context.fill();
@@ -190,19 +193,19 @@ export class Snake {
         context.beginPath();
         context.fillStyle = 'red';
         if (this.direction === Direction.right || this.direction === Direction.left) {
-            context.arc((this.RectCenter[0] + cellWidth / 2  ),
-                        (this.RectCenter[1] + cellHeight / 2) - cellWidth / 4,
+            context.arc((this.RectCenter.x + cellWidth / 2  ),
+                        (this.RectCenter.y + cellHeight / 2) - cellWidth / 4,
                         3, 0 * Math.PI, (2 * Math.PI), false);
-            context.arc((this.RectCenter[0] + cellWidth / 2 ),
-                        (this.RectCenter[1] + cellHeight / 2) + cellWidth / 4,
+            context.arc((this.RectCenter.x + cellWidth / 2 ),
+                        (this.RectCenter.y + cellHeight / 2) + cellWidth / 4,
                         3, 0 * Math.PI, (2 * Math.PI), false);
         }
         if (this.direction === Direction.up || this.direction === Direction.down) {
-            context.arc((this.RectCenter[0] + cellWidth / 2) - cellWidth / 4,
-                        (this.RectCenter[1] + cellHeight / 2),
+            context.arc((this.RectCenter.x + cellWidth / 2) - cellWidth / 4,
+                        (this.RectCenter.y + cellHeight / 2),
                         3, 0 * Math.PI, (2 * Math.PI), false);
-            context.arc((this.RectCenter[0] + cellWidth / 2) + cellWidth / 4,
-                        (this.RectCenter[1] + cellHeight / 2),
+            context.arc((this.RectCenter.x + cellWidth / 2) + cellWidth / 4,
+                        (this.RectCenter.y + cellHeight / 2),
                         3, 0 * Math.PI, (2 * Math.PI), false);
         }
         context.fill();
