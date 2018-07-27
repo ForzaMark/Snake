@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('mainCanvas') mainCanvasReference: ElementRef;
+  @ViewChild('container') divContainer: ElementRef;
 
   private drawTimer: any;
   Score: number[] = [];
@@ -21,23 +22,23 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy {
     private configData: ConfigDataService,
     private router: Router
   ) { }
-  
+
   ngOnInit(): void {
     if (!this.configData.data) {
       this.router.navigate(['/snake-menu']);
     }
   }
-  
+
   ngAfterViewInit(): void {
-    if (!this.configData.data) { 
+    if (!this.configData.data) {
       return;
     }
 
     const mainCanvas = this.mainCanvasReference.nativeElement as HTMLCanvasElement;
+    const container = this.divContainer.nativeElement as HTMLDivElement;
     const framesPerSecond = 30;
-    const speed = 1;
-    const screenWidth = 800;
-    const screenHeight = 600;
+    const screenWidth = container.offsetWidth;
+    const screenHeight = screenWidth / 1.33333333333333333333;
     for (let i = 0; i < this.configData.data.playerCount; i++) {
       this.Score.push(this.configData.data.snakeLength);
     }
@@ -54,8 +55,8 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy {
     let lastTimeStamp = Date.now();
 
     this.drawTimer = setInterval(() => {
-      let currentTimeStamp = Date.now()
-      let difference = currentTimeStamp - lastTimeStamp;
+      const currentTimeStamp = Date.now();
+      const difference = currentTimeStamp - lastTimeStamp;
       lastTimeStamp = currentTimeStamp;
       if (snakeGame.update(difference / 1000)) {
       } else {
