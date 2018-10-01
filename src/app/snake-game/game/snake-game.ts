@@ -38,7 +38,8 @@ export class SnakeGame {
                                            this.configuration.levelHeight,
                                            this.configuration.snakeLength,
                                            i,
-                                           this.configuration.playerInputs[i]));
+                                           this.configuration.playerInputs[i],
+                                           this.widthDifference / 2, this.heightDifference / 2));
             this.score[i] = configuration.snakeLength;
         }
 
