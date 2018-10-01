@@ -25,7 +25,6 @@ export class Snake {
                 widthCorrectur: number, heightCorrecture: number) {
         this.witdhCorrecture = widthCorrectur;
         this.heightCorrecture = heightCorrecture;
-
         for (let i = 0; i < snakeSize; i++) {
             if (startPos === 0) {
                 this.addPart(0, startPos);
@@ -182,10 +181,10 @@ export class Snake {
                 this.snakeParts[0].y = this.fieldHeight;
             }
         }
-        if (!wallenabled && (this.snakeHead.x > this.fieldWidth ||
-                                               this.snakeHead.x < -1 ||
-                                               this.snakeHead.y > this.fieldHeight ||
-                                               this.snakeHead.y < -1)) {
+        if (!wallenabled && (this.snakeHead.x >= this.fieldWidth ||
+                                               this.snakeHead.x <= -1 ||
+                                               this.snakeHead.y >= this.fieldHeight ||
+                                               this.snakeHead.y <= -1)) {
             return false;
         }
         return true;
