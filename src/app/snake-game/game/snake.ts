@@ -229,7 +229,7 @@ export class Snake {
 
     private drawTail(context: CanvasRenderingContext2D, cellWidth: number, cellHeight: number) {
         context.beginPath();
-        if ( this.tailDirection[0]) {
+        if (this.tailDirection[0]) {
             context.fillRect(this.partCenter.x,
                             this.partCenter.y,
                             cellWidth / 2,
@@ -240,7 +240,7 @@ export class Snake {
                         1.5 * Math.PI,
                         0.5 * Math.PI);
         }
-        if ( this.tailDirection[1]) {
+        if (this.tailDirection[1]) {
             context.fillRect(this.partCenter.x + cellWidth / 2,
                              this.partCenter.y,
                              cellWidth / 2,
@@ -251,7 +251,7 @@ export class Snake {
                         0.5 * Math.PI,
                         1.5 * Math.PI);
         }
-        if ( this.tailDirection[2]) {
+        if (this.tailDirection[2]) {
             context.fillRect(this.partCenter.x,
                             this.partCenter.y - cellHeight / 2,
                             cellWidth ,
@@ -262,7 +262,7 @@ export class Snake {
                         0,
                         Math.PI);
         }
-        if ( this.tailDirection[3]) {
+        if (this.tailDirection[3]) {
             context.fillRect(this.partCenter.x,
                             this.partCenter.y + cellHeight / 2,
                             cellWidth,
