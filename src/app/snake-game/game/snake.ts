@@ -8,8 +8,6 @@ export class Snake {
     private snakeParts: SnakePart[] = [];
     private snakeHead: SnakePart;
     private changeCounter = 0;
-    private waitCounter: number[] = [0, 0, 0, 0];
-    private tailDirection: boolean[] = [false, false, false, false];
     private partCenter = {
         x : 0,
         y : 0
@@ -43,13 +41,6 @@ export class Snake {
     move(wallEnabled: boolean): boolean {
         this.sort();
         this.makeaStep();
-        if (this.waitCounter[this.direction] !== 0) {
-            this.waitCounter[this.direction]--;
-        }
-        if (this.waitCounter[this.direction] === 0) {
-            this.tailDirection = [false, false, false, false];
-            this.tailDirection[this.direction] = true;
-        }
        return this.wall(wallEnabled);
     }
 
@@ -85,8 +76,8 @@ export class Snake {
     }
 
     onkey(key: KeyboardEvent): void {
-        this.waitCounter[this.direction] =  this.snakeParts.length;
-        this.tailDirection[this.direction] = true;
+        // this.waitCounter[this.direction] =  this.snakeParts.length;
+        // this.tailDirection[this.direction] = true;
         if (this.changeCounter === 0) {
             if (key.code === this.input.right && this.direction !== Direction.left) {
                 this.direction = Direction.right;
@@ -245,8 +236,9 @@ export class Snake {
     }
 
     private drawTail(context: CanvasRenderingContext2D, cellWidth: number, cellHeight: number) {
+        const dir = this.snakeParts[this.snakeParts.length - 2];
         context.beginPath();
-        if (this.tailDirection[0]) {
+        if (dir.x - this.snakeParts[this.snakeParts.length - 1].x === -1) {
             context.fillRect(this.partCenter.x,
                             this.partCenter.y,
                             cellWidth / 2,
@@ -257,7 +249,7 @@ export class Snake {
                         1.5 * Math.PI,
                         0.5 * Math.PI);
         }
-        if (this.tailDirection[1]) {
+        if (dir.x - this.snakeParts[this.snakeParts.length - 1].x === 1 ) {
             context.fillRect(this.partCenter.x + cellWidth / 2,
                              this.partCenter.y,
                              cellWidth / 2,
@@ -268,7 +260,7 @@ export class Snake {
                         0.5 * Math.PI,
                         1.5 * Math.PI);
         }
-        if (this.tailDirection[2]) {
+        if (dir.y - this.snakeParts[this.snakeParts.length - 1].y === -1) {
             context.fillRect(this.partCenter.x,
                             this.partCenter.y - cellHeight / 2,
                             cellWidth ,
@@ -279,7 +271,7 @@ export class Snake {
                         0,
                         Math.PI);
         }
-        if (this.tailDirection[3]) {
+        if (dir.y - this.snakeParts[this.snakeParts.length - 1].y === 1) {
             context.fillRect(this.partCenter.x,
                             this.partCenter.y + cellHeight / 2,
                             cellWidth,
