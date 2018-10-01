@@ -15,6 +15,8 @@ export class SnakeGame {
     score: number[] = [];
     private gridWidth: number;
     private gridHeight: number;
+    private widthDifference: number;
+    private heightDifference: number;
 
     constructor(private screenWidth: number, private screenHeight: number, private configuration: SnakeGameConfiguration) {
         this.elapsedTimeSeconds = 0;
@@ -28,8 +30,8 @@ export class SnakeGame {
         }
         this.gridWidth = this.cellWidth * this.configuration.levelWidth;
         this.gridHeight = this.cellHeight * this.configuration.levelHeight;
-        const widthDifference = screenWidth - this.gridWidth;
-        const heightDifference = screenHeight - this.gridHeight;
+        this.widthDifference = screenWidth - this.gridWidth;
+        this.heightDifference = screenHeight - this.gridHeight;
 
         for (let i = 0; i < this.configuration.playerCount; i++) {
             this.multiSnake.push(new Snake(this.configuration.levelWidth,
@@ -41,8 +43,7 @@ export class SnakeGame {
         }
 
         this.grid = new SnakeGrid(this.cellWidth, this.cellHeight,
-                                  this.configuration.levelWidth, this.configuration.levelHeight,
-                                  widthDifference / 2, heightDifference / 2);
+                                  this.configuration.levelWidth, this.configuration.levelHeight);
         this.food = new Food(this.cellWidth, this.cellHeight, this.configuration.levelWidth, this.configuration.levelHeight);
         this.level = new Level(this.cellWidth, this.cellHeight, this.configuration.levelWidth, this.configuration.levelHeight);
         this.food.createNewFood(this.multiSnake[0]);
@@ -100,15 +101,17 @@ export class SnakeGame {
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
 
         if (this.configuration.grid) {
-            this.grid.draw(context);
+            this.grid.draw(context, this.widthDifference / 2, this.heightDifference / 2 );
         }
 
         for (let i = 0; i < this.multiSnake.length; i++) {
-            this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight, i, this.configuration.color);
+            this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight,
+                                    i, this.configuration.color,
+                                    this.widthDifference / 2, this.heightDifference / 2);
         }
 
-        this.food.draw(context);
-        this.level.draw(context);
+        this.food.draw(context, this.widthDifference / 2, this.heightDifference / 2 );
+        this.level.draw(context, this.widthDifference / 2, this.heightDifference / 2 );
     }
 
     onKeyUp(key: KeyboardEvent): void {

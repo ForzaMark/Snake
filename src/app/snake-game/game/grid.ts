@@ -1,34 +1,33 @@
 export class SnakeGrid {
     constructor(private cellWidth: number, private cellHeight: number,
-                private fieldWidth: number, private fieldHeight: number,
-                private widthCorrecture: number, private heightCorrecture: number) {}
+                private fieldWidth: number, private fieldHeight: number) {}
 
-    draw(context: CanvasRenderingContext2D): void {
-        if (this.heightCorrecture === 0 ) {
+    draw(context: CanvasRenderingContext2D, widthCorrecture: number, heightCorrecture: number): void {
+        if (heightCorrecture === 0 ) {
             for (let x = 0; x <= this.fieldWidth; x++) {
                 context.beginPath();
-                context.moveTo(x * this.cellWidth + this.widthCorrecture, this.heightCorrecture);
-                context.lineTo(x * this.cellWidth + this.widthCorrecture, this.fieldHeight * this.cellHeight);
+                context.moveTo(x * this.cellWidth + widthCorrecture, heightCorrecture);
+                context.lineTo(x * this.cellWidth + widthCorrecture, this.fieldHeight * this.cellHeight);
                 context.stroke();
             }
             for (let y = 0; y <= this.fieldHeight ; y++) {
                context.beginPath();
-               context.moveTo(this.widthCorrecture, y * this.cellHeight);
-               context.lineTo(this.cellWidth * this.fieldWidth + this.widthCorrecture, y * this.cellHeight);
+               context.moveTo(widthCorrecture, y * this.cellHeight);
+               context.lineTo(this.cellWidth * this.fieldWidth + widthCorrecture, y * this.cellHeight);
                context.stroke();
              }
         }
-        if (this.widthCorrecture === 0) {
+        if (widthCorrecture === 0) {
             for (let x = 0; x <= this.fieldWidth; x++) {
                 context.beginPath();
-                context.moveTo(x * this.cellWidth, this.heightCorrecture);
-                context.lineTo(x * this.cellWidth, this.fieldHeight * this.cellHeight + this.heightCorrecture);
+                context.moveTo(x * this.cellWidth, heightCorrecture);
+                context.lineTo(x * this.cellWidth, this.fieldHeight * this.cellHeight + heightCorrecture);
                 context.stroke();
             }
             for (let y = 0; y <= this.fieldHeight ; y++) {
                context.beginPath();
-               context.moveTo(0, y * this.cellHeight + this.heightCorrecture );
-               context.lineTo(this.cellWidth * this.fieldWidth, y * this.cellHeight + this.heightCorrecture);
+               context.moveTo(0, y * this.cellHeight + heightCorrecture );
+               context.lineTo(this.cellWidth * this.fieldWidth, y * this.cellHeight + heightCorrecture);
                context.stroke();
              }
         }

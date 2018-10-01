@@ -49,7 +49,10 @@ export class Snake {
        return this.wall(wallEnabled);
     }
 
-    draw(context: CanvasRenderingContext2D, cellWidth: number, cellHeight: number, snakeNumber: number, color: string): void {
+    draw(context: CanvasRenderingContext2D,
+         cellWidth: number, cellHeight: number,
+         snakeNumber: number, color: string,
+         widthCorrectur: number, heightCorrecture: number): void {
         for (let i = 0; i < this.snakeParts.length; i++) {
             if (snakeNumber === 0) {
                 context.fillStyle = color;
