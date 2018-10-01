@@ -13,11 +13,23 @@ export class SnakeGame {
     private level: Level;
     private multiSnake: Snake[] = [];
     score: number[] = [];
+    private gridWidth: number;
+    private gridHeight: number;
 
     constructor(private screenWidth: number, private screenHeight: number, private configuration: SnakeGameConfiguration) {
         this.elapsedTimeSeconds = 0;
         this.cellWidth = screenWidth / this.configuration.levelWidth;
         this.cellHeight = screenHeight / this.configuration.levelHeight;
+        if (this.cellWidth < this.cellHeight) {
+            this.cellHeight = this.cellWidth;
+        }
+        if (this.cellHeight < this.cellWidth) {
+            this.cellWidth = this.cellHeight;
+        }
+        this.gridWidth = this.cellWidth * this.configuration.levelWidth;
+        this.gridHeight = this.cellHeight * this.configuration.levelHeight;
+        const widthDifference = screenWidth - this.gridWidth;
+        const heightDifference = screenHeight - this.gridHeight;
 
         for (let i = 0; i < this.configuration.playerCount; i++) {
             this.multiSnake.push(new Snake(this.configuration.levelWidth,
@@ -28,7 +40,9 @@ export class SnakeGame {
             this.score[i] = configuration.snakeLength;
         }
 
-        this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.configuration.levelWidth, this.configuration.levelHeight);
+        this.grid = new SnakeGrid(this.cellWidth, this.cellHeight,
+                                  this.configuration.levelWidth, this.configuration.levelHeight,
+                                  widthDifference / 2, heightDifference / 2);
         this.food = new Food(this.cellWidth, this.cellHeight, this.configuration.levelWidth, this.configuration.levelHeight);
         this.level = new Level(this.cellWidth, this.cellHeight, this.configuration.levelWidth, this.configuration.levelHeight);
         this.food.createNewFood(this.multiSnake[0]);

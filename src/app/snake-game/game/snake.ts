@@ -46,9 +46,6 @@ export class Snake {
             this.tailDirection = [false, false, false, false];
             this.tailDirection[this.direction] = true;
         }
-        // if (this.tailDirection[this.direction] !== false ) {
-        //     this.tailDirection[this.direction] = false;
-        // }
        return this.wall(wallEnabled);
     }
 
