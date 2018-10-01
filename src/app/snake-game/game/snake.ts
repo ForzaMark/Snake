@@ -76,8 +76,6 @@ export class Snake {
     }
 
     onkey(key: KeyboardEvent): void {
-        // this.waitCounter[this.direction] =  this.snakeParts.length;
-        // this.tailDirection[this.direction] = true;
         if (this.changeCounter === 0) {
             if (key.code === this.input.right && this.direction !== Direction.left) {
                 this.direction = Direction.right;
