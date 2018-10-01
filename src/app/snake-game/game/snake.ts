@@ -155,32 +155,37 @@ export class Snake {
         }
     }
     private wall(wallenabled: boolean): boolean {
-        if ((this.snakeHead.x >= this.fieldWidth && this.witdhCorrecture === 0) ||
-            (this.snakeHead.x >= this.fieldWidth && this.witdhCorrecture !== 0)
-            && wallenabled) {
-            this.snakeParts[0].x = 0;
-        } else if (this.snakeHead.x > this.fieldWidth && !wallenabled) {
-            return false;
+        if (this.heightCorrecture !== 0 || this.witdhCorrecture !== 0) {
+            if (this.snakeHead.x >= this.fieldWidth && wallenabled) {
+                this.snakeParts[0].x = 0;
+            }
+            if (this.snakeHead.x < 0 && wallenabled) {
+                this.snakeParts[0].x = this.fieldWidth - 1;
+            }
+            if (this.snakeHead.y >= this.fieldHeight && wallenabled) {
+                this.snakeParts[0].y = 0;
+            }
+            if (this.snakeHead.y < 0 && wallenabled) {
+                this.snakeParts[0].y = this.fieldHeight - 1;
+            }
+        } else {
+            if (this.snakeHead.x >= this.fieldWidth && wallenabled) {
+                this.snakeParts[0].x = 0;
+            }
+            if (this.snakeHead.x < 0 && wallenabled) {
+                this.snakeParts[0].x = this.fieldWidth - 1;
+            }
+            if (this.snakeHead.y >= this.fieldHeight && wallenabled) {
+                this.snakeParts[0].y = 0;
+            }
+            if (this.snakeHead.y <= 0 && wallenabled) {
+                this.snakeParts[0].y = this.fieldHeight;
+            }
         }
-        if ((this.snakeHead.x < 0 && this.witdhCorrecture === 0) ||
-            (this.snakeHead.x < 0 && this.witdhCorrecture !== 0)
-            && wallenabled) {
-            this.snakeParts[0].x = this.fieldWidth - 1;
-        } else if (this.snakeHead.x < -1 && !wallenabled) {
-            return false;
-        }
-        if ((this.snakeHead.y >= this.fieldHeight && this.heightCorrecture === 0) ||
-            (this.snakeHead.y >= this.fieldHeight && this.heightCorrecture !== 0 )
-            && wallenabled) {
-            this.snakeParts[0].y = 0;
-        } else if (this.snakeHead.y > this.fieldHeight && !wallenabled) {
-            return false;
-        }
-        if ((this.snakeHead.y < 0 && this.heightCorrecture === 0) ||
-            (this.snakeHead.y < 0 && this.heightCorrecture !== 0 )
-            && wallenabled) {
-            this.snakeParts[0].y = this.fieldHeight;
-        } else if (this.snakeHead.y < -1 && !wallenabled) {
+        if (!wallenabled && (this.snakeHead.x > this.fieldWidth ||
+                                               this.snakeHead.x < -1 ||
+                                               this.snakeHead.y > this.fieldHeight ||
+                                               this.snakeHead.y < -1)) {
             return false;
         }
         return true;
