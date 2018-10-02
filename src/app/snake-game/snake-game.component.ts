@@ -1,15 +1,17 @@
-import { Component, AfterViewInit, ElementRef, ViewChild, OnDestroy, OnInit } from '@angular/core';
-import { SnakeGame } from './game/snake-game';
+import { Component, AfterViewInit, ElementRef, ViewChild, OnDestroy, OnInit, Input } from '@angular/core';
+import { SnakeGame, IMessageService } from './game/snake-game';
 import { Location } from '@angular/common';
 import { ConfigDataService } from '../config-data.service';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-snake-game',
   templateUrl: './snake-game.component.html',
   styleUrls: ['./snake-game.component.css']
 })
-export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy {
+
+export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMessageService {
   @ViewChild('mainCanvas') mainCanvasReference: ElementRef;
   @ViewChild('container') divContainer: ElementRef;
 
@@ -47,7 +49,7 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const context = mainCanvas.getContext('2d');
 
-    const snakeGame = new SnakeGame(screenWidth, screenHeight, this.configData.data);
+    const snakeGame = new SnakeGame(screenWidth, screenHeight, this.configData.data, this);
 
     document.addEventListener('keyup', e => snakeGame.onKeyUp(e as KeyboardEvent));
 
@@ -71,4 +73,9 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     clearInterval(this.drawTimer);
   }
+
+  alert(text: string): void {
+    alert(text);
+  }
+
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, NgModule } from '@angular/core';
 import { ConfigDataService } from '../config-data.service';
 import { Router } from '@angular/router';
+import { NgbModal } from '../../../node_modules/@ng-bootstrap/ng-bootstrap';
 
 export class SnakeGameConfigurationData {
   levelWidth: string;
@@ -28,7 +29,7 @@ export class SnakeMenuComponent implements OnInit {
   alertState = false;
   score: number;
   reason: string;
-  constructor(private service: ConfigDataService, private router: Router) {
+  constructor(private service: ConfigDataService, private router: Router, private modalService: NgbModal) {
   }
   ngOnInit() {
     if (this.service.data) {
@@ -59,7 +60,7 @@ export class SnakeMenuComponent implements OnInit {
           }
         ],
         color : '#08088A',
-        lives : 1
+        lives : 1,
       };
     }
 
@@ -118,5 +119,8 @@ export class SnakeMenuComponent implements OnInit {
     this.service.data.color = this.configurationData.color;
     this.service.data.lives = this.configurationData.lives;
     this.router.navigate(['/snake-game']);
+  }
+  callModal(modal): void {
+    this.modalService.open(modal);
   }
 }

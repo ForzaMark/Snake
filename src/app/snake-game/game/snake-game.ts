@@ -4,6 +4,10 @@ import { SnakeGrid } from './grid';
 import { Level } from './Level';
 import { SnakeGameConfiguration } from './snake-game-configuration';
 
+export interface IMessageService {
+    alert(text: string);
+}
+
 export class SnakeGame {
     private elapsedTimeSeconds: number;
     private food: Food;
@@ -20,7 +24,10 @@ export class SnakeGame {
     private liveCounter: number[] = [];
     private liveCounterState: boolean;
 
-    constructor(private screenWidth: number, private screenHeight: number, private configuration: SnakeGameConfiguration) {
+    constructor(private screenWidth: number,
+                private screenHeight: number,
+                private configuration: SnakeGameConfiguration,
+                private messageService: IMessageService) {
         this.elapsedTimeSeconds = 0;
         this.liveCounter = [0, 0];
         this.liveCounterState = false;
@@ -70,7 +77,7 @@ export class SnakeGame {
                 if (!this.multiSnake[i].move(this.configuration.wall)) {
                     this.liveCounter[i]++;
                     this.liveCounterState = true;
-                    alert('Beendet : mit Wand kollidiert --> Score : ' + this.score[i] +
+                    this.messageService.alert('Beendet : mit Wand kollidiert --> Score : ' + this.score[i] +
                         ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter[i]));
                 }
                 if (this.multiSnake[i].isOnSnake(this.food)) {
@@ -88,7 +95,7 @@ export class SnakeGame {
                 if (this.level.collidesWith(this.multiSnake[i])) {
                     this.liveCounter[i]++;
                     this.liveCounterState = true;
-                    alert('Beendet : Mit Hinderniss kollidiert ---> Score : ' + this.score[i] +
+                    this.messageService.alert('Beendet : Mit Hinderniss kollidiert ---> Score : ' + this.score[i] +
                           ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter[i]) );
                     this.level.changeObstaclePosition(this.multiSnake[i], this.food);
                 }
@@ -96,7 +103,7 @@ export class SnakeGame {
                 if (this.multiSnake[i].collidesWithItself()) {
                     this.liveCounterState = true;
                     this.liveCounter[i]++;
-                    alert('Beendet : Mit sich selbst kollidiert ---> Score : ' + this.score[i] +
+                    this.messageService.alert('Beendet : Mit sich selbst kollidiert ---> Score : ' + this.score[i] +
                           ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter[i]));
                 }
 
@@ -105,7 +112,7 @@ export class SnakeGame {
                        this.multiSnake[i].collidesWithOtherSnake(this.multiSnake[j])) {
                             this.liveCounterState = true;
                             this.liveCounter[i]++;
-                            alert('Beendet : Mit anderer Schlange kollidiert --> Score : ' + this.score[i] +
+                            this.messageService.alert('Beendet : Mit anderer Schlange kollidiert --> Score : ' + this.score[i] +
                                   ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter[i]));
                     }
                 }

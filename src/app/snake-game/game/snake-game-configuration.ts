@@ -1,3 +1,4 @@
+
 export class SnakeInputConfiguration {
     left: string;
     right: string;

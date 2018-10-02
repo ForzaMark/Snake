@@ -6,17 +6,22 @@ import { AppComponent } from './app.component';
 import { SnakeGameComponent } from './snake-game/snake-game.component';
 import { SnakeMenuComponent } from './snake-menu/snake-menu.component';
 import { AppRoutingModule } from './/app-routing.module';
+import { NgbModal, NgbModule } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
+
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     SnakeGameComponent,
-    SnakeMenuComponent
+    SnakeMenuComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    NgbModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
