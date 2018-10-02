@@ -16,4 +16,5 @@ export class SnakeGameConfiguration {
     grid: boolean;
     playerInputs: SnakeInputConfiguration[];
     color: string;
+    lives: number;
 }

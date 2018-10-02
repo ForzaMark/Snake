@@ -17,9 +17,11 @@ export class SnakeGame {
     private gridHeight: number;
     private widthDifference: number;
     private heightDifference: number;
+    private liveCounter: number;
 
     constructor(private screenWidth: number, private screenHeight: number, private configuration: SnakeGameConfiguration) {
         this.elapsedTimeSeconds = 0;
+        this.liveCounter = 0;
         this.cellWidth = screenWidth / this.configuration.levelWidth;
         this.cellHeight = screenHeight / this.configuration.levelHeight;
         if (this.cellWidth < this.cellHeight) {
@@ -52,50 +54,57 @@ export class SnakeGame {
 
     update(deltaSeconds: number): boolean {
         const updateThresholdSeconds = this.configuration.speed;
-
         this.elapsedTimeSeconds += deltaSeconds;
         if (this.elapsedTimeSeconds < updateThresholdSeconds) {
             return true;
         } else {
             this.elapsedTimeSeconds -= updateThresholdSeconds;
         }
+        for (let i = 0; i < this.configuration.lives; i++) {
 
-        for (let i = 0; i < this.multiSnake.length; i++) {
-            if (!this.multiSnake[i].move(this.configuration.wall)) {
-                alert('Beendet : mit Wand kollidiert --> Score : ' + this.score[i]);
-                return false;
-            }
-            if (this.multiSnake[i].isOnSnake(this.food)) {
-                this.score[i]++;
-                this.multiSnake[i].grow();
-                this.food.createNewFood(this.multiSnake[i]);
-                if ((this.multiSnake[i].getSnakeLength() % this.configuration.skillLevel === 0)
-                    || this.multiSnake[i].getSnakeLength() === this.configuration.snakeLength + 1) {
-                    this.level.addObstacle(this.multiSnake[i], this.food);
-                } else {
+                if (!this.multiSnake[i].move(this.configuration.wall)) {
+                    this.liveCounter++;
+                    alert('Beendet : mit Wand kollidiert --> Score : ' + this.score[i] +
+                        ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter));
+                }
+                if (this.multiSnake[i].isOnSnake(this.food)) {
+                    this.score[i]++;
+                    this.multiSnake[i].grow();
+                    this.food.createNewFood(this.multiSnake[i]);
+                    if ((this.multiSnake[i].getSnakeLength() % this.configuration.skillLevel === 0)
+                        || this.multiSnake[i].getSnakeLength() === this.configuration.snakeLength + 1) {
+                        this.level.addObstacle(this.multiSnake[i], this.food);
+                    } else {
+                        this.level.changeObstaclePosition(this.multiSnake[i], this.food);
+                    }
+                }
+
+                if (this.level.collidesWith(this.multiSnake[i])) {
+                    this.liveCounter++;
+                    alert('Beendet : Mit Hinderniss kollidiert ---> Score : ' + this.score[i] +
+                          ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter) );
                     this.level.changeObstaclePosition(this.multiSnake[i], this.food);
                 }
-            }
 
-            if (this.level.collidesWith(this.multiSnake[i])) {
-                alert('Beendet : Mit Hinderniss kollidiert ---> Score : ' + this.score[i]);
-                return false;
-            }
-
-            if (this.multiSnake[i].collidesWithItself()) {
-                alert('Beendet : Mit sich selbst kollidiert ---> Score : ' + this.score[i]);
-                return false;
-            }
-
-            for (let j = 0; j < this.multiSnake.length; j++) {
-                if (this.multiSnake[j] !== this.multiSnake[i] &&
-                   this.multiSnake[i].collidesWithOtherSnake(this.multiSnake[j])) {
-                        alert('Beendet : Mit anderer Schlange kollidiert --> Score : ' + this.score[i]);
-                        return false;
+                if (this.multiSnake[i].collidesWithItself()) {
+                    this.liveCounter++;
+                    alert('Beendet : Mit sich selbst kollidiert ---> Score : ' + this.score[i] +
+                          ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter));
                 }
-            }
+
+                for (let j = 0; j < this.multiSnake.length; j++) {
+                    if (this.multiSnake[j] !== this.multiSnake[i] &&
+                       this.multiSnake[i].collidesWithOtherSnake(this.multiSnake[j])) {
+                            this.liveCounter++;
+                            alert('Beendet : Mit anderer Schlange kollidiert --> Score : ' + this.score[i] +
+                                  ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter));
+                    }
+                }
+                if (this.liveCounter >= this.configuration.lives) {
+                    return false;
+                }
+            return true;
         }
-        return true;
     }
 
     draw(context: CanvasRenderingContext2D): void {

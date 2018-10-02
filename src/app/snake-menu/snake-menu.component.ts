@@ -14,6 +14,7 @@ export class SnakeGameConfigurationData {
   player1Keys: string[];
   player2Keys: string[];
   color: string;
+  lives: number;
 }
 
 @Component({
@@ -57,7 +58,8 @@ export class SnakeMenuComponent implements OnInit {
             right: 'KeyD',
           }
         ],
-        color : '#08088A'
+        color : '#08088A',
+        lives : 1
       };
     }
 
@@ -78,6 +80,7 @@ export class SnakeMenuComponent implements OnInit {
                                           this.service.data.playerInputs[1].left,
                                           this.service.data.playerInputs[1].right];
     this.configurationData.color = this.service.data.color;
+    this.configurationData.lives = this.service.data.lives;
   }
 
   startGame() {
@@ -113,6 +116,7 @@ export class SnakeMenuComponent implements OnInit {
       }
     ];
     this.service.data.color = this.configurationData.color;
+    this.service.data.lives = this.configurationData.lives;
     this.router.navigate(['/snake-game']);
   }
 }
