@@ -166,7 +166,7 @@ export class Snake {
             if (this.snakeHead.y >= this.fieldHeight && wallenabled) {
                 this.snakeParts[0].y = 0;
             }
-            if (this.snakeHead.y <= 0 && wallenabled) {
+            if (this.snakeHead.y < 0 && wallenabled) {
                 this.snakeParts[0].y = this.fieldHeight;
             }
         }
