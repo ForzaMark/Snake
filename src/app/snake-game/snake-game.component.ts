@@ -13,16 +13,18 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMessageService {
   @ViewChild('mainCanvas') mainCanvasReference: ElementRef;
-  @ViewChild('container') divContainer: ElementRef;
+  @ViewChild('content') content: any;
 
   private drawTimer: any;
   Score: number[] = [];
   message: string;
+  modal: object;
 
   constructor(
     private location: Location,
     private configData: ConfigDataService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -35,9 +37,7 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
     if (!this.configData.data) {
       return;
     }
-
     const mainCanvas = this.mainCanvasReference.nativeElement as HTMLCanvasElement;
-    const container = this.divContainer.nativeElement as HTMLDivElement;
     const framesPerSecond = 30;
     const screenWidth = 800;
     const screenHeight = 600;
@@ -74,8 +74,8 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
     clearInterval(this.drawTimer);
   }
 
-  alert(text: string): void {
-    alert(text);
+  alert(text: string, callback: () => void): void {
+    this.modalService.open(this.content).result.then(() => callback(), () => callback());
   }
 
 }

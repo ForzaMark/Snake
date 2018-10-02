@@ -5,7 +5,7 @@ import { Level } from './Level';
 import { SnakeGameConfiguration } from './snake-game-configuration';
 
 export interface IMessageService {
-    alert(text: string);
+    alert(text: string, callback: () => void);
 }
 
 export class SnakeGame {
@@ -23,6 +23,7 @@ export class SnakeGame {
     private heightDifference: number;
     private liveCounter: number[] = [];
     private liveCounterState: boolean;
+    private pauseUpdate = false;
 
     constructor(private screenWidth: number,
                 private screenHeight: number,
@@ -62,6 +63,9 @@ export class SnakeGame {
     }
 
     update(deltaSeconds: number): boolean {
+        if (this.pauseUpdate) {
+            return true;
+        }
         const updateThresholdSeconds = this.configuration.speed;
         if (this.liveCounterState) {
             deltaSeconds = 0;
@@ -77,8 +81,9 @@ export class SnakeGame {
                 if (!this.multiSnake[i].move(this.configuration.wall)) {
                     this.liveCounter[i]++;
                     this.liveCounterState = true;
+                    this.pauseUpdate = true;
                     this.messageService.alert('Beendet : mit Wand kollidiert --> Score : ' + this.score[i] +
-                        ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter[i]));
+                        ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter[i]), () => this.pauseUpdate = false);
                 }
                 if (this.multiSnake[i].isOnSnake(this.food)) {
                     this.score[i]++;
@@ -95,16 +100,18 @@ export class SnakeGame {
                 if (this.level.collidesWith(this.multiSnake[i])) {
                     this.liveCounter[i]++;
                     this.liveCounterState = true;
+                    this.pauseUpdate = true;
                     this.messageService.alert('Beendet : Mit Hinderniss kollidiert ---> Score : ' + this.score[i] +
-                          ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter[i]) );
+                          ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter[i]), () => this.pauseUpdate = false );
                     this.level.changeObstaclePosition(this.multiSnake[i], this.food);
                 }
 
                 if (this.multiSnake[i].collidesWithItself()) {
                     this.liveCounterState = true;
                     this.liveCounter[i]++;
+                    this.pauseUpdate = true;
                     this.messageService.alert('Beendet : Mit sich selbst kollidiert ---> Score : ' + this.score[i] +
-                          ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter[i]));
+                          ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter[i]), () => this.pauseUpdate = false);
                 }
 
                 for (let j = 0; j < this.multiSnake.length; j++) {
@@ -112,8 +119,9 @@ export class SnakeGame {
                        this.multiSnake[i].collidesWithOtherSnake(this.multiSnake[j])) {
                             this.liveCounterState = true;
                             this.liveCounter[i]++;
+                            this.pauseUpdate = true;
                             this.messageService.alert('Beendet : Mit anderer Schlange kollidiert --> Score : ' + this.score[i] +
-                                  ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter[i]));
+                                  ' \nÜbrige Leben : ' + (this.configuration.lives - this.liveCounter[i]), () => this.pauseUpdate = false);
                     }
                 }
                 if (this.liveCounter[i] >= this.configuration.lives) {
@@ -141,6 +149,11 @@ export class SnakeGame {
     onKeyUp(key: KeyboardEvent): void {
         for (let i = 0; i < this.multiSnake.length; i++) {
             this.multiSnake[i].onkey(key);
+        }
+        if (key.code === 'Space') {
+            this.pauseUpdate = true;
+            this.messageService.alert('Game paused', () => this.pauseUpdate = false);
+            this.liveCounterState = true;
         }
     }
 }
