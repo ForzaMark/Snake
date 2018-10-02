@@ -6,7 +6,7 @@ import { SnakeInputConfiguration } from './snake-game-configuration';
 export class Snake {
     private direction = Direction.right;
     private snakeParts: SnakePart[] = [];
-    private snakeHead: SnakePart;
+    public snakeHead: SnakePart;
     private changeCounter = 0;
     private partCenter = {
         x : 0,
