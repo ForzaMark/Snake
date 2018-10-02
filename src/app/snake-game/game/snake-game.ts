@@ -67,8 +67,6 @@ export class SnakeGame {
             this.elapsedTimeSeconds -= updateThresholdSeconds;
         }
         for (let i = 0; i < this.multiSnake.length; i++) {
-console.log(i + ' ' + this.multiSnake.length);
-
                 if (!this.multiSnake[i].move(this.configuration.wall)) {
                     this.liveCounter[i]++;
                     this.liveCounterState = true;

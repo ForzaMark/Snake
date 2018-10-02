@@ -170,10 +170,32 @@ export class Snake {
                 this.snakeParts[0].y = this.fieldHeight;
             }
         }
-        if (!wallenabled && (this.snakeHead.x >= this.fieldWidth ||
-                                               this.snakeHead.x <= -1 ||
-                                               this.snakeHead.y >= this.fieldHeight ||
-                                               this.snakeHead.y <= -1)) {
+        if (!wallenabled && (this.snakeHead.x >= this.fieldWidth)) {
+            this.direction = Direction.left;
+            this.makeaStep();
+            this.direction = Direction.down;
+            this.makeaStep();
+            return false;
+        }
+        if (!wallenabled && (this.snakeHead.x < 0)) {
+            this.direction = Direction.right;
+            this.makeaStep();
+            this.direction = Direction.up;
+            this.makeaStep();
+            return false;
+        }
+        if (!wallenabled && (this.snakeHead.y >= this.fieldHeight)) {
+            this.direction = Direction.up;
+            this.makeaStep();
+            this.direction = Direction.right;
+            this.makeaStep();
+            return false;
+        }
+        if (!wallenabled && (this.snakeHead.y < 0)) {
+            this.direction = Direction.down;
+            this.makeaStep();
+            this.direction = Direction.left;
+            this.makeaStep();
             return false;
         }
         return true;
