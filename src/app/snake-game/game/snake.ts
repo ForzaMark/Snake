@@ -15,6 +15,8 @@ export class Snake {
     private witdhCorrecture: number;
     private heightCorrecture: number;
 
+    lives: number;
+
     constructor(private fieldWidth: number,
                 private fieldHeight: number,
                 snakeSize: number,
@@ -23,6 +25,7 @@ export class Snake {
                 widthCorrectur: number, heightCorrecture: number) {
         this.witdhCorrecture = widthCorrectur;
         this.heightCorrecture = heightCorrecture;
+        this.lives = 0;
 
         for (let i = 0; i < snakeSize; i++) {
             if (startPos === 0) {

@@ -19,16 +19,6 @@ export class SnakeGrid {
              }
         }
         if (!this.gridenabled) {
-            // if (widthCorrecture === 0) {
-            //     context.beginPath();
-            //     context.moveTo(0, heightCorrecture);
-            //     context.lineTo(this.cellWidth * this.fieldWidth, heightCorrecture);
-            //     context.stroke();
-            //     context.moveTo(0, this.cellHeight * this.fieldHeight + heightCorrecture);
-            //     context.lineTo(this.cellWidth * this.fieldWidth, this.cellHeight * this.fieldHeight + heightCorrecture );
-            //     context.stroke();
-            // }
-            // if (heightCorrecture === 0) {
                 context.beginPath();
                 context.moveTo(widthCorrecture, heightCorrecture);
                 context.lineTo(widthCorrecture, this.cellHeight * this.fieldHeight + heightCorrecture);
