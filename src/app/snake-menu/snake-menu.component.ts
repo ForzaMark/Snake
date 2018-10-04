@@ -114,4 +114,7 @@ export class SnakeMenuComponent implements OnInit {
     this.service.data.leveltype = this.configurationData.leveltype;
     this.router.navigate(['/snake-game']);
   }
+  startEditor() {
+    this.router.navigate(['/snake-editor']);
+  }
 }

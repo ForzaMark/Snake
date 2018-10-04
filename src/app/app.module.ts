@@ -7,7 +7,7 @@ import { SnakeGameComponent } from './snake-game/snake-game.component';
 import { SnakeMenuComponent } from './snake-menu/snake-menu.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { NgbModal, NgbModule } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
-import { SnakeEditorComponent } from './snake-editor/snake-editor/snake-editor.component';
+import { SnakeEditorComponent } from './snake-editor/snake-editor.component';
 
 @NgModule({
   declarations: [
