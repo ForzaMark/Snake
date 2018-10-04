@@ -18,4 +18,5 @@ export class SnakeGameConfiguration {
     playerInputs: SnakeInputConfiguration[];
     color: string;
     lives: number;
+    leveltype: string;
 }

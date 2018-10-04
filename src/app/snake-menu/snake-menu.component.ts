@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ConfigDataService } from '../config-data.service';
 import { Router } from '@angular/router';
-import { NgbModal } from '../../../node_modules/@ng-bootstrap/ng-bootstrap';
 
 export class SnakeGameConfigurationData {
   levelWidth: string;
@@ -16,6 +15,7 @@ export class SnakeGameConfigurationData {
   player2Keys: string[];
   color: string;
   lives: number;
+  leveltype: string;
 }
 
 @Component({
@@ -24,7 +24,6 @@ export class SnakeGameConfigurationData {
   styleUrls: ['./snake-menu.component.css']
 })
 export class SnakeMenuComponent implements OnInit {
-  @ViewChild('wall') wallRef: ElementRef;
 
   configurationData: SnakeGameConfigurationData = new SnakeGameConfigurationData();
   alertState = false;
@@ -61,6 +60,7 @@ export class SnakeMenuComponent implements OnInit {
         ],
         color : '#08088A',
         lives : 1,
+        leveltype: 'random'
       };
     }
 
@@ -82,6 +82,7 @@ export class SnakeMenuComponent implements OnInit {
                                           this.service.data.playerInputs[1].right];
     this.configurationData.color = this.service.data.color;
     this.configurationData.lives = this.service.data.lives;
+    this.configurationData.leveltype = this.service.data.leveltype;
   }
 
   startGame() {
@@ -91,16 +92,8 @@ export class SnakeMenuComponent implements OnInit {
     this.service.data.skillLevel = parseInt(this.configurationData.skillLevel, 10);
     this.service.data.playerCount = parseInt(this.configurationData.playerCount, 10);
     this.service.data.speed = parseFloat(this.configurationData.speed);
-    if (this.configurationData.wall) {
-      this.service.data.wall = true;
-    } else {
-      this.service.data.wall = false;
-    }
-    if (this.configurationData.grid) {
-      this.service.data.grid = true;
-    } else {
-      this.service.data.grid = false;
-    }
+    this.service.data.wall = this.configurationData.wall;
+    this.service.data.grid = this.configurationData.grid;
 
     this.service.data.playerInputs = [
       {
@@ -118,6 +111,7 @@ export class SnakeMenuComponent implements OnInit {
     ];
     this.service.data.color = this.configurationData.color;
     this.service.data.lives = this.configurationData.lives;
+    this.service.data.leveltype = this.configurationData.leveltype;
     this.router.navigate(['/snake-game']);
   }
 }
