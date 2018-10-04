@@ -196,7 +196,7 @@ export class Snake {
             }
         }
 
-        return wallenabled;
+        return true;
     }
     private drawHead(context: CanvasRenderingContext2D, cellWidth: number, cellHeight: number): void {
         context.beginPath();

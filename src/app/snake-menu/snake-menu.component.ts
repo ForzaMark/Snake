@@ -2,6 +2,7 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { ConfigDataService } from '../config-data.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '../../../node_modules/@ng-bootstrap/ng-bootstrap';
+import { log } from 'util';
 
 export class SnakeGameConfigurationData {
   levelWidth: string;
@@ -63,6 +64,8 @@ export class SnakeMenuComponent implements OnInit {
         lives : 1,
       };
     }
+    console.log(this.service.data.wall);
+    console.log(this.configurationData.wall);
 
     this.configurationData.levelWidth = this.service.data.levelWidth.toString();
     this.configurationData.levelHeight = this.service.data.levelHeight.toString();

@@ -2,7 +2,7 @@
     <div class="jumbotron">
         <h1>Welcome to the Snake Game</h1>
     </div>
-    <div class="alert alert-success text-center" role="alert">
+    <div class="alert alert-success text-center" *ngIf="this.alertState" role="alert">
         <p>You've finished the Game</p>
     </div>
 
@@ -62,7 +62,7 @@
                                                 class="form-control" 
                                                 id="wall"
                                                 type="checkbox" 
-                                                checked>
+                                                >
                                 </div>
                                 
                                 <div class="form-group mt-5">
@@ -89,7 +89,7 @@
                         <div class="card-header bg-info text-white mb-3">Game Mode</div>
                         <div class="card-body">
                                 <div class="form-group">
-                                        <label class="control-label">Dificulty</label>
+                                        <label class="control-label">Difficulty</label>
                                         <select #skillLevel="ngModel" 
                                                 [(ngModel)]="configurationData.skillLevel" 
                                                 required
