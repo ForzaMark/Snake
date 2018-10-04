@@ -6,13 +6,13 @@
         <p>You've finished the Game</p>
     </div>
 
-    <div class="panel panel-info">
-        <div class="panel-heading">Setup Your Game</div>
-        <div class="panel-body">
-                <div class="panel panel-primary">
-                        <div class="panel-heading">Level Setup</div>
-                        <div class="panel-body">
-                                <div class="form-group mt-5">
+    <div class="card">
+        <div class="card-header bg-info text-white mb-3">Setup Your Game</div>
+        <div class="card-body">
+                <div class="card">
+                        <div class="card-header bg-info text-white mb-3">Level Setup</div>
+                        <div class="card-body">
+                                <div class="form-group">
                                         <label class="control-label" for="levelWidth">Level Width </label>
                                         <input #LevelWidth="ngModel" 
                                                 type="number"
@@ -75,7 +75,7 @@
                                                 checked>         
                                 </div>    
                                 <div class="form-group mt-5">
-                                        <label class="form-check-label" for="color">Choose a Color for Your Snake</label>
+                                        <label class="form-check-label" for="color">Choose a Color for Your Snake :</label>
                                         <input #color = "ngModel"
                                                 [(ngModel)] = "configurationData.color"
                                                 class="form-control"
@@ -85,10 +85,10 @@
                         </div>
                 </div>
 
-                <div class="panel panel-primary">
-                        <div class="panel-heading">Game Mode</div>
-                        <div class="panel-body">
-                                <div class="form-group mt-5">
+                <div class="card card-margin">
+                        <div class="card-header bg-info text-white mb-3">Game Mode</div>
+                        <div class="card-body">
+                                <div class="form-group">
                                         <label class="control-label">Dificulty</label>
                                         <select #skillLevel="ngModel" 
                                                 [(ngModel)]="configurationData.skillLevel" 
@@ -133,24 +133,44 @@
                                 </div>
                         </div>
                 </div>
-                <button (click) = 'callModal(content)'></button>
-                <div class="panel panel-primary">
-                        <div class="panel-heading">How to Controll the Snake</div>
-                        <div class="panel-body">
-                                <div class="col-sm-4 center-text">
-                                        <h3>Controlling</h3>
-                                        <p>Up : </p>
-                                        <p>Down : </p>
-                                        <p>Left : </p>
-                                        <p>Right : </p>
+                <div class="card card-margin">
+                        <div class="card-header bg-info text-white mb-3">How to Controll the Snake</div>
+                        <div class="card-body">
+                                <div class="row">
+                                        <div class="col-sm-4 center-text">
+                                                <div class="card">
+                                                        <div class="card-header">
+                                                                <h3>Controlling</h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                                <p>Up : </p>
+                                                                <p>Down : </p>
+                                                                <p>Left : </p>
+                                                                <p>Right : </p>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="col-sm-4 center-text">
+                                                <div class="card">
+                                                        <div class="card-header">
+                                                                <h3>Player 1: </h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                                <p *ngFor="let Key of configurationData.player1Keys">{{Key}}</p>
+                                                        </div>
+                                                </div>
+                                                
+                                        </div>
+                                        <div class="col-sm-4 center-text" *ngIf="configurationData.playerCount == 2">
+                                                        <div class="card">
+                                                                <div class="card-header">
+                                                                        <h3>Player 2: </h3>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                        <p *ngFor="let Key of configurationData.player2Keys">{{Key}}</p>
+                                                                </div>
+                                                        </div>
                                 </div>
-                                <div class="col-sm-4 center-text">
-                                        <h3>Player 1</h3>
-                                        <p *ngFor="let Key of configurationData.player1Keys">{{Key}}</p>
-                                </div>
-                                <div class="col-sm-4 center-text" *ngIf="configurationData.playerCount == 2">
-                                        <h3>Player 2</h3>
-                                        <p *ngFor="let Key of configurationData.player2Keys">{{Key}}</p>
                                 </div>
                         </div>
 
