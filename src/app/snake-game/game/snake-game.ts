@@ -63,20 +63,12 @@ export class SnakeGame {
     }
 
     update(deltaSeconds: number): boolean {
+        this.liveCounterState = false;
         if (this.pauseUpdate) {
             return true;
         }
-
-        if (this.liveCounterState) {
-            deltaSeconds = 0;
-        }
-        const updateThresholdSeconds = this.configuration.speed;
-        this.elapsedTimeSeconds += deltaSeconds;
-        if (this.elapsedTimeSeconds < updateThresholdSeconds) {
-            this.liveCounterState = false;
+        if (this.updateTime(deltaSeconds, this.configuration.speed, this.liveCounterState)) {
             return true;
-        } else {
-            this.elapsedTimeSeconds -= updateThresholdSeconds;
         }
 
         for (let i = 0; i < this.multiSnake.length; i++) {
@@ -157,6 +149,18 @@ export class SnakeGame {
             this.pauseUpdate = true;
             this.messageService.alert('Game paused', () => this.pauseUpdate = false);
             this.liveCounterState = true;
+        }
+    }
+    private updateTime(deltaSeconds: number, updateThresholdSeconds: number, liveCounterState: boolean): boolean {
+        if (liveCounterState) {
+            deltaSeconds = 0;
+        }
+        this.elapsedTimeSeconds += deltaSeconds;
+        if (this.elapsedTimeSeconds < updateThresholdSeconds) {
+            liveCounterState = false;
+            return true;
+        } else {
+            this.elapsedTimeSeconds -= updateThresholdSeconds;
         }
     }
 }
