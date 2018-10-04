@@ -66,56 +66,56 @@ export class SnakeGame {
         }
 
         for (let i = 0; i < this.multiSnake.length; i++) {
-                if (!this.multiSnake[i].move(this.configuration.wall)) {
-                    this.multiSnake[i].lives++;
-                    this.liveCounterState = true;
-                    this.pauseUpdate = true;
-                    this.messageService.alert('Snake collides with wall \nScore : ' + this.score[i] +
-                        ' \nremaining lives : ' + (this.configuration.lives - this.multiSnake[i].lives), () => this.pauseUpdate = false);
-                }
-                if (this.multiSnake[i].isOnSnake(this.food)) {
-                    this.score[i]++;
-                    this.multiSnake[i].grow();
-                    this.food.createNewFood(this.multiSnake[i]);
-                    if ((this.multiSnake[i].getSnakeLength() % this.configuration.skillLevel === 0)
-                        || this.multiSnake[i].getSnakeLength() === this.configuration.snakeLength + 1) {
-                        this.level.addObstacle(this.multiSnake[i], this.food);
-                    } else {
-                        this.level.changeObstaclePosition(this.multiSnake[i], this.food);
-                    }
-                }
-
-                if (this.level.collidesWith(this.multiSnake[i])) {
-                    this.multiSnake[i].lives++;
-                    this.liveCounterState = true;
-                    this.pauseUpdate = true;
-                    this.messageService.alert('Snake collides with obstacle  \nScore : ' + this.score[i] +
-                          ' \nremaining lives : ' + (this.configuration.lives - this.multiSnake[i].lives), () => this.pauseUpdate = false );
+            if (this.multiSnake[i].lives >= this.configuration.lives && !this.pauseUpdate) {
+                return false;
+            }
+            if (!this.multiSnake[i].move(this.configuration.wall)) {
+                this.multiSnake[i].lives++;
+                this.liveCounterState = true;
+                this.pauseUpdate = true;
+                this.messageService.alert('Snake collides with wall \nScore : ' + this.score[i] +
+                    ' \nremaining lives : ' + (this.configuration.lives - this.multiSnake[i].lives), () => this.pauseUpdate = false);
+            }
+            if (this.multiSnake[i].isOnSnake(this.food)) {
+                this.score[i]++;
+                this.multiSnake[i].grow();
+                this.food.createNewFood(this.multiSnake[i]);
+                if ((this.multiSnake[i].getSnakeLength() % this.configuration.skillLevel === 0)
+                    || this.multiSnake[i].getSnakeLength() === this.configuration.snakeLength + 1) {
+                    this.level.addObstacle(this.multiSnake[i], this.food);
+                } else {
                     this.level.changeObstaclePosition(this.multiSnake[i], this.food);
                 }
+            }
 
-                if (this.multiSnake[i].collidesWithItself()) {
-                    this.liveCounterState = true;
-                    this.multiSnake[i].lives++;
-                    this.pauseUpdate = true;
-                    this.messageService.alert('Snake collides with itself \nScore : ' + this.score[i] +
-                          ' \nremaining lives : ' + (this.configuration.lives - this.multiSnake[i].lives), () => this.pauseUpdate = false);
-                }
+            if (this.level.collidesWith(this.multiSnake[i])) {
+                this.multiSnake[i].lives++;
+                this.liveCounterState = true;
+                this.pauseUpdate = true;
+                this.messageService.alert('Snake collides with obstacle  \nScore : ' + this.score[i] +
+                        ' \nremaining lives : ' + (this.configuration.lives - this.multiSnake[i].lives), () => this.pauseUpdate = false );
+                this.level.changeObstaclePosition(this.multiSnake[i], this.food);
+            }
 
-                for (let j = 0; j < this.multiSnake.length; j++) {
-                    if (this.multiSnake[j] !== this.multiSnake[i] &&
-                       this.multiSnake[i].collidesWithOtherSnake(this.multiSnake[j])) {
-                            this.liveCounterState = true;
-                            this.multiSnake[i].lives++;
-                            this.pauseUpdate = true;
-                            this.messageService.alert('Snake collides with other Snake \nScore : ' + this.score[i] +
-                                  ' \nremaining lives : ' +
-                                  (this.configuration.lives - this.multiSnake[i].lives), () => this.pauseUpdate = false);
-                    }
+            if (this.multiSnake[i].collidesWithItself()) {
+                this.liveCounterState = true;
+                this.multiSnake[i].lives++;
+                this.pauseUpdate = true;
+                this.messageService.alert('Snake collides with itself \nScore : ' + this.score[i] +
+                        ' \nremaining lives : ' + (this.configuration.lives - this.multiSnake[i].lives), () => this.pauseUpdate = false);
+            }
+
+            for (let j = 0; j < this.multiSnake.length; j++) {
+                if (this.multiSnake[j] !== this.multiSnake[i] &&
+                    this.multiSnake[i].collidesWithOtherSnake(this.multiSnake[j])) {
+                        this.liveCounterState = true;
+                        this.multiSnake[i].lives++;
+                        this.pauseUpdate = true;
+                        this.messageService.alert('Snake collides with other Snake \nScore : ' + this.score[i] +
+                                ' \nremaining lives : ' +
+                                (this.configuration.lives - this.multiSnake[i].lives), () => this.pauseUpdate = false);
                 }
-                if (this.multiSnake[i].lives >= this.configuration.lives && !this.pauseUpdate) {
-                    return false;
-                }
+            }
 
         }
         return true;

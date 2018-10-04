@@ -1,18 +1,17 @@
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ConfigDataService } from '../config-data.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '../../../node_modules/@ng-bootstrap/ng-bootstrap';
-import { log } from 'util';
 
 export class SnakeGameConfigurationData {
   levelWidth: string;
   levelHeight: string;
   snakeLength: string;
-  wall: string;
+  wall: boolean;
   skillLevel: string;
   playerCount: string;
   speed: string;
-  grid: string;
+  grid: boolean;
   player1Keys: string[];
   player2Keys: string[];
   color: string;
@@ -25,12 +24,12 @@ export class SnakeGameConfigurationData {
   styleUrls: ['./snake-menu.component.css']
 })
 export class SnakeMenuComponent implements OnInit {
+  @ViewChild('wall') wallRef: ElementRef;
 
   configurationData: SnakeGameConfigurationData = new SnakeGameConfigurationData();
   alertState = false;
   score: number;
-  reason: string;
-  constructor(private service: ConfigDataService, private router: Router, private modalService: NgbModal) {
+  constructor(private service: ConfigDataService, private router: Router) {
   }
   ngOnInit() {
     if (this.service.data) {
@@ -64,8 +63,6 @@ export class SnakeMenuComponent implements OnInit {
         lives : 1,
       };
     }
-    console.log(this.service.data.wall);
-    console.log(this.configurationData.wall);
 
     this.configurationData.levelWidth = this.service.data.levelWidth.toString();
     this.configurationData.levelHeight = this.service.data.levelHeight.toString();
@@ -73,8 +70,8 @@ export class SnakeMenuComponent implements OnInit {
     this.configurationData.skillLevel = this.service.data.skillLevel.toString();
     this.configurationData.playerCount = this.service.data.playerCount.toString();
     this.configurationData.speed = this.service.data.speed.toString();
-    this.configurationData.wall = this.service.data.wall ? 'checked' : 'unchecked';
-    this.configurationData.grid = this.service.data.grid ? 'checked' : 'unchecked';
+    this.configurationData.wall = this.service.data.wall;
+    this.configurationData.grid = this.service.data.grid;
     this.configurationData.player1Keys = [this.service.data.playerInputs[0].up,
                                           this.service.data.playerInputs[0].down,
                                           this.service.data.playerInputs[0].left,
@@ -94,12 +91,12 @@ export class SnakeMenuComponent implements OnInit {
     this.service.data.skillLevel = parseInt(this.configurationData.skillLevel, 10);
     this.service.data.playerCount = parseInt(this.configurationData.playerCount, 10);
     this.service.data.speed = parseFloat(this.configurationData.speed);
-    if (this.configurationData.wall === 'checked' || this.configurationData.wall) {
+    if (this.configurationData.wall) {
       this.service.data.wall = true;
     } else {
       this.service.data.wall = false;
     }
-    if (this.configurationData.grid === 'checked' || this.configurationData.grid) {
+    if (this.configurationData.grid) {
       this.service.data.grid = true;
     } else {
       this.service.data.grid = false;
