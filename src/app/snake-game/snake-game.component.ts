@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ElementRef, ViewChild, OnDestroy, OnInit, Input } from '@angular/core';
 import { SnakeGame, IMessageService } from './game/snake-game';
-import { Location } from '@angular/common';
+import { Location, NgTemplateOutlet } from '@angular/common';
 import { ConfigDataService } from '../config-data.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -19,6 +19,8 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
   Score: number[] = [];
   message: string;
   modal: object;
+  modalHeader: string;
+  modalBody: string;
 
   constructor(
     private location: Location,
@@ -75,6 +77,8 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
   }
 
   alert(text: string, callback: () => void): void {
+    this.modalHeader = 'Game Interruption : ';
+    this.modalBody = text;
     this.modalService.open(this.content).result.then(() => callback(), () => callback());
   }
 
