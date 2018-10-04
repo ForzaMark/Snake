@@ -1,4 +1,4 @@
-canvas{
+canvas {
     border: black solid;
     padding-left: 0;
     padding-right: 0;
@@ -6,10 +6,4 @@ canvas{
     margin-right: auto;
     display: block;
     width: 800px;
-}
-#checkbox{
-    float: left;
-}
-.keep-margin{
-    margin-top: 100rem;
 }

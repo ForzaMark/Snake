@@ -8,9 +8,6 @@ import { SnakeMenuComponent } from './snake-menu/snake-menu.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { NgbModal, NgbModule } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent,

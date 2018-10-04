@@ -1,6 +1,6 @@
-import { Component, AfterViewInit, ElementRef, ViewChild, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { SnakeGame, IMessageService } from './game/snake-game';
-import { Location, NgTemplateOutlet } from '@angular/common';
+import { Location } from '@angular/common';
 import { ConfigDataService } from '../config-data.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

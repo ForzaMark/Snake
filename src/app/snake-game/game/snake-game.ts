@@ -16,7 +16,6 @@ export class SnakeGame {
     private grid: SnakeGrid;
     private level: Level;
     private multiSnake: Snake[] = [];
-    score: number[] = [];
     private gridWidth: number;
     private gridHeight: number;
     private widthDifference: number;
@@ -25,6 +24,8 @@ export class SnakeGame {
     private liveCounterState: boolean;
     private pauseUpdate = false;
 
+    score: number[] = [];
+
     constructor(private screenWidth: number,
                 private screenHeight: number,
                 private configuration: SnakeGameConfiguration,
@@ -32,14 +33,9 @@ export class SnakeGame {
         this.elapsedTimeSeconds = 0;
         this.liveCounter = [0, 0];
         this.liveCounterState = false;
-        this.cellWidth = screenWidth / this.configuration.levelWidth;
-        this.cellHeight = screenHeight / this.configuration.levelHeight;
-        if (this.cellWidth < this.cellHeight) {
-            this.cellHeight = this.cellWidth;
-        }
-        if (this.cellHeight < this.cellWidth) {
-            this.cellWidth = this.cellHeight;
-        }
+        const cellSize = Math.min(screenWidth / this.configuration.levelWidth, screenHeight / this.configuration.levelHeight);
+        this.cellWidth = cellSize;
+        this.cellHeight = cellSize;
         this.gridWidth = this.cellWidth * this.configuration.levelWidth;
         this.gridHeight = this.cellHeight * this.configuration.levelHeight;
         this.widthDifference = screenWidth - this.gridWidth;
