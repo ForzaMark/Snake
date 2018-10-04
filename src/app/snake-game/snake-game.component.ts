@@ -13,13 +13,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMessageService {
   @ViewChild('mainCanvas') mainCanvasReference: ElementRef;
-  @ViewChild('content') content: any;
+  @ViewChild('modalSelector') ModalReference: any;
 
   private drawTimer: any;
   Score: number[] = [];
   message: string;
   modal: object;
-  modalHeader: string;
   modalBody: string;
 
   constructor(
@@ -77,9 +76,8 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
   }
 
   alert(text: string, callback: () => void): void {
-    this.modalHeader = 'Game Interruption : ';
     this.modalBody = text;
-    this.modalService.open(this.content).result.then(() => callback(), () => callback());
+    this.modalService.open(this.ModalReference).result.then(() => callback(), () => callback());
   }
 
 }

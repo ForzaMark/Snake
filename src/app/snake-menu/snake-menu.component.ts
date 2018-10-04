@@ -120,8 +120,4 @@ export class SnakeMenuComponent implements OnInit {
     this.service.data.lives = this.configurationData.lives;
     this.router.navigate(['/snake-game']);
   }
-  callModal(modal): void {
-    console.log(typeof(modal));
-    this.modalService.open(modal);
-  }
 }

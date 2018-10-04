@@ -66,10 +66,11 @@ export class SnakeGame {
         if (this.pauseUpdate) {
             return true;
         }
-        const updateThresholdSeconds = this.configuration.speed;
+
         if (this.liveCounterState) {
             deltaSeconds = 0;
         }
+        const updateThresholdSeconds = this.configuration.speed;
         this.elapsedTimeSeconds += deltaSeconds;
         if (this.elapsedTimeSeconds < updateThresholdSeconds) {
             this.liveCounterState = false;
@@ -77,6 +78,7 @@ export class SnakeGame {
         } else {
             this.elapsedTimeSeconds -= updateThresholdSeconds;
         }
+
         for (let i = 0; i < this.multiSnake.length; i++) {
                 if (!this.multiSnake[i].move(this.configuration.wall)) {
                     this.liveCounter[i]++;
@@ -125,7 +127,7 @@ export class SnakeGame {
                                   (this.configuration.lives - this.liveCounter[i]), () => this.pauseUpdate = false);
                     }
                 }
-                if (this.liveCounter[i] >= this.configuration.lives) {
+                if (this.liveCounter[i] >= this.configuration.lives && !this.pauseUpdate) {
                     return false;
                 }
 
