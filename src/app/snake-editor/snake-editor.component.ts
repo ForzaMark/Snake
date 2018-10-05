@@ -50,7 +50,6 @@ export class SnakeEditorComponent implements OnInit {
     document.addEventListener('keyup', e => level.onKeyUp(e as KeyboardEvent));
 
     this.drawTimer = setInterval(() => {
-      level.update();
       level.draw(context, this.levelWidth, this.levelHeight);
     }, 1000 / framesPerSec);
 

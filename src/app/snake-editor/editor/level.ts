@@ -47,8 +47,6 @@ export class EditorLevel {
         this.food = new Food(this.cellWidth, this.cellHeight, levelWidth, levelHeight);
 
     }
-    update(): void {
-    }
 
     draw(context: CanvasRenderingContext2D , levelWidth: number, levelHeight: number) {
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
