@@ -73,4 +73,12 @@ export class Level {
         this.cellWidth = newCellWidth;
         this.cellHeight = newCellHeight;
     }
+    isOnObstacle(x: number, y: number): boolean {
+        for (let i = 0; i < this.obstacles.length; i++) {
+            if (this.obstacles[i].x === x && this.obstacles[i].y === y) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

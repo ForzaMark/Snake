@@ -20,12 +20,12 @@ export class EditorLevel {
     private heightDifference: number;
 
     constructor(private screenWidth: number, private screenHeight: number,
-                levelWidth: number, levelHeight: number,
+                private levelWidth: number, private levelHeight: number,
                 private gameMode: number, private snakeLength: number) {
-        this.cellWidth = screenWidth / levelWidth;
-        this.cellHeight = screenHeight / levelHeight;
-        this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, levelWidth, levelHeight, true);
-        this.level = new Level(this.cellWidth, this.cellHeight, levelWidth, levelHeight);
+        this.cellWidth = screenWidth / this.levelWidth;
+        this.cellHeight = screenHeight / this.levelHeight;
+        this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.levelWidth, this.levelHeight, true);
+        this.level = new Level(this.cellWidth, this.cellHeight, this.levelWidth, this.levelHeight);
         this.inputConfig = new SnakeInputConfiguration();
         this.inputConfig.down = 'ArrowDown';
         this.inputConfig.up = 'ArrowUp';
@@ -75,33 +75,56 @@ export class EditorLevel {
     }
 
     onKeyUp(key: KeyboardEvent) {
-        if (key.code === 'ArrowUp') {
+        console.log(this.posX + ' ' + this.posY);
+
+        
+        if (key.code === 'ArrowUp' && this.posY !== 0) {
            this.posY = this.posY - 1;
         }
-        if (key.code === 'ArrowDown') {
+        if (key.code === 'ArrowDown' && this.posY !== this.levelHeight - 1) {
             this.posY = this.posY + 1;
         }
-        if (key.code === 'ArrowLeft') {
+        if (key.code === 'ArrowLeft' && this.posX !== 0) {
             this.posX = this.posX - 1;
         }
-        if (key.code === 'ArrowRight') {
+        if (key.code === 'ArrowRight' && this.posX !==  this.levelWidth - 1) {
             this.posX = this.posX + 1;
         }
         if (key.code === 'Space') {
-            this.level.placeNewObstacle(this.posX, this.posY);
+            if (this.posX !== this.food.x || this.posY !== this.food.y) {
+                for (let i = 0; i < this.multiSnake.length; i++) {
+                    if (this.posX !== this.multiSnake[i].snakeHead.x || this.posY !== this.multiSnake[i].snakeHead.y) {
+                        this.level.placeNewObstacle(this.posX, this.posY);
+                    }
+                }
+            }
         }
         if (key.code === 'Delete') {
             this.level.removeObstacle(this.posX, this.posY);
             this.food.removeFood(this.posX, this.posY);
         }
         if (key.code === 'KeyF') {
-            this.food.placeNewFood(this.posX, this.posY);
+            for (let i = 0; i < this.multiSnake.length; i++) {
+                if (this.posX !== this.multiSnake[i].snakeHead.x || this.posY !== this.multiSnake[i].snakeHead.y) {
+                    if (this.level.isOnObstacle(this.posX, this.posY)) {
+                        this.food.placeNewFood(this.posX, this.posY);
+                    }
+                }
+            }
         }
         if (key.code === 'KeyS') {
-            this.multiSnake[0].placeSnake(this.posX, this.posY);
+            if (this.posX !== this.food.x && this.posY !== this.food.y) {
+                if (this.level.isOnObstacle(this.posX, this.posY)) {
+                    this.multiSnake[0].placeSnake(this.posX, this.posY);
+                }
+            }
         }
         if (this.gameMode === 2 && key.code === 'KeyX') {
-            this.multiSnake[1].placeSnake(this.posX, this.posY);
+            if (this.posX !== this.food.x && this.posY !== this.food.y) {
+                if (this.level.isOnObstacle(this.posX, this.posY)) {
+                    this.multiSnake[1].placeSnake(this.posX, this.posY);
+                }
+            }
         }
     }
 }
