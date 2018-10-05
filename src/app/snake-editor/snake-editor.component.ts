@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { EditorLevel } from './editor/level';
+import { ConfigDataService } from '../config-data.service';
+import { Router } from '../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-snake-editor',
@@ -14,23 +16,30 @@ export class SnakeEditorComponent implements OnInit {
   private screenHeight = 600;
   private snakeLength: number;
   private gameMode: number;
+  private color: string;
   private drawTimer: any;
+  private router: Router;
 
-  constructor() { }
+  constructor(private configData: ConfigDataService) { }
 
   ngOnInit() {
+    if (!this.configData.data) {
+      this.router.navigate(['/snake-menu']);
+    }
   }
 
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit(): void {
-    this.levelWidth = 20;
-    this.levelHeight = 15;
-    this.snakeLength = 1;
-    this.gameMode = 1;
     const editorCanvas = this.canvasReference.nativeElement as HTMLCanvasElement;
     const context = editorCanvas.getContext('2d');
     const framesPerSec = 30;
+
+    this.levelWidth = this.configData.data.levelWidth;
+    this.levelHeight = this.configData.data.levelHeight;
+    this.snakeLength = this.configData.data.snakeLength;
+    this.gameMode = this.configData.data.playerCount;
+    this.color = this.configData.data.color;
     const level = new EditorLevel(this.screenWidth, this.screenHeight, this.levelWidth, this.levelHeight, this.snakeLength, this.gameMode);
 
     editorCanvas.width = this.screenWidth;

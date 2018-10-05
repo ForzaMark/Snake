@@ -15,7 +15,6 @@ export class SnakeGameConfigurationData {
   player2Keys: string[];
   color: string;
   lives: number;
-  leveltype: string;
 }
 
 @Component({
@@ -60,7 +59,6 @@ export class SnakeMenuComponent implements OnInit {
         ],
         color : '#08088A',
         lives : 1,
-        leveltype: 'random'
       };
     }
 
@@ -82,7 +80,6 @@ export class SnakeMenuComponent implements OnInit {
                                           this.service.data.playerInputs[1].right];
     this.configurationData.color = this.service.data.color;
     this.configurationData.lives = this.service.data.lives;
-    this.configurationData.leveltype = this.service.data.leveltype;
   }
 
   startGame() {
@@ -111,7 +108,6 @@ export class SnakeMenuComponent implements OnInit {
     ];
     this.service.data.color = this.configurationData.color;
     this.service.data.lives = this.configurationData.lives;
-    this.service.data.leveltype = this.configurationData.leveltype;
     this.router.navigate(['/snake-game']);
   }
   startEditor() {

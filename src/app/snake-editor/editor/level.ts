@@ -75,9 +75,6 @@ export class EditorLevel {
     }
 
     onKeyUp(key: KeyboardEvent) {
-        console.log(this.posX + ' ' + this.posY);
-
-        
         if (key.code === 'ArrowUp' && this.posY !== 0) {
            this.posY = this.posY - 1;
         }

@@ -1,6 +1,5 @@
 import { Component, AfterViewInit, ElementRef, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { SnakeGame, IMessageService } from './game/snake-game';
-import { Location } from '@angular/common';
 import { ConfigDataService } from '../config-data.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -22,7 +21,6 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
   modalBody: string;
 
   constructor(
-    private location: Location,
     private configData: ConfigDataService,
     private router: Router,
     private modalService: NgbModal
@@ -62,7 +60,7 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
       lastTimeStamp = currentTimeStamp;
       if (snakeGame.update(difference / 1000)) {
       } else {
-          this.location.back();
+          this.router.navigate(['/snake-menu']);
       }
       for (let i = 0; i < snakeGame.score.length; i++) {
         this.Score[i] = snakeGame.score[i];
