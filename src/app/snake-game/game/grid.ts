@@ -32,4 +32,10 @@ export class SnakeGrid {
                 context.stroke();
         }
     }
+    changeGridProperties(newCellWidth, newCellHeight, newFieldWidth, newFieldHeight) {
+        this.cellWidth = newCellWidth;
+        this.cellHeight = newCellHeight;
+        this.fieldWidth = newFieldWidth;
+        this.fieldHeight = newFieldHeight;
+    }
 }

@@ -14,9 +14,13 @@ export class EditorLevel {
     private inputConfig: SnakeInputConfiguration;
     private posX: number;
     private posY: number;
+    private gridWidth:  number;
+    private gridHeight: number;
+    private widthDifference: number;
+    private heightDifference: number;
 
-    constructor(private screenwidth: number, private screenHeight: number, private levelWidth: number, private levelHeight: number) {
-        this.cellWidth = screenwidth / levelWidth;
+    constructor(private screenWidth: number, private screenHeight: number, private levelWidth: number, private levelHeight: number) {
+        this.cellWidth = screenWidth / levelWidth;
         this.cellHeight = screenHeight / levelHeight;
         this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, levelWidth, levelHeight, true);
         this.level = new Level(this.cellWidth, this.cellHeight, levelWidth, levelHeight);
@@ -33,15 +37,21 @@ export class EditorLevel {
 
     }
     update(): void {
-
     }
 
-    draw(context: CanvasRenderingContext2D) {
-        const heightCorrecture = 0;
-        const widthCorrecture = 0;
-        this.grid.draw(context, widthCorrecture, heightCorrecture);
-        this.level.draw(context, widthCorrecture, heightCorrecture);
-        this.level.drawPreview(context, widthCorrecture, heightCorrecture, this.posX, this.posY);
+    draw(context: CanvasRenderingContext2D , levelWidth: number, levelHeight: number) {
+        const cellSize = Math.min(this.screenWidth / levelWidth, this.screenHeight / levelHeight);
+        this.cellWidth = cellSize;
+        this.cellHeight = cellSize;
+        this.gridWidth = this.cellWidth * levelWidth;
+        this.gridHeight = this.cellHeight * levelHeight;
+        this.widthDifference = this.screenWidth - this.gridWidth;
+        this.heightDifference = this.screenHeight - this.gridHeight;
+
+        this.grid.changeGridProperties(this.cellWidth, this.cellHeight, levelWidth, levelHeight);
+        this.grid.draw(context, this.widthDifference / 2, this.heightDifference / 2);
+        this.level.draw(context, this.widthDifference / 2, this.heightDifference / 2);
+        this.level.drawPreview(context, this.widthDifference / 2, this.heightDifference / 2, this.posX, this.posY);
     }
 
     onKeyUp(key: KeyboardEvent) {
