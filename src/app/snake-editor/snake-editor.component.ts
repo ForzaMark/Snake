@@ -42,10 +42,9 @@ export class SnakeEditorComponent implements OnInit {
     this.snakeLength = this.configData.data.snakeLength;
     this.gameMode = this.configData.data.playerCount;
     this.color = this.configData.data.color;
+
     const level = new EditorLevel(this.screenWidth, this.screenHeight,
-                                  this.levelWidth, this.levelHeight,
-                                  this.snakeLength, this.gameMode,
-                                  this.color);
+                                  this.configData);
 
     document.addEventListener('keyup', e => level.onKeyUp(e as KeyboardEvent));
 

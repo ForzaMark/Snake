@@ -3,6 +3,7 @@ import { Level } from '../../snake-game/game/Level';
 import { Snake } from '../../snake-game/game/snake';
 import { SnakeInputConfiguration } from '../../snake-game/game/snake-game-configuration';
 import { Food } from '../../snake-game/game/food';
+import { ConfigDataService } from '../../config-data.service';
 
 export class EditorLevel {
     private cellWidth: number;
@@ -20,13 +21,11 @@ export class EditorLevel {
     private heightDifference: number;
 
     constructor(private screenWidth: number, private screenHeight: number,
-                private levelWidth: number, private levelHeight: number,
-                private gameMode: number, private snakeLength: number,
-                private color: string) {
-        this.cellWidth = screenWidth / this.levelWidth;
-        this.cellHeight = screenHeight / this.levelHeight;
-        this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.levelWidth, this.levelHeight, true);
-        this.level = new Level(this.cellWidth, this.cellHeight, this.levelWidth, this.levelHeight);
+                private configData: ConfigDataService) {
+        const cellSize = Math.min(screenWidth / configData.data.levelWidth,
+                                  screenHeight / this.configData.data.levelHeight);
+        this.cellWidth = cellSize;
+        this.cellHeight = cellSize;
         this.inputConfig = new SnakeInputConfiguration();
         this.inputConfig.down = 'ArrowDown';
         this.inputConfig.up = 'ArrowUp';
@@ -36,15 +35,20 @@ export class EditorLevel {
         this.posY = 0;
 
 
-        for (let i = 0; i < this.gameMode; i++) {
-            this.multiSnake.push(new Snake(levelWidth,
-                                           levelHeight,
-                                           this.snakeLength,
+        for (let i = 0; i < configData.data.playerCount; i++) {
+            this.multiSnake.push(new Snake(configData.data.levelWidth,
+                                           configData.data.levelHeight,
+                                           configData.data.snakeLength,
                                            i,
                                            this.inputConfig,
                                            this.widthDifference / 2, this.heightDifference / 2));
         }
-        this.food = new Food(this.cellWidth, this.cellHeight, levelWidth, levelHeight);
+        this.food = new Food(this.cellWidth, this.cellHeight,
+                             configData.data.levelWidth, configData.data.levelHeight);
+        this.grid = new SnakeGrid(this.cellWidth, this.cellHeight,
+                                  configData.data.levelWidth, configData.data.levelHeight, true);
+        this.level = new Level(this.cellWidth, this.cellHeight,
+                               configData.data.levelWidth, configData.data.levelHeight);
 
     }
 
@@ -67,7 +71,7 @@ export class EditorLevel {
         this.food.draw(context, this.widthDifference / 2, this.heightDifference / 2);
         for (let i = 0; i < this.multiSnake.length; i++) {
             this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight,
-                                    1, this.color,
+                                    1, this.configData.data.color,
                                     this.widthDifference / 2, this.heightDifference / 2);
         }
         this.level.drawPreview(context, this.widthDifference / 2, this.heightDifference / 2, this.posX, this.posY);
@@ -77,13 +81,13 @@ export class EditorLevel {
         if (key.code === 'ArrowUp' && this.posY !== 0) {
            this.posY = this.posY - 1;
         }
-        if (key.code === 'ArrowDown' && this.posY !== this.levelHeight - 1) {
+        if (key.code === 'ArrowDown' && this.posY !== this.configData.data.levelHeight - 1) {
             this.posY = this.posY + 1;
         }
         if (key.code === 'ArrowLeft' && this.posX !== 0) {
             this.posX = this.posX - 1;
         }
-        if (key.code === 'ArrowRight' && this.posX !==  this.levelWidth - 1) {
+        if (key.code === 'ArrowRight' && this.posX !==  this.configData.data.levelWidth - 1) {
             this.posX = this.posX + 1;
         }
         if (key.code === 'Space') {
@@ -115,7 +119,7 @@ export class EditorLevel {
                 }
             }
         }
-        if (this.gameMode === 2 && key.code === 'KeyX') {
+        if (this.configData.data.playerCount === 2 && key.code === 'KeyX') {
             if (this.posX !== this.food.x && this.posY !== this.food.y) {
                 if (this.level.isOnObstacle(this.posX, this.posY)) {
                     this.multiSnake[1].placeSnake(this.posX, this.posY);
