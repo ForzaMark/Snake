@@ -3,6 +3,40 @@
         <h1 class="text-center">Let`s Build!</h1>
     </div>
     <div class="card">
+        <div class="card-header">Standard Settings</div>
+        <div class="card-body">
+            <div class="form-group">
+                <label class="control-label" for="levelWidth">Level Width </label>
+                <input #LevelWidth="ngModel" 
+                        type="number"
+                        id="levelWidth" 
+                        class="form-control"
+                        value="20" 
+                        required 
+                        min="7"
+                        max="50" 
+                        maxlength="2" 
+                        minlength="1" 
+                        [(ngModel)]="levelWidth">
+        </div>
+        <div class="form-group mt-5 ">
+                <label class="control-label" for="LevelHeight">Level Height</label>
+                <input #LevelHeight="ngModel"
+                        class="form-control"
+                        id="LevelHeight"
+                        type="number" 
+                        value="15" 
+                        required 
+                        min="7" 
+                        max="50" 
+                        maxlength="2" 
+                        minlength="1" 
+                        [(ngModel)]="levelHeight">
+        
+        </div>
+        </div>
+    </div>
+    <div class="card">
         <div class="card-header text-white bg-info">Snake Editor</div>
         <div class="card-body">
             <canvas #editorCanvas class="text-center mb-3"></canvas>

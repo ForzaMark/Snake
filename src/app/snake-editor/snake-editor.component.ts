@@ -8,6 +8,8 @@ import { EditorLevel } from './editor/level';
 })
 export class SnakeEditorComponent implements OnInit {
   @ViewChild('editorCanvas') canvasReference: ElementRef;
+  private levelWidth: number;
+  private levelHeight: number;
 
   private drawTimer: any;
   constructor() { }
@@ -30,6 +32,7 @@ export class SnakeEditorComponent implements OnInit {
     const context = editorCanvas.getContext('2d');
 
     const level = new EditorLevel(screenWidth, screenHeight, levelWidth, levelHeight);
+    document.addEventListener('keyup', e => level.onKeyUp(e as KeyboardEvent));
 
     this.drawTimer = setInterval(() => {
       level.update();
