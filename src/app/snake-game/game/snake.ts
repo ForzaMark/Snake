@@ -306,4 +306,8 @@ export class Snake {
         }
         context.fill();
     }
+    placeSnake(x: number, y: number) {
+        this.snakeHead.x = x;
+        this.snakeHead.y = y;
+    }
 }

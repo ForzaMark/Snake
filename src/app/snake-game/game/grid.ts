@@ -4,10 +4,6 @@ export class SnakeGrid {
                 private gridenabled: boolean) {}
 
     draw(context: CanvasRenderingContext2D, widthCorrecture: number, heightCorrecture: number): void {
-        context.fillStyle = 'white';
-        context.fillRect(0, 0, 800, 600);
-        context.stroke();
-
         if (this.gridenabled) {
             for (let x = 0; x <= this.fieldWidth; x++) {
                 context.beginPath();

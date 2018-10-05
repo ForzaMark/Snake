@@ -9,7 +9,7 @@ export class EditorLevel {
     private cellHeight: number;
     private grid: SnakeGrid;
     private level: Level;
-    private snake: Snake;
+    private multiSnake: Snake[] = [];
     private food: Food;
     private inputConfig: SnakeInputConfiguration;
     private posX: number;
@@ -18,6 +18,8 @@ export class EditorLevel {
     private gridHeight: number;
     private widthDifference: number;
     private heightDifference: number;
+    private playerCount: number;
+    private snakeLength: number;
 
     constructor(private screenWidth: number, private screenHeight: number, private levelWidth: number, private levelHeight: number) {
         this.cellWidth = screenWidth / levelWidth;
@@ -29,10 +31,20 @@ export class EditorLevel {
         this.inputConfig.up = 'ArrowUp';
         this.inputConfig.left = 'ArrowLeft';
         this.inputConfig.right = 'ArrowRight';
-        this.posX = 10;
-        this.posY = 10;
+        this.posX = 0;
+        this.posY = 0;
+        this.playerCount = 2;
+        this.snakeLength = 1;
 
-        this.snake = new Snake(levelWidth, levelHeight, 1, 2, this.inputConfig, 0, 0);
+
+        for (let i = 0; i < this.playerCount; i++) {
+            this.multiSnake.push(new Snake(levelWidth,
+                                           levelHeight,
+                                           this.snakeLength,
+                                           i,
+                                           this.inputConfig,
+                                           this.widthDifference / 2, this.heightDifference / 2));
+        }
         this.food = new Food(this.cellWidth, this.cellHeight, levelWidth, levelHeight);
 
     }
@@ -40,6 +52,7 @@ export class EditorLevel {
     }
 
     draw(context: CanvasRenderingContext2D , levelWidth: number, levelHeight: number) {
+        context.clearRect(0, 0, this.screenWidth, this.screenHeight);
         const cellSize = Math.min(this.screenWidth / levelWidth, this.screenHeight / levelHeight);
         this.cellWidth = cellSize;
         this.cellHeight = cellSize;
@@ -50,8 +63,16 @@ export class EditorLevel {
 
         this.grid.changeGridProperties(this.cellWidth, this.cellHeight, levelWidth, levelHeight);
         this.level.changeObstacleProperties(this.cellWidth, this.cellHeight);
+        this.food.changeFoodProperties(this.cellWidth, this.cellHeight);
+
         this.grid.draw(context, this.widthDifference / 2, this.heightDifference / 2);
         this.level.draw(context, this.widthDifference / 2, this.heightDifference / 2);
+        this.food.draw(context, this.widthDifference / 2, this.heightDifference / 2);
+        for (let i = 0; i < this.multiSnake.length; i++) {
+            this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight,
+                                    1, 'blue',
+                                    this.widthDifference / 2, this.heightDifference / 2);
+        }
         this.level.drawPreview(context, this.widthDifference / 2, this.heightDifference / 2, this.posX, this.posY);
     }
 
@@ -73,6 +94,19 @@ export class EditorLevel {
         }
         if (key.code === 'Delete') {
             this.level.removeObstacle(this.posX, this.posY);
+            this.food.removeFood(this.posX, this.posY);
+        }
+        if (key.code === 'KeyF') {
+            this.food.placeNewFood(this.posX, this.posY);
+        }
+        if (key.code === 'KeyS') {
+            this.multiSnake[0].placeSnake(this.posX, this.posY);
+        }
+        if (this.playerCount === 2 && key.code === 'KeyX') {
+            console.log('in');
+            console.log(this.posX + ' ' + this.posY);
+            
+            this.multiSnake[1].placeSnake(this.posX, this.posY);
         }
     }
 }

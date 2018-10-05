@@ -60,11 +60,10 @@ export class Level {
         for (let i = 0; i < this.obstacles.length; i++) {
             if (this.obstacles[i].x === x && this.obstacles[i].y === y) {
                 this.obstacles.splice(i, 1);
-
             }
-
         }
     }
+
     drawPreview(context: CanvasRenderingContext2D, widthCorrecture: number, heightCorrecture: number, x: number, y: number): void {
         context.fillStyle = '#fc6f6f';
         context.fillRect(x * this.cellWidth + widthCorrecture, y * this.cellHeight + heightCorrecture, this.cellWidth, this.cellHeight);

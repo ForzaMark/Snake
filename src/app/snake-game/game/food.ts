@@ -29,4 +29,21 @@ export class Food implements CellObject {
         context.stroke();
         context.fillStyle = 'black';
     }
+
+    placeNewFood(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+    }
+
+    changeFoodProperties(newCellWidth, newCellHeight) {
+        this.cellWidth = newCellWidth;
+        this.cellHeight = newCellHeight;
+    }
+
+    removeFood(x: number, y: number): void {
+        if (this.x === x && this.y === y ) {
+            this.x = undefined;
+            this.y = undefined;
+        }
+    }
 }
