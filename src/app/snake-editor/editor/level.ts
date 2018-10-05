@@ -21,7 +21,8 @@ export class EditorLevel {
 
     constructor(private screenWidth: number, private screenHeight: number,
                 private levelWidth: number, private levelHeight: number,
-                private gameMode: number, private snakeLength: number) {
+                private gameMode: number, private snakeLength: number,
+                private color: string) {
         this.cellWidth = screenWidth / this.levelWidth;
         this.cellHeight = screenHeight / this.levelHeight;
         this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, this.levelWidth, this.levelHeight, true);
@@ -68,7 +69,7 @@ export class EditorLevel {
         this.food.draw(context, this.widthDifference / 2, this.heightDifference / 2);
         for (let i = 0; i < this.multiSnake.length; i++) {
             this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight,
-                                    1, 'blue',
+                                    1, this.color,
                                     this.widthDifference / 2, this.heightDifference / 2);
         }
         this.level.drawPreview(context, this.widthDifference / 2, this.heightDifference / 2, this.posX, this.posY);

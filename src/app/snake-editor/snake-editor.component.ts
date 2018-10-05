@@ -32,6 +32,8 @@ export class SnakeEditorComponent implements OnInit {
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit(): void {
     const editorCanvas = this.canvasReference.nativeElement as HTMLCanvasElement;
+    editorCanvas.width = this.screenWidth;
+    editorCanvas.height = this.screenHeight;
     const context = editorCanvas.getContext('2d');
     const framesPerSec = 30;
 
@@ -40,10 +42,11 @@ export class SnakeEditorComponent implements OnInit {
     this.snakeLength = this.configData.data.snakeLength;
     this.gameMode = this.configData.data.playerCount;
     this.color = this.configData.data.color;
-    const level = new EditorLevel(this.screenWidth, this.screenHeight, this.levelWidth, this.levelHeight, this.snakeLength, this.gameMode);
+    const level = new EditorLevel(this.screenWidth, this.screenHeight,
+                                  this.levelWidth, this.levelHeight,
+                                  this.snakeLength, this.gameMode,
+                                  this.color);
 
-    editorCanvas.width = this.screenWidth;
-    editorCanvas.height = this.screenHeight;
     document.addEventListener('keyup', e => level.onKeyUp(e as KeyboardEvent));
 
     this.drawTimer = setInterval(() => {
