@@ -49,6 +49,7 @@ export class EditorLevel {
         this.heightDifference = this.screenHeight - this.gridHeight;
 
         this.grid.changeGridProperties(this.cellWidth, this.cellHeight, levelWidth, levelHeight);
+        this.level.changeObstacleProperties(this.cellWidth, this.cellHeight);
         this.grid.draw(context, this.widthDifference / 2, this.heightDifference / 2);
         this.level.draw(context, this.widthDifference / 2, this.heightDifference / 2);
         this.level.drawPreview(context, this.widthDifference / 2, this.heightDifference / 2, this.posX, this.posY);

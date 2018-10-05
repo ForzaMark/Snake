@@ -70,4 +70,8 @@ export class Level {
         context.fillRect(x * this.cellWidth + widthCorrecture, y * this.cellHeight + heightCorrecture, this.cellWidth, this.cellHeight);
         context.fillStyle = 'black';
     }
+    changeObstacleProperties(newCellWidth, newCellHeight) {
+        this.cellWidth = newCellWidth;
+        this.cellHeight = newCellHeight;
+    }
 }
