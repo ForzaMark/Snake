@@ -5,7 +5,7 @@ export class SnakeGrid {
 
     draw(context: CanvasRenderingContext2D, widthCorrecture: number, heightCorrecture: number): void {
         context.fillStyle = 'white';
-        context.fillRect(0, 0, this.cellWidth * this.fieldWidth, this.cellHeight * this.fieldHeight);
+        context.fillRect(0, 0, 800, 600);
         context.stroke();
 
         if (this.gridenabled) {
