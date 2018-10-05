@@ -12,6 +12,8 @@ export class SnakeEditorComponent implements OnInit {
   private levelHeight: number;
   private screenWidth = 800;
   private screenHeight = 600;
+  private snakeLength: number;
+  private gameMode: number;
   private drawTimer: any;
 
   constructor() { }
@@ -24,10 +26,12 @@ export class SnakeEditorComponent implements OnInit {
   ngAfterViewInit(): void {
     this.levelWidth = 20;
     this.levelHeight = 15;
+    this.snakeLength = 1;
+    this.gameMode = 1;
     const editorCanvas = this.canvasReference.nativeElement as HTMLCanvasElement;
     const context = editorCanvas.getContext('2d');
     const framesPerSec = 30;
-    const level = new EditorLevel(this.screenWidth, this.screenHeight, this.levelWidth, this.levelHeight);
+    const level = new EditorLevel(this.screenWidth, this.screenHeight, this.levelWidth, this.levelHeight, this.snakeLength, this.gameMode);
 
     editorCanvas.width = this.screenWidth;
     editorCanvas.height = this.screenHeight;

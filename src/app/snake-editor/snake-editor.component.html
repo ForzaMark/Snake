@@ -32,8 +32,31 @@
                         maxlength="2" 
                         minlength="1" 
                         [(ngModel)]="this.levelHeight">
-        
         </div>
+        <div class="form-group mt-5">
+            <label class="control-label">Game Mode</label>
+            <select #GameMode="ngModel" 
+                    [(ngModel)]="this.gameMode" 
+                    required
+                    class="form-control">
+                    <option value="1">Singleplayer</option>
+                    <option value="2">Multiplayer</option>
+            </select>
+        </div>
+        <div class="form-group mt-5 ">
+            <label class="control-label" for="snakeLength">Snakelength : </label>
+            <input #SnakeLength="ngModel"
+                    class="form-control"
+                    id="LevelHeight"
+                    type="number" 
+                    value="1" 
+                    required 
+                    min="1" 
+                    max="6" 
+                    maxlength="2" 
+                    minlength="1" 
+                    [(ngModel)]="this.snakeLength">
+    </div>
     </div>
     <div class="card">
         <div class="card-header text-white bg-info">Snake Editor</div>

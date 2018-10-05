@@ -18,10 +18,10 @@ export class EditorLevel {
     private gridHeight: number;
     private widthDifference: number;
     private heightDifference: number;
-    private playerCount: number;
-    private snakeLength: number;
 
-    constructor(private screenWidth: number, private screenHeight: number, private levelWidth: number, private levelHeight: number) {
+    constructor(private screenWidth: number, private screenHeight: number,
+                levelWidth: number, levelHeight: number,
+                private gameMode: number, private snakeLength: number) {
         this.cellWidth = screenWidth / levelWidth;
         this.cellHeight = screenHeight / levelHeight;
         this.grid = new SnakeGrid(this.cellWidth, this.cellHeight, levelWidth, levelHeight, true);
@@ -33,11 +33,9 @@ export class EditorLevel {
         this.inputConfig.right = 'ArrowRight';
         this.posX = 0;
         this.posY = 0;
-        this.playerCount = 2;
-        this.snakeLength = 1;
 
 
-        for (let i = 0; i < this.playerCount; i++) {
+        for (let i = 0; i < this.gameMode; i++) {
             this.multiSnake.push(new Snake(levelWidth,
                                            levelHeight,
                                            this.snakeLength,
@@ -102,10 +100,7 @@ export class EditorLevel {
         if (key.code === 'KeyS') {
             this.multiSnake[0].placeSnake(this.posX, this.posY);
         }
-        if (this.playerCount === 2 && key.code === 'KeyX') {
-            console.log('in');
-            console.log(this.posX + ' ' + this.posY);
-            
+        if (this.gameMode === 2 && key.code === 'KeyX') {
             this.multiSnake[1].placeSnake(this.posX, this.posY);
         }
     }
