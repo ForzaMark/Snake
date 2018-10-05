@@ -22,14 +22,17 @@ export class SnakeEditorComponent implements OnInit {
     const framesPerSec = 30;
     const screenWidth = 800;
     const screenHeight = 600;
+    const levelWidth = 20;
+    const levelHeight = 15;
 
     editorCanvas.width = screenWidth;
     editorCanvas.height = screenHeight;
     const context = editorCanvas.getContext('2d');
 
-    const level = new EditorLevel();
+    const level = new EditorLevel(screenWidth, screenHeight, levelWidth, levelHeight);
 
     this.drawTimer = setInterval(() => {
+      level.update();
       level.draw(context);
     }, 1000 / framesPerSec);
 
