@@ -4,6 +4,7 @@ import { Snake } from '../../snake-game/game/snake';
 import { SnakeInputConfiguration } from '../../snake-game/game/snake-game-configuration';
 import { Food } from '../../snake-game/game/food';
 import { ConfigDataService } from '../../config-data.service';
+import { EditorPreview } from './preview';
 
 export class EditorLevel {
     private cellWidth: number;
@@ -12,6 +13,7 @@ export class EditorLevel {
     private level: Level;
     private multiSnake: Snake[] = [];
     private food: Food;
+    private preview: EditorPreview;
     private inputConfig: SnakeInputConfiguration;
     private posX: number;
     private posY: number;
@@ -42,19 +44,13 @@ export class EditorLevel {
         this.food = new Food(configData.data.levelWidth, configData.data.levelHeight);
         this.grid = new SnakeGrid(true);
         this.level = new Level(configData.data.levelWidth, configData.data.levelHeight);
+        this.preview = new EditorPreview();
 
     }
 
     draw(context: CanvasRenderingContext2D , levelWidth: number, levelHeight: number) {
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
-        const cellSize = Math.min(this.screenWidth / levelWidth, this.screenHeight / levelHeight);
-        this.cellWidth = cellSize;
-        this.cellHeight = cellSize;
-        this.gridWidth = this.cellWidth * levelWidth;
-        this.gridHeight = this.cellHeight * levelHeight;
-        this.widthDifference = this.screenWidth - this.gridWidth;
-        this.heightDifference = this.screenHeight - this.gridHeight;
-
+        this.setDrawVariables(levelWidth, levelHeight);
         this.grid.draw(context, this.widthDifference / 2, this.heightDifference / 2,
                         this.cellWidth, this.cellHeight,
                         levelWidth, levelHeight);
@@ -67,9 +63,9 @@ export class EditorLevel {
                                     1, this.configData.data.color,
                                     this.widthDifference / 2, this.heightDifference / 2);
         }
-        this.level.drawPreview(context, this.widthDifference / 2, this.heightDifference / 2,
-                               this.posX, this.posY,
-                               this.cellWidth, this.cellHeight);
+        this.preview.draw(context, this.widthDifference, this.heightDifference,
+                          this.posX, this.posY,
+                          this.cellWidth, this.cellHeight);
     }
 
     onKeyUp(key: KeyboardEvent) {
@@ -121,5 +117,14 @@ export class EditorLevel {
                 }
             }
         }
+    }
+    private setDrawVariables(levelWidth: number, levelHeight: number): void {
+        const cellSize = Math.min(this.screenWidth / levelWidth, this.screenHeight / levelHeight);
+        this.cellWidth = cellSize;
+        this.cellHeight = cellSize;
+        this.gridWidth = this.cellWidth * levelWidth;
+        this.gridHeight = this.cellHeight * levelHeight;
+        this.widthDifference = this.screenWidth - this.gridWidth;
+        this.heightDifference = this.screenHeight - this.gridHeight;
     }
 }

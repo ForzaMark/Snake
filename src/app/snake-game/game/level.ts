@@ -62,15 +62,6 @@ export class Level {
             }
         }
     }
-
-    drawPreview(context: CanvasRenderingContext2D, widthCorrecture: number, heightCorrecture: number,
-                x: number, y: number,
-                cellWidth: number, cellHeight: number): void {
-        context.fillStyle = '#fc6f6f';
-        context.fillRect(x * cellWidth + widthCorrecture, y * cellHeight + heightCorrecture, cellWidth, cellHeight);
-        context.fillStyle = 'black';
-    }
-
     isOnObstacle(x: number, y: number): boolean {
         for (let i = 0; i < this.obstacles.length; i++) {
             if (this.obstacles[i].x === x && this.obstacles[i].y === y) {
