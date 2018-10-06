@@ -50,7 +50,7 @@ export class SnakeGame {
         }
 
         this.grid = new SnakeGrid(this.configuration.grid);
-        this.food = new Food(this.cellWidth, this.cellHeight, this.configuration.levelWidth, this.configuration.levelHeight);
+        this.food = new Food(configuration.levelWidth, configuration.levelHeight);
         this.level = new Level(this.cellWidth, this.cellHeight, this.configuration.levelWidth, this.configuration.levelHeight);
         this.food.createNewFood(this.multiSnake[0]);
     }
@@ -132,7 +132,8 @@ export class SnakeGame {
                                     this.widthDifference / 2, this.heightDifference / 2);
         }
 
-        this.food.draw(context, this.widthDifference / 2, this.heightDifference / 2 );
+        this.food.draw(context, this.widthDifference / 2, this.heightDifference / 2,
+                       this.cellWidth, this.cellHeight );
         this.level.draw(context, this.widthDifference / 2, this.heightDifference / 2 );
     }
 

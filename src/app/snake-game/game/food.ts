@@ -5,10 +5,7 @@ export class Food implements CellObject {
     x: number;
     y: number;
 
-    constructor(private cellWidth: number,
-                private cellHeight: number,
-                private fieldWidth: number,
-                private fieldHeight: number) {}
+    constructor(private fieldWidth: number, private fieldHeight: number) {}
 
     createNewFood(snake: Snake): void {
         let isOnSnake = true;
@@ -19,11 +16,12 @@ export class Food implements CellObject {
         }
     }
 
-    draw(context: CanvasRenderingContext2D,  widthCorrecture: number, heightCorrecture: number): void {
+    draw(context: CanvasRenderingContext2D,  widthCorrecture: number, heightCorrecture: number,
+         cellWidth: number, cellHeight: number): void {
         context.beginPath();
-        context.arc(this.x * this.cellWidth + this.cellWidth / 2 + widthCorrecture,
-                    this.y * this.cellHeight + this.cellHeight / 2 + heightCorrecture,
-                    this.cellWidth / 2, 0, 2 * Math.PI, false);
+        context.arc(this.x * cellWidth + cellWidth / 2 + widthCorrecture,
+                    this.y * cellHeight + cellHeight / 2 + heightCorrecture,
+                    cellWidth / 2, 0, 2 * Math.PI, false);
         context.fillStyle = '#088A29';
         context.fill();
         context.stroke();
@@ -33,11 +31,6 @@ export class Food implements CellObject {
     placeNewFood(x: number, y: number) {
         this.x = x;
         this.y = y;
-    }
-
-    changeFoodProperties(newCellWidth, newCellHeight) {
-        this.cellWidth = newCellWidth;
-        this.cellHeight = newCellHeight;
     }
 
     removeFood(x: number, y: number): void {

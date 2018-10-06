@@ -39,8 +39,7 @@ export class EditorLevel {
                                            this.inputConfig,
                                            this.widthDifference / 2, this.heightDifference / 2));
         }
-        this.food = new Food(this.cellWidth, this.cellHeight,
-                             configData.data.levelWidth, configData.data.levelHeight);
+        this.food = new Food(configData.data.levelWidth, configData.data.levelHeight);
         this.grid = new SnakeGrid(true);
         this.level = new Level(this.cellWidth, this.cellHeight,
                                configData.data.levelWidth, configData.data.levelHeight);
@@ -58,13 +57,13 @@ export class EditorLevel {
         this.heightDifference = this.screenHeight - this.gridHeight;
 
         this.level.changeObstacleProperties(this.cellWidth, this.cellHeight);
-        this.food.changeFoodProperties(this.cellWidth, this.cellHeight);
 
         this.grid.draw(context, this.widthDifference / 2, this.heightDifference / 2,
                         this.cellWidth, this.cellHeight,
                         levelWidth, levelHeight);
         this.level.draw(context, this.widthDifference / 2, this.heightDifference / 2);
-        this.food.draw(context, this.widthDifference / 2, this.heightDifference / 2);
+        this.food.draw(context, this.widthDifference / 2, this.heightDifference / 2,
+                        this.cellWidth, this.cellHeight);
         for (let i = 0; i < this.multiSnake.length; i++) {
             this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight,
                                     1, this.configData.data.color,
