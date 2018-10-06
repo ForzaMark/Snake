@@ -49,8 +49,7 @@ export class SnakeGame {
             this.score[i] = configuration.snakeLength;
         }
 
-        this.grid = new SnakeGrid(this.cellWidth, this.cellHeight,
-                                  this.configuration.levelWidth, this.configuration.levelHeight, this.configuration.grid);
+        this.grid = new SnakeGrid(this.configuration.grid);
         this.food = new Food(this.cellWidth, this.cellHeight, this.configuration.levelWidth, this.configuration.levelHeight);
         this.level = new Level(this.cellWidth, this.cellHeight, this.configuration.levelWidth, this.configuration.levelHeight);
         this.food.createNewFood(this.multiSnake[0]);
@@ -123,7 +122,9 @@ export class SnakeGame {
 
     draw(context: CanvasRenderingContext2D): void {
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
-        this.grid.draw(context, this.widthDifference / 2, this.heightDifference / 2 );
+        this.grid.draw(context, this.widthDifference / 2, this.heightDifference / 2,
+                        this.cellWidth, this.cellHeight,
+                        this.configuration.levelWidth, this.configuration.levelHeight);
 
         for (let i = 0; i < this.multiSnake.length; i++) {
             this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight,
