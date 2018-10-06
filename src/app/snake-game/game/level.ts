@@ -5,9 +5,7 @@ import { Obstacle } from './obstacle';
 export class Level {
     private obstacles: Obstacle[] = [];
 
-    constructor(private cellWidth: number,
-        private cellHeight: number,
-        private fieldWidth: number,
+    constructor( private fieldWidth: number,
         private fieldHeight: number) {
         }
 
@@ -24,12 +22,13 @@ export class Level {
         this.obstacles.push(obstacle);
     }
 
-    draw(context: CanvasRenderingContext2D,  widthCorrecture: number, heightCorrecture: number): void {
+    draw(context: CanvasRenderingContext2D,  widthCorrecture: number, heightCorrecture: number,
+         cellWidth: number, cellHeight: number): void {
         context.fillStyle = '#FF0040';
         for (let i = 0; i < this.obstacles.length; i++) {
-            context.fillRect(this.obstacles[i].x * this.cellWidth + widthCorrecture,
-                             this.obstacles[i].y * this.cellHeight + heightCorrecture,
-                             this.cellWidth, this.cellHeight);
+            context.fillRect(this.obstacles[i].x * cellWidth + widthCorrecture,
+                             this.obstacles[i].y * cellHeight + heightCorrecture,
+                             cellWidth, cellHeight);
         }
         context.fillStyle = 'black';
     }
@@ -64,15 +63,14 @@ export class Level {
         }
     }
 
-    drawPreview(context: CanvasRenderingContext2D, widthCorrecture: number, heightCorrecture: number, x: number, y: number): void {
+    drawPreview(context: CanvasRenderingContext2D, widthCorrecture: number, heightCorrecture: number,
+                x: number, y: number,
+                cellWidth: number, cellHeight: number): void {
         context.fillStyle = '#fc6f6f';
-        context.fillRect(x * this.cellWidth + widthCorrecture, y * this.cellHeight + heightCorrecture, this.cellWidth, this.cellHeight);
+        context.fillRect(x * cellWidth + widthCorrecture, y * cellHeight + heightCorrecture, cellWidth, cellHeight);
         context.fillStyle = 'black';
     }
-    changeObstacleProperties(newCellWidth, newCellHeight) {
-        this.cellWidth = newCellWidth;
-        this.cellHeight = newCellHeight;
-    }
+
     isOnObstacle(x: number, y: number): boolean {
         for (let i = 0; i < this.obstacles.length; i++) {
             if (this.obstacles[i].x === x && this.obstacles[i].y === y) {
