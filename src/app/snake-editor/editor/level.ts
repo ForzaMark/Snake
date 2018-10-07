@@ -15,8 +15,6 @@ export class EditorLevel {
     private food: Food;
     private preview: EditorPreview;
     private inputConfig: SnakeInputConfiguration;
-    private posX: number;
-    private posY: number;
     private gridWidth:  number;
     private gridHeight: number;
     private widthDifference: number;
@@ -29,9 +27,6 @@ export class EditorLevel {
         this.cellWidth = cellSize;
         this.cellHeight = cellSize;
         this.inputConfig = new SnakeInputConfiguration();
-        this.posX = 0;
-        this.posY = 0;
-
 
         for (let i = 0; i < configData.data.playerCount; i++) {
             this.multiSnake.push(new Snake(configData.data.levelWidth,
@@ -44,7 +39,7 @@ export class EditorLevel {
         this.food = new Food(configData.data.levelWidth, configData.data.levelHeight);
         this.grid = new SnakeGrid(true);
         this.level = new Level(configData.data.levelWidth, configData.data.levelHeight);
-        this.preview = new EditorPreview();
+        this.preview = new EditorPreview(0, 0);
 
     }
 
@@ -64,56 +59,57 @@ export class EditorLevel {
                                     this.widthDifference / 2, this.heightDifference / 2);
         }
         this.preview.draw(context, this.widthDifference, this.heightDifference,
-                          this.posX, this.posY,
-                          this.cellWidth, this.cellHeight);
+                          this.cellWidth, this.cellHeight,
+                          this.configData.data.levelWidth, this.configData.data.levelHeight);
     }
 
     onKeyUp(key: KeyboardEvent) {
-        if (key.code === 'ArrowUp' && this.posY !== 0) {
-           this.posY = this.posY - 1;
+        if (key.code === 'ArrowUp' && this.preview.y !== 0) {
+           this.preview.y = this.preview.y - 1;
         }
-        if (key.code === 'ArrowDown' && this.posY !== this.configData.data.levelHeight - 1) {
-            this.posY = this.posY + 1;
+        if (key.code === 'ArrowDown' && this.preview.y !== this.configData.data.levelHeight - 1) {
+            this.preview.y = this.preview.y + 1;
         }
-        if (key.code === 'ArrowLeft' && this.posX !== 0) {
-            this.posX = this.posX - 1;
+        if (key.code === 'ArrowLeft' && this.preview.x !== 0) {
+            this.preview.x = this.preview.x - 1;
         }
-        if (key.code === 'ArrowRight' && this.posX !==  this.configData.data.levelWidth - 1) {
-            this.posX = this.posX + 1;
+        if (key.code === 'ArrowRight' && this.preview.x !==  this.configData.data.levelWidth - 1) {
+            this.preview.x = this.preview.x + 1;
         }
         if (key.code === 'Space') {
-            if (this.posX !== this.food.x || this.posY !== this.food.y) {
+            if (this.preview.x !== this.food.x || this.preview.y !== this.food.y) {
                 for (let i = 0; i < this.multiSnake.length; i++) {
-                    if (this.posX !== this.multiSnake[i].snakeHead.x || this.posY !== this.multiSnake[i].snakeHead.y) {
-                        this.level.placeNewObstacle(this.posX, this.posY);
+                    if (this.preview.x !== this.multiSnake[i].snakeHead.x ||
+                        this.preview.y !== this.multiSnake[i].snakeHead.y) {
+                        this.level.placeNewObstacle(this.preview.x, this.preview.y);
                     }
                 }
             }
         }
         if (key.code === 'Delete') {
-            this.level.removeObstacle(this.posX, this.posY);
-            this.food.removeFood(this.posX, this.posY);
+            this.level.removeObstacle(this.preview.x, this.preview.y);
+            this.food.removeFood(this.preview.x, this.preview.y);
         }
         if (key.code === 'KeyF') {
             for (let i = 0; i < this.multiSnake.length; i++) {
-                if (this.posX !== this.multiSnake[i].snakeHead.x || this.posY !== this.multiSnake[i].snakeHead.y) {
-                    if (this.level.isOnObstacle(this.posX, this.posY)) {
-                        this.food.placeNewFood(this.posX, this.posY);
+                if (this.preview.x !== this.multiSnake[i].snakeHead.x || this.preview.y !== this.multiSnake[i].snakeHead.y) {
+                    if (this.level.isOnObstacle(this.preview.x, this.preview.y)) {
+                        this.food.placeNewFood(this.preview.x, this.preview.y);
                     }
                 }
             }
         }
         if (key.code === 'KeyS') {
-            if (this.posX !== this.food.x && this.posY !== this.food.y) {
-                if (this.level.isOnObstacle(this.posX, this.posY)) {
-                    this.multiSnake[0].placeSnake(this.posX, this.posY);
+            if (this.preview.x !== this.food.x && this.preview.y !== this.food.y) {
+                if (this.level.isOnObstacle(this.preview.x, this.preview.y)) {
+                    this.multiSnake[0].placeSnake(this.preview.x, this.preview.y);
                 }
             }
         }
         if (this.configData.data.playerCount === 2 && key.code === 'KeyX') {
-            if (this.posX !== this.food.x && this.posY !== this.food.y) {
-                if (this.level.isOnObstacle(this.posX, this.posY)) {
-                    this.multiSnake[1].placeSnake(this.posX, this.posY);
+            if (this.preview.x !== this.food.x && this.preview.y !== this.food.y) {
+                if (this.level.isOnObstacle(this.preview.x, this.preview.y)) {
+                    this.multiSnake[1].placeSnake(this.preview.x, this.preview.y);
                 }
             }
         }
