@@ -100,7 +100,7 @@ export class EditorLevel {
             }
         }
         if (key.code === 'KeyS') {
-            if (this.preview.x !== this.food.x && this.preview.y !== this.food.y) {
+            if (this.preview.x !== this.food.x || this.preview.y !== this.food.y) {
                 if (this.level.isOnObstacle(this.preview.x, this.preview.y)) {
                     this.multiSnake[0].placeSnake(this.preview.x, this.preview.y);
                 }
