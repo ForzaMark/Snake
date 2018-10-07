@@ -58,7 +58,7 @@ export class EditorLevel {
                                     1, this.configData.data.color,
                                     this.widthDifference / 2, this.heightDifference / 2);
         }
-        this.preview.draw(context, this.widthDifference, this.heightDifference,
+        this.preview.draw(context, this.widthDifference / 2, this.heightDifference / 2,
                           this.cellWidth, this.cellHeight,
                           this.configData.data.levelWidth, this.configData.data.levelHeight);
     }
@@ -81,7 +81,8 @@ export class EditorLevel {
                 for (let i = 0; i < this.multiSnake.length; i++) {
                     if (this.preview.x !== this.multiSnake[i].snakeHead.x ||
                         this.preview.y !== this.multiSnake[i].snakeHead.y) {
-                        this.level.placeNewObstacle(this.preview.x, this.preview.y);
+                        this.level.addObstacle(this.multiSnake[i], this.food, false,
+                                               this.preview.x, this.preview.y);
                     }
                 }
             }

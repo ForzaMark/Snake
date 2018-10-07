@@ -81,7 +81,7 @@ export class SnakeGame {
                 this.food.createNewFood(this.multiSnake[i]);
                 if ((this.multiSnake[i].getSnakeLength() % this.configuration.skillLevel === 0)
                     || this.multiSnake[i].getSnakeLength() === this.configuration.snakeLength + 1) {
-                    this.level.addObstacle(this.multiSnake[i], this.food);
+                    this.level.addObstacle(this.multiSnake[i], this.food, true);
                 } else {
                     this.level.changeObstaclePosition(this.multiSnake[i], this.food);
                 }

@@ -9,17 +9,23 @@ export class Level {
         private fieldHeight: number) {
         }
 
-    addObstacle(snake: Snake, food: Food): void {
+    addObstacle(snake: Snake, food: Food, random: boolean,
+                fixedX?: number, fixedY?: number): void {
         let isOnSnakeOrFood = true;
         let obstacle: Obstacle;
-        while (isOnSnakeOrFood) {
+        if (random) {
+            while (isOnSnakeOrFood) {
 
-            const propx = Math.floor(Math.random() * this.fieldWidth);
-            const propy = Math.floor(Math.random() * this.fieldHeight);
-            obstacle = new Obstacle(propx, propy);
-            isOnSnakeOrFood = snake.isOnSnake(obstacle) || propx === food.x && propy === food.y;
+                const propx = Math.floor(Math.random() * this.fieldWidth);
+                const propy = Math.floor(Math.random() * this.fieldHeight);
+                obstacle = new Obstacle(propx, propy);
+                isOnSnakeOrFood = snake.isOnSnake(obstacle) || propx === food.x && propy === food.y;
+            }
+            this.obstacles.push(obstacle);
+        } else {
+            obstacle = new Obstacle(fixedX, fixedY);
+            this.obstacles.push(obstacle);
         }
-        this.obstacles.push(obstacle);
     }
 
     draw(context: CanvasRenderingContext2D,  widthCorrecture: number, heightCorrecture: number,
@@ -47,14 +53,10 @@ export class Level {
         this.obstacles = [];
 
         for (let i = 0; i < obstacleCounter; i++) {
-            this.addObstacle(snake, food);
+            this.addObstacle(snake, food, true);
         }
     }
-    placeNewObstacle(x: number, y: number): void {
-        let obstacle: Obstacle;
-        obstacle = new Obstacle(x, y);
-        this.obstacles.push(obstacle);
-    }
+
     removeObstacle(x: number, y: number): void {
         for (let i = 0; i < this.obstacles.length; i++) {
             if (this.obstacles[i].x === x && this.obstacles[i].y === y) {
