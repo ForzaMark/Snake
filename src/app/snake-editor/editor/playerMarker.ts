@@ -1,7 +1,10 @@
 import { CellObject } from '../../snake-game/game/cell-object';
 
 export class EditorPlayerMarker implements CellObject {
-    constructor(public x: number, public y: number) { }
+    x: number;
+    y: number;
+
+    constructor() { }
     intersects(other: CellObject) {
         return this.x === other.x && this.y === other.y;
     }

@@ -15,7 +15,7 @@ export class EditorLevel {
     private multiSnake: Snake[] = [];
     private food: Food;
     private cursor: Cursor;
-    private playerMarker: EditorPlayerMarker;
+    private playerMarker: EditorPlayerMarker[] = [];
     private gridWidth:  number;
     private gridHeight: number;
     private widthDifference: number;
@@ -33,14 +33,15 @@ export class EditorLevel {
         this.grid = new SnakeGrid(true);
         this.level = new Level(configData.data.levelWidth, configData.data.levelHeight);
         this.cursor = new Cursor(0, 0);
-        this.playerMarker = new EditorPlayerMarker(0, 1);
-
+        this.playerMarker[0] = new EditorPlayerMarker();
+        this.playerMarker[1] = new EditorPlayerMarker();
     }
 
     draw(context: CanvasRenderingContext2D , levelWidth: number, levelHeight: number) {
         this.levelWidth = levelWidth;
         this.levelHeight = levelHeight;
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
+
         this.setDrawVariables(levelWidth, levelHeight);
         this.grid.draw(context, this.widthDifference / 2, this.heightDifference / 2,
                         this.cellWidth, this.cellHeight,
@@ -51,9 +52,12 @@ export class EditorLevel {
         this.food.draw(context, this.widthDifference / 2, this.heightDifference / 2,
                         this.cellWidth, this.cellHeight,
                         levelWidth, levelHeight);
-        this.playerMarker.draw(context, this.widthDifference / 2, this.heightDifference / 2,
-                               this.cellWidth, this.cellHeight,
-                               levelWidth, levelHeight);
+        this.playerMarker[0].draw(context, this.widthDifference / 2, this.heightDifference / 2,
+                                  this.cellWidth, this.cellHeight,
+                                  levelWidth, levelHeight);
+        this.playerMarker[1].draw(context, this.widthDifference / 2, this.heightDifference / 2,
+                                  this.cellWidth, this.cellHeight,
+                                  levelWidth, levelHeight);
         this.cursor.draw(context, this.widthDifference / 2, this.heightDifference / 2,
                           this.cellWidth, this.cellHeight,
                           levelWidth, levelHeight);
@@ -62,7 +66,8 @@ export class EditorLevel {
     onKeyUp(key: KeyboardEvent) {
         this.cursor.move(key, this.levelWidth, this.levelHeight);
         if (key.code === 'Space') {
-            if (!(this.cursor.intersects(this.food) || this.cursor.intersects(this.playerMarker))) {
+            if (!(this.cursor.intersects(this.food) ||
+                  this.cursor.intersects(this.playerMarker[0]) || this.cursor.intersects(this.playerMarker[1]))) {
                         this.level.addObstacle(this.multiSnake[0], this.food, false,
                                                this.cursor.x, this.cursor.y);
             }
@@ -72,18 +77,19 @@ export class EditorLevel {
             this.food.removeFood(this.cursor.x, this.cursor.y);
         }
         if (key.code === 'KeyF') {
-            if (!(this.level.isOnObstacle(this.cursor.x, this.cursor.y) || this.cursor.intersects(this.playerMarker))) {
+            if (!(this.level.isOnObstacle(this.cursor.x, this.cursor.y) ||
+                  this.cursor.intersects(this.playerMarker[0]) || this.cursor.intersects(this.playerMarker[1]))) {
                 this.food.placeNewFood(this.cursor.x, this.cursor.y);
             }
         }
         if (key.code === 'KeyS') {
             if (!(this.cursor.intersects(this.food) || this.level.isOnObstacle(this.cursor.x, this.cursor.y))) {
-                this.playerMarker.placeNewMarker(this.cursor);
+                this.playerMarker[0].placeNewMarker(this.cursor);
             }
         }
         if (key.code === 'KeyX') {
             if ( !(this.cursor.intersects(this.food) || this.level.isOnObstacle(this.cursor.x, this.cursor.y))) {
-                this.playerMarker.placeNewMarker(this.cursor);
+                this.playerMarker[1].placeNewMarker(this.cursor);
             }
         }
     }
