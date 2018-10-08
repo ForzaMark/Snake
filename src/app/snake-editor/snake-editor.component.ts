@@ -10,8 +10,8 @@ import { Router } from '../../../node_modules/@angular/router';
 })
 export class SnakeEditorComponent implements OnInit {
   @ViewChild('editorCanvas') canvasReference: ElementRef;
-  private levelWidth = 20;
-  private levelHeight = 15;
+  private levelWidth: number;
+  private levelHeight: number;
   private screenWidth = 800;
   private screenHeight = 600;
   private drawTimer: any;
@@ -27,6 +27,8 @@ export class SnakeEditorComponent implements OnInit {
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit(): void {
+    this.levelWidth = this.configData.data.levelWidth;
+    this.levelHeight = this.configData.data.levelHeight;
     const editorCanvas = this.canvasReference.nativeElement as HTMLCanvasElement;
     editorCanvas.width = this.screenWidth;
     editorCanvas.height = this.screenHeight;
