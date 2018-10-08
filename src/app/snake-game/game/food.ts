@@ -6,7 +6,7 @@ export class Food implements CellObject {
     y: number;
 
     constructor(private fieldWidth: number, private fieldHeight: number) {}
-    intersects(other: CellObject): boolean{
+    intersects(other: CellObject): boolean {
         return this.x === other.x && this.y === other.y;
     }
 
@@ -21,7 +21,7 @@ export class Food implements CellObject {
 
     draw(context: CanvasRenderingContext2D,  widthCorrecture: number, heightCorrecture: number,
          cellWidth: number, cellHeight: number,
-        fieldWidth: number, fieldHeight: number): void {
+         fieldWidth: number, fieldHeight: number): void {
         if (this.x > fieldWidth - 1) {
             this.x = fieldWidth - 1;
         }
@@ -35,10 +35,10 @@ export class Food implements CellObject {
             this.y = fieldHeight - 1;
         }
         context.beginPath();
+        context.fillStyle = '#84e968';
         context.arc(this.x * cellWidth + cellWidth / 2 + widthCorrecture,
                     this.y * cellHeight + cellHeight / 2 + heightCorrecture,
                     cellWidth / 2, 0, 2 * Math.PI, false);
-        context.fillStyle = '#088A29';
         context.fill();
         context.stroke();
         context.fillStyle = 'black';

@@ -25,4 +25,18 @@ export class Cursor implements CellObject {
         context.fillRect(this.x * cellWidth + widthCorrecture, this.y * cellHeight + heightCorrecture, cellWidth, cellHeight);
         context.fillStyle = 'black';
     }
+    move(key: KeyboardEvent, levelWidth: number, levelHeight: number) {
+        if (key.code === 'ArrowUp' && this.y !== 0) {
+            this.y = this.y - 1;
+         }
+         if (key.code === 'ArrowDown' && this.y !== levelHeight - 1) {
+             this.y = this.y + 1;
+         }
+         if (key.code === 'ArrowLeft' && this.x !== 0) {
+             this.x = this.x - 1;
+         }
+         if (key.code === 'ArrowRight' && this.x !== levelWidth - 1) {
+             this.x = this.x + 1;
+         }
+    }
 }

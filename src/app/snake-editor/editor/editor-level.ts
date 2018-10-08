@@ -59,32 +59,18 @@ export class EditorLevel {
         this.food.draw(context, this.widthDifference / 2, this.heightDifference / 2,
                         this.cellWidth, this.cellHeight,
                         levelWidth, levelHeight);
-        for (let i = 0; i < this.multiSnake.length; i++) {
-            this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight,
-                                    1, this.configData.data.color,
-                                    this.widthDifference / 2, this.heightDifference / 2,
-                                    levelWidth, levelHeight);
-        }
+        this.playerMarker.draw(context, this.widthDifference / 2, this.heightDifference / 2,
+                               this.cellWidth, this.cellHeight,
+                               levelWidth, levelHeight);
         this.cursor.draw(context, this.widthDifference / 2, this.heightDifference / 2,
                           this.cellWidth, this.cellHeight,
                           levelWidth, levelHeight);
     }
 
     onKeyUp(key: KeyboardEvent) {
-        if (key.code === 'ArrowUp' && this.cursor.y !== 0) {
-           this.cursor.y = this.cursor.y - 1;
-        }
-        if (key.code === 'ArrowDown' && this.cursor.y !== this.configData.data.levelHeight - 1) {
-            this.cursor.y = this.cursor.y + 1;
-        }
-        if (key.code === 'ArrowLeft' && this.cursor.x !== 0) {
-            this.cursor.x = this.cursor.x - 1;
-        }
-        if (key.code === 'ArrowRight' && this.cursor.x !==  this.configData.data.levelWidth - 1) {
-            this.cursor.x = this.cursor.x + 1;
-        }
+        this.cursor.move(key, this.configData.data.levelWidth, this.configData.data.levelHeight);
         if (key.code === 'Space') {
-            if (this.level.isOnObstacle(this.food.x, this.food.y) || this.level.isOnObstacle(this.playerMarker.x, this.playerMarker.y)) {
+            if (!(this.cursor.intersects(this.food) || this.cursor.intersects(this.playerMarker))) {
                         this.level.addObstacle(this.multiSnake[0], this.food, false,
                                                this.cursor.x, this.cursor.y);
             }
@@ -94,22 +80,18 @@ export class EditorLevel {
             this.food.removeFood(this.cursor.x, this.cursor.y);
         }
         if (key.code === 'KeyF') {
-            if ((this.food.intersects(this.cursor) || this.food.intersects(this.playerMarker))) {
+            if (!(this.level.isOnObstacle(this.cursor.x, this.cursor.y) || this.cursor.intersects(this.playerMarker))) {
                 this.food.placeNewFood(this.cursor.x, this.cursor.y);
             }
         }
         if (key.code === 'KeyS') {
-            if (this.cursor.x !== this.food.x || this.cursor.y !== this.food.y) {
-                if (this.level.isOnObstacle(this.cursor.x, this.cursor.y)) {
-                    this.multiSnake[0].placeSnake(this.cursor.x, this.cursor.y);
-                }
+            if (!(this.cursor.intersects(this.food) || this.level.isOnObstacle(this.cursor.x, this.cursor.y))) {
+                this.playerMarker.placeNewMarker(this.cursor);
             }
         }
-        if (this.configData.data.playerCount === 2 && key.code === 'KeyX') {
-            if (this.cursor.x !== this.food.x && this.cursor.y !== this.food.y) {
-                if (this.level.isOnObstacle(this.cursor.x, this.cursor.y)) {
-                    this.multiSnake[1].placeSnake(this.cursor.x, this.cursor.y);
-                }
+        if (key.code === 'KeyX') {
+            if ( !(this.cursor.intersects(this.food) || this.level.isOnObstacle(this.cursor.x, this.cursor.y))) {
+                this.playerMarker.placeNewMarker(this.cursor);
             }
         }
     }
