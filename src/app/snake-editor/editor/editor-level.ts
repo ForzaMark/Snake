@@ -16,29 +16,19 @@ export class EditorLevel {
     private food: Food;
     private cursor: Cursor;
     private playerMarker: EditorPlayerMarker;
-    private inputConfig: SnakeInputConfiguration;
     private gridWidth:  number;
     private gridHeight: number;
     private widthDifference: number;
     private heightDifference: number;
+    private levelWidth: number;
+    private levelHeight: number;
 
     constructor(private screenWidth: number,
                 private screenHeight: number,
                 private configData: ConfigDataService) {
-        const cellSize = Math.min(screenWidth / configData.data.levelWidth,
-                                  screenHeight / this.configData.data.levelHeight);
-        this.cellWidth = cellSize;
-        this.cellHeight = cellSize;
-        this.inputConfig = new SnakeInputConfiguration();
+        this.levelWidth = configData.data.levelWidth;
+        this.levelHeight = configData.data.levelHeight;
 
-        for (let i = 0; i < configData.data.playerCount; i++) {
-            this.multiSnake.push(new Snake(configData.data.levelWidth,
-                                           configData.data.levelHeight,
-                                           configData.data.snakeLength,
-                                           i,
-                                           this.inputConfig,
-                                           this.widthDifference / 2, this.heightDifference / 2));
-        }
         this.food = new Food(configData.data.levelWidth, configData.data.levelHeight);
         this.grid = new SnakeGrid(true);
         this.level = new Level(configData.data.levelWidth, configData.data.levelHeight);
@@ -48,6 +38,8 @@ export class EditorLevel {
     }
 
     draw(context: CanvasRenderingContext2D , levelWidth: number, levelHeight: number) {
+        this.levelWidth = levelWidth;
+        this.levelHeight = levelHeight;
         context.clearRect(0, 0, this.screenWidth, this.screenHeight);
         this.setDrawVariables(levelWidth, levelHeight);
         this.grid.draw(context, this.widthDifference / 2, this.heightDifference / 2,
@@ -68,7 +60,7 @@ export class EditorLevel {
     }
 
     onKeyUp(key: KeyboardEvent) {
-        this.cursor.move(key, this.configData.data.levelWidth, this.configData.data.levelHeight);
+        this.cursor.move(key, this.levelWidth, this.levelHeight);
         if (key.code === 'Space') {
             if (!(this.cursor.intersects(this.food) || this.cursor.intersects(this.playerMarker))) {
                         this.level.addObstacle(this.multiSnake[0], this.food, false,
