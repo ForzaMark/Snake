@@ -49,7 +49,11 @@
         <div class="card-header text-white bg-info">Snake Editor</div>
         <div class="card-body">
             <canvas #editorCanvas class="text-center mb-3 canvas-style"></canvas>
-            <button routerLink='/snake-menu' class="btn btn-primary btn-block">Back to Main Menu</button>
+            <button class="btn btn-primary btn-block mt-3 mb-3" (click)="saveLevel()">Save Level</button>
         </div>   
+    </div>
+
+        </div>
+        <button routerLink='/snake-menu' class="btn btn-secondary btn-block">Back to Main Menu</button>
     </div>
 </div>

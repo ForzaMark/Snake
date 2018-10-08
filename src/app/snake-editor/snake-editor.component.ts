@@ -17,6 +17,7 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   private screenHeight = 600;
   private drawTimer: any;
   private configuration: SnakeGameConfiguration;
+  private level: EditorLevel;
 
   constructor(private configData: ConfigDataService,
               private router: Router) {  }
@@ -36,18 +37,21 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     editorCanvas.height = this.screenHeight;
     const context = editorCanvas.getContext('2d');
     const framesPerSec = 30;
-    const level = new EditorLevel(this.screenWidth, this.screenHeight,
+    this.level = new EditorLevel(this.screenWidth, this.screenHeight,
                                   this.configData);
     document.addEventListener('keyup', e => {
-      level.onKeyUp(e as KeyboardEvent);
+      this.level.onKeyUp(e as KeyboardEvent);
     });
 
     this.drawTimer = setInterval(() => {
-      level.draw(context, this.levelWidth, this.levelHeight);
+      this.level.draw(context, this.levelWidth, this.levelHeight);
     }, 1000 / framesPerSec);
 
   }
   ngOnDestroy(): void {
     clearInterval(this.drawTimer);
+  }
+  saveLevel(): void {
+    console.log(this.level.returnLevelCofiguration());
   }
 }

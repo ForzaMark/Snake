@@ -6,6 +6,7 @@ import { ConfigDataService } from '../../services/config-data.service';
 import { Cursor } from './cursor';
 import { EditorPlayerMarker } from './playerMarker';
 import { SnakeGameConfiguration } from '../../services/snake-game-configuration';
+import { LevelConfiguration } from '../../services/level-configuration';
 
 export class EditorLevel {
     private cellWidth: number;
@@ -22,6 +23,7 @@ export class EditorLevel {
     private levelWidth: number;
     private levelHeight: number;
     private configData: SnakeGameConfiguration;
+    private levelConfig: LevelConfiguration;
 
     constructor(private screenWidth: number,
                 private screenHeight: number,
@@ -71,6 +73,7 @@ export class EditorLevel {
             if (!(this.cursor.intersects(this.food) ||
                   this.cursor.intersects(this.playerMarker[0]) || this.cursor.intersects(this.playerMarker[1]))) {
                         this.level.addObstacle(this.food, false, this.cursor.x, this.cursor.y);
+                        this.levelConfig.obstaclePosition.push(this.cursor);
             }
         }
         if (key.code === 'Delete') {
@@ -81,16 +84,21 @@ export class EditorLevel {
             if (!(this.level.intersects(this.cursor) ||
                   this.cursor.intersects(this.playerMarker[0]) || this.cursor.intersects(this.playerMarker[1]))) {
                 this.food.placeNewFood(this.cursor.x, this.cursor.y);
+                this.levelConfig.foodPosition = this.food;
             }
         }
         if (key.code === 'KeyS') {
             if (!(this.cursor.intersects(this.food) || this.level.intersects(this.cursor))) {
+                this.levelConfig.playerCount = 1;
                 this.playerMarker[0].placeNewMarker(this.cursor);
+                this.levelConfig.playerStartPosition[0] = this.cursor;
             }
         }
         if (key.code === 'KeyX') {
             if ( !(this.cursor.intersects(this.food) || this.level.intersects(this.cursor))) {
+                this.levelConfig.playerCount = 2;
                 this.playerMarker[1].placeNewMarker(this.cursor);
+                this.levelConfig.playerStartPosition[0] = this.cursor;
             }
         }
     }
@@ -102,5 +110,11 @@ export class EditorLevel {
         this.gridHeight = this.cellHeight * levelHeight;
         this.widthDifference = this.screenWidth - this.gridWidth;
         this.heightDifference = this.screenHeight - this.gridHeight;
+    }
+    returnLevelCofiguration(): LevelConfiguration {
+        this.levelConfig.levelWidth = this.levelWidth;
+        this.levelConfig.levelHeight = this.levelHeight;
+        return this.levelConfig;
+
     }
 }
