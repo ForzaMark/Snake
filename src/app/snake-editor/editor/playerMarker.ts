@@ -14,12 +14,16 @@ export class EditorPlayerMarker implements CellObject {
     }
     draw(context: CanvasRenderingContext2D, widthCorrecture: number, heightCorrecture: number,
         cellWidth: number, cellHeight: number,
-        fieldWidth: number, fieldHeight: number): void {
+        fieldWidth: number, fieldHeight: number, player: number): void {
         if (this.x > fieldWidth - 1 || this.x < 0
             || this.y < 0 ||  this.y > fieldHeight - 1 ) {
             this.removeMarker();
         }
-        context.fillStyle = '#33beff';
+        if (player === 0) {
+            context.fillStyle = '#33beff';
+        } else {
+            context.fillStyle = '#eabb6d';
+        }
         context.fillRect(this.x * cellWidth + widthCorrecture, this.y * cellHeight + heightCorrecture, cellWidth, cellHeight);
         context.fillStyle = 'black';
     }

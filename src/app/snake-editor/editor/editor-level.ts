@@ -1,7 +1,6 @@
 import { SnakeGrid } from '../../snake-game/game/grid';
 import { Level } from '../../snake-game/game/Level';
 import { Snake } from '../../snake-game/game/snake';
-import { SnakeInputConfiguration } from '../../snake-game/game/snake-game-configuration';
 import { Food } from '../../snake-game/game/food';
 import { ConfigDataService } from '../../config-data.service';
 import { Cursor } from './cursor';
@@ -54,10 +53,10 @@ export class EditorLevel {
                         levelWidth, levelHeight);
         this.playerMarker[0].draw(context, this.widthDifference / 2, this.heightDifference / 2,
                                   this.cellWidth, this.cellHeight,
-                                  levelWidth, levelHeight);
+                                  levelWidth, levelHeight, 0);
         this.playerMarker[1].draw(context, this.widthDifference / 2, this.heightDifference / 2,
                                   this.cellWidth, this.cellHeight,
-                                  levelWidth, levelHeight);
+                                  levelWidth, levelHeight, 1);
         this.cursor.draw(context, this.widthDifference / 2, this.heightDifference / 2,
                           this.cellWidth, this.cellHeight,
                           levelWidth, levelHeight);

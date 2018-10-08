@@ -61,6 +61,7 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
       if (snakeGame.update(difference / 1000)) {
       } else {
           this.router.navigate(['/snake-menu']);
+          clearInterval(this.drawTimer);
       }
       for (let i = 0; i < snakeGame.score.length; i++) {
         this.Score[i] = snakeGame.score[i];
