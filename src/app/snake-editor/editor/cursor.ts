@@ -21,9 +21,12 @@ export class Cursor implements CellObject {
         if (this.y > fieldHeight - 1 ) {
             this.y = fieldHeight - 1;
         }
-        context.fillStyle = '#fc6f6f';
-        context.fillRect(this.x * cellWidth + widthCorrecture, this.y * cellHeight + heightCorrecture, cellWidth, cellHeight);
-        context.fillStyle = 'black';
+        context.strokeStyle = '#fc6f6f';
+        context.lineWidth = 3;
+        context.strokeRect(this.x * cellWidth + widthCorrecture + 1,
+                           this.y * cellHeight + heightCorrecture + 1,
+                           cellWidth - 2,
+                           cellHeight - 2);
     }
     move(key: KeyboardEvent, levelWidth: number, levelHeight: number) {
         if (key.code === 'ArrowUp' && this.y !== 0) {

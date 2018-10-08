@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { EditorLevel } from './editor/editor-level';
-import { ConfigDataService } from '../config-data.service';
+import { ConfigDataService } from '../services/config-data.service';
 import { Router } from '@angular/router';
+import { SnakeGameConfiguration } from '../services/snake-game-configuration';
 
 @Component({
   selector: 'app-snake-editor',
@@ -15,19 +16,21 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   private screenWidth = 800;
   private screenHeight = 600;
   private drawTimer: any;
+  private configuration: SnakeGameConfiguration;
 
   constructor(private configData: ConfigDataService,
               private router: Router) {  }
 
   ngOnInit() {
-    if (!this.configData.data) {
+    this.configuration = this.configData.getGameConfiguration();
+    if (!this.configuration) {
       this.router.navigate(['/snake-menu']);
     }
   }
 
   ngAfterViewInit(): void {
-    this.levelWidth = this.configData.data.levelWidth;
-    this.levelHeight = this.configData.data.levelHeight;
+    this.levelWidth = this.configuration.levelWidth;
+    this.levelHeight = this.configuration.levelHeight;
     const editorCanvas = this.canvasReference.nativeElement as HTMLCanvasElement;
     editorCanvas.width = this.screenWidth;
     editorCanvas.height = this.screenHeight;
@@ -35,7 +38,9 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     const framesPerSec = 30;
     const level = new EditorLevel(this.screenWidth, this.screenHeight,
                                   this.configData);
-    document.addEventListener('keyup', e => level.onKeyUp(e as KeyboardEvent));
+    document.addEventListener('keyup', e => {
+      level.onKeyUp(e as KeyboardEvent);
+    });
 
     this.drawTimer = setInterval(() => {
       level.draw(context, this.levelWidth, this.levelHeight);

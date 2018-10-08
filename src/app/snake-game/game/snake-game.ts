@@ -2,7 +2,7 @@ import { Food } from './food';
 import { Snake } from './snake';
 import { SnakeGrid } from './grid';
 import { Level } from './Level';
-import { SnakeGameConfiguration } from './snake-game-configuration';
+import { SnakeGameConfiguration } from '../../services/snake-game-configuration';
 
 export interface IMessageService {
     alert(text: string, callback: () => void);
@@ -81,7 +81,7 @@ export class SnakeGame {
                 this.food.createNewFood(this.multiSnake[i]);
                 if ((this.multiSnake[i].getSnakeLength() % this.configuration.skillLevel === 0)
                     || this.multiSnake[i].getSnakeLength() === this.configuration.snakeLength + 1) {
-                    this.level.addObstacle(this.multiSnake[i], this.food, true);
+                    this.level.addObstacle(this.food, true, undefined, undefined, this.multiSnake[i]);
                 } else {
                     this.level.changeObstaclePosition(this.multiSnake[i], this.food);
                 }

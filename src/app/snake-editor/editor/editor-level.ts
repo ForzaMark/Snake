@@ -2,16 +2,16 @@ import { SnakeGrid } from '../../snake-game/game/grid';
 import { Level } from '../../snake-game/game/Level';
 import { Snake } from '../../snake-game/game/snake';
 import { Food } from '../../snake-game/game/food';
-import { ConfigDataService } from '../../config-data.service';
+import { ConfigDataService } from '../../services/config-data.service';
 import { Cursor } from './cursor';
 import { EditorPlayerMarker } from './playerMarker';
+import { SnakeGameConfiguration } from '../../services/snake-game-configuration';
 
 export class EditorLevel {
     private cellWidth: number;
     private cellHeight: number;
     private grid: SnakeGrid;
     private level: Level;
-    private multiSnake: Snake[] = [];
     private food: Food;
     private cursor: Cursor;
     private playerMarker: EditorPlayerMarker[] = [];
@@ -21,16 +21,19 @@ export class EditorLevel {
     private heightDifference: number;
     private levelWidth: number;
     private levelHeight: number;
+    private configData: SnakeGameConfiguration;
 
     constructor(private screenWidth: number,
                 private screenHeight: number,
-                private configData: ConfigDataService) {
-        this.levelWidth = configData.data.levelWidth;
-        this.levelHeight = configData.data.levelHeight;
+                private service: ConfigDataService) {
+        this.configData = service.getGameConfiguration();
 
-        this.food = new Food(configData.data.levelWidth, configData.data.levelHeight);
+        this.levelWidth = this.configData.levelWidth;
+        this.levelHeight = this.configData.levelHeight;
+
+        this.food = new Food(this.configData.levelWidth, this.configData.levelHeight);
         this.grid = new SnakeGrid(true);
-        this.level = new Level(configData.data.levelWidth, configData.data.levelHeight);
+        this.level = new Level(this.configData.levelWidth, this.configData.levelHeight);
         this.cursor = new Cursor(0, 0);
         this.playerMarker[0] = new EditorPlayerMarker();
         this.playerMarker[1] = new EditorPlayerMarker();
@@ -67,8 +70,7 @@ export class EditorLevel {
         if (key.code === 'Space') {
             if (!(this.cursor.intersects(this.food) ||
                   this.cursor.intersects(this.playerMarker[0]) || this.cursor.intersects(this.playerMarker[1]))) {
-                        this.level.addObstacle(this.multiSnake[0], this.food, false,
-                                               this.cursor.x, this.cursor.y);
+                        this.level.addObstacle(this.food, false, this.cursor.x, this.cursor.y);
             }
         }
         if (key.code === 'Delete') {

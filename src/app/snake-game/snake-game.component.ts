@@ -1,8 +1,9 @@
 import { Component, AfterViewInit, ElementRef, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { SnakeGame, IMessageService } from './game/snake-game';
-import { ConfigDataService } from '../config-data.service';
+import { ConfigDataService } from '../services/config-data.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SnakeGameConfiguration } from '../services/snake-game-configuration';
 
 @Component({
   selector: 'app-snake-game',
@@ -19,6 +20,7 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
   message: string;
   modal: object;
   modalBody: string;
+  configuration: SnakeGameConfiguration;
 
   constructor(
     private configData: ConfigDataService,
@@ -27,28 +29,29 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
   ) { }
 
   ngOnInit(): void {
-    if (!this.configData.data) {
+    this.configuration = this.configData.getGameConfiguration();
+    if (!this.configuration) {
       this.router.navigate(['/snake-menu']);
     }
   }
 
   ngAfterViewInit(): void {
-    if (!this.configData.data) {
+    if (!this.configuration) {
       return;
     }
     const mainCanvas = this.mainCanvasReference.nativeElement as HTMLCanvasElement;
     const framesPerSecond = 30;
     const screenWidth = 800;
     const screenHeight = 600;
-    for (let i = 0; i < this.configData.data.playerCount; i++) {
-      this.Score.push(this.configData.data.snakeLength);
+    for (let i = 0; i < this.configuration.playerCount; i++) {
+      this.Score.push(this.configuration.snakeLength);
     }
     mainCanvas.width = screenWidth;
     mainCanvas.height = screenHeight;
 
     const context = mainCanvas.getContext('2d');
 
-    const snakeGame = new SnakeGame(screenWidth, screenHeight, this.configData.data, this);
+    const snakeGame = new SnakeGame(screenWidth, screenHeight, this.configuration, this);
 
     document.addEventListener('keyup', e => snakeGame.onKeyUp(e as KeyboardEvent));
 

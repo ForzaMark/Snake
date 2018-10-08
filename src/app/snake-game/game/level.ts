@@ -12,8 +12,7 @@ export class Level implements CellObject {
         private fieldHeight: number) {
         }
 
-    addObstacle(snake: Snake, food: Food, random: boolean,
-                fixedX?: number, fixedY?: number): void {
+    addObstacle(food: Food, random: boolean, fixedX?: number, fixedY?: number, snake?: Snake): void {
         let isOnSnakeOrFood = true;
         let obstacle: Obstacle;
         if (random) {
@@ -22,7 +21,11 @@ export class Level implements CellObject {
                 const propx = Math.floor(Math.random() * this.fieldWidth);
                 const propy = Math.floor(Math.random() * this.fieldHeight);
                 obstacle = new Obstacle(propx, propy);
-                isOnSnakeOrFood = snake.isOnSnake(obstacle) || propx === food.x && propy === food.y;
+                if (snake) {
+                    isOnSnakeOrFood = snake.isOnSnake(obstacle) || propx === food.x && propy === food.y;
+                } else {
+                    isOnSnakeOrFood = propx === food.x && propy === food.y;
+                }
             }
             this.obstacles.push(obstacle);
         } else {
@@ -69,7 +72,7 @@ export class Level implements CellObject {
         this.obstacles = [];
 
         for (let i = 0; i < obstacleCounter; i++) {
-            this.addObstacle(snake, food, true);
+            this.addObstacle(food, true, undefined, undefined, snake);
         }
     }
 

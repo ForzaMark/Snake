@@ -1,7 +1,7 @@
 import { SnakePart } from './snake-part';
 import { Direction } from './direction';
 import { CellObject } from './cell-object';
-import { SnakeInputConfiguration } from './snake-game-configuration';
+import { SnakeInputConfiguration } from '../../services/snake-game-configuration';
 
 export class Snake {
     private direction = Direction.right;
