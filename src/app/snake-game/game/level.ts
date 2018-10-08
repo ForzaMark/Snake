@@ -3,7 +3,9 @@ import { Food } from './food';
 import { Obstacle } from './obstacle';
 import { CellObject } from './cell-object';
 
-export class Level {
+export class Level implements CellObject {
+    x: number;
+    y: number;
     private obstacles: Obstacle[] = [];
 
     constructor( private fieldWidth: number,
@@ -78,11 +80,9 @@ export class Level {
             }
         }
     }
-    isOnObstacle(x: number, y: number): boolean {
+    intersects(other: CellObject) {
         for (let i = 0; i < this.obstacles.length; i++) {
-            if (this.obstacles[i].x === x && this.obstacles[i].y === y) {
-                return true;
-            }
+             return this.obstacles[i].x === other.x && this.obstacles[i].y === other.y;
         }
         return false;
     }

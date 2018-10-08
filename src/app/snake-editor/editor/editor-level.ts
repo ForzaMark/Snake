@@ -77,18 +77,18 @@ export class EditorLevel {
             this.food.removeFood(this.cursor.x, this.cursor.y);
         }
         if (key.code === 'KeyF') {
-            if (!(this.level.isOnObstacle(this.cursor.x, this.cursor.y) ||
+            if (!(this.level.intersects(this.cursor) ||
                   this.cursor.intersects(this.playerMarker[0]) || this.cursor.intersects(this.playerMarker[1]))) {
                 this.food.placeNewFood(this.cursor.x, this.cursor.y);
             }
         }
         if (key.code === 'KeyS') {
-            if (!(this.cursor.intersects(this.food) || this.level.isOnObstacle(this.cursor.x, this.cursor.y))) {
+            if (!(this.cursor.intersects(this.food) || this.level.intersects(this.cursor))) {
                 this.playerMarker[0].placeNewMarker(this.cursor);
             }
         }
         if (key.code === 'KeyX') {
-            if ( !(this.cursor.intersects(this.food) || this.level.isOnObstacle(this.cursor.x, this.cursor.y))) {
+            if ( !(this.cursor.intersects(this.food) || this.level.intersects(this.cursor))) {
                 this.playerMarker[1].placeNewMarker(this.cursor);
             }
         }
