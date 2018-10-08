@@ -29,9 +29,22 @@ export class Level {
     }
 
     draw(context: CanvasRenderingContext2D,  widthCorrecture: number, heightCorrecture: number,
-         cellWidth: number, cellHeight: number): void {
+         cellWidth: number, cellHeight: number,
+         fieldWidth: number, fieldHeight: number): void {
         context.fillStyle = '#FF0040';
         for (let i = 0; i < this.obstacles.length; i++) {
+            if (this.obstacles[i].x > fieldWidth - 1) {
+                this.obstacles[i].x = fieldWidth - 1;
+            }
+            if (this.obstacles[i].x < 0 ) {
+                this.obstacles[i].x = 0;
+            }
+            if (this.obstacles[i].y < 0) {
+                this.obstacles[i].y = 0;
+            }
+            if (this.obstacles[i].y > fieldHeight - 1 ) {
+                this.obstacles[i].y = fieldHeight - 1;
+            }
             context.fillRect(this.obstacles[i].x * cellWidth + widthCorrecture,
                              this.obstacles[i].y * cellHeight + heightCorrecture,
                              cellWidth, cellHeight);

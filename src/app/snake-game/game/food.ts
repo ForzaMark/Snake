@@ -17,7 +17,20 @@ export class Food implements CellObject {
     }
 
     draw(context: CanvasRenderingContext2D,  widthCorrecture: number, heightCorrecture: number,
-         cellWidth: number, cellHeight: number): void {
+         cellWidth: number, cellHeight: number,
+        fieldWidth: number, fieldHeight: number): void {
+        if (this.x > fieldWidth - 1) {
+            this.x = fieldWidth - 1;
+        }
+        if (this.x < 0 ) {
+            this.x = 0;
+        }
+        if (this.y < 0) {
+            this.y = 0;
+        }
+        if (this.y > fieldHeight - 1 ) {
+            this.y = fieldHeight - 1;
+        }
         context.beginPath();
         context.arc(this.x * cellWidth + cellWidth / 2 + widthCorrecture,
                     this.y * cellHeight + cellHeight / 2 + heightCorrecture,

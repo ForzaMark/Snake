@@ -50,9 +50,11 @@ export class EditorLevel {
                         this.cellWidth, this.cellHeight,
                         levelWidth, levelHeight);
         this.level.draw(context, this.widthDifference / 2, this.heightDifference / 2,
-                        this.cellWidth, this.cellHeight);
+                        this.cellWidth, this.cellHeight, 
+                        levelWidth, levelHeight);
         this.food.draw(context, this.widthDifference / 2, this.heightDifference / 2,
-                        this.cellWidth, this.cellHeight);
+                        this.cellWidth, this.cellHeight,
+                        levelWidth, levelHeight);
         for (let i = 0; i < this.multiSnake.length; i++) {
             this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight,
                                     1, this.configData.data.color,

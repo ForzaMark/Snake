@@ -133,9 +133,11 @@ export class SnakeGame {
         }
 
         this.food.draw(context, this.widthDifference / 2, this.heightDifference / 2,
-                       this.cellWidth, this.cellHeight );
+                       this.cellWidth, this.cellHeight,
+                       this.configuration.levelWidth, this.configuration.levelHeight);
         this.level.draw(context, this.widthDifference / 2, this.heightDifference / 2,
-                        this.cellWidth, this.cellHeight);
+                        this.cellWidth, this.cellHeight,
+                        this.configuration.levelWidth, this.configuration.levelHeight);
     }
 
     onKeyUp(key: KeyboardEvent): void {
