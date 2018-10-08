@@ -83,6 +83,7 @@ export class SnakeMenuComponent implements OnInit {
                                           this.configuration.playerInputs[1].right];
     this.configurationData.color = this.configuration.color;
     this.configurationData.lives = this.configuration.lives;
+    this.service.saveGameConfiguration(this.configuration);
   }
 
   startGame() {
