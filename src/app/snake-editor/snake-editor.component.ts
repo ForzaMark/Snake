@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { EditorLevel } from './editor/level';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { EditorLevel } from './editor/editor-level';
 import { ConfigDataService } from '../config-data.service';
-import { Router } from '../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-snake-editor',
   templateUrl: './snake-editor.component.html',
   styleUrls: ['./snake-editor.component.css']
 })
-export class SnakeEditorComponent implements OnInit {
+export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('editorCanvas') canvasReference: ElementRef;
   private levelWidth: number;
   private levelHeight: number;
@@ -25,7 +25,6 @@ export class SnakeEditorComponent implements OnInit {
     }
   }
 
-  // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit(): void {
     this.levelWidth = this.configData.data.levelWidth;
     this.levelHeight = this.configData.data.levelHeight;
@@ -42,5 +41,8 @@ export class SnakeEditorComponent implements OnInit {
       level.draw(context, this.levelWidth, this.levelHeight);
     }, 1000 / framesPerSec);
 
+  }
+  ngOnDestroy(): void {
+    clearInterval(this.drawTimer);
   }
 }

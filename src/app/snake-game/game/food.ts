@@ -6,6 +6,9 @@ export class Food implements CellObject {
     y: number;
 
     constructor(private fieldWidth: number, private fieldHeight: number) {}
+    intersects(other: CellObject): boolean{
+        return this.x === other.x && this.y === other.y;
+    }
 
     createNewFood(snake: Snake): void {
         let isOnSnake = true;

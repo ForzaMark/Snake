@@ -6,7 +6,7 @@
     <div class="card">
         <div class="card-header text-white bg-info">Snake Game</div>
         <div class="card-body" #container>
-            <canvas #mainCanvas class="text-center"></canvas>
+            <canvas class="canvas-style" #mainCanvas class="text-center"></canvas>
             <h1 *ngFor="let Points of Score" class="mt-3 mb-3">Score: {{Points}}</h1>
             <button routerLink='/snake-menu' class="btn btn-primary btn-block">Back to Main Menu</button>
         </div>   

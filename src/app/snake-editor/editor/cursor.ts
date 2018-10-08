@@ -1,6 +1,9 @@
 import { CellObject } from '../../snake-game/game/cell-object';
 
-export class EditorPreview implements CellObject {
+export class Cursor implements CellObject {
+    intersects(other: CellObject): boolean {
+        return this.x === other.x && this.y === other.y;
+    }
     constructor(public x: number, public y: number) {}
 
     draw(context: CanvasRenderingContext2D, widthCorrecture: number, heightCorrecture: number,

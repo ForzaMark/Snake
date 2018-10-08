@@ -1,6 +1,7 @@
 import { Snake } from './snake';
 import { Food } from './food';
 import { Obstacle } from './obstacle';
+import { CellObject } from './cell-object';
 
 export class Level {
     private obstacles: Obstacle[] = [];
