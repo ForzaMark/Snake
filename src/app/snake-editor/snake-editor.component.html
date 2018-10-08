@@ -1,6 +1,7 @@
 <div class="container">
     <div class="jumbotron">
         <h1 class="text-center">Let`s Build!</h1>
+        {{this.levelWidth}}
     </div>
     <div class="card">
         <div class="card-header">Standard Settings</div>
@@ -10,8 +11,7 @@
                 <input #LevelWidth="ngModel" 
                         type="number"
                         id="levelWidth" 
-                        class="form-control"
-                        value="20" 
+                        class="form-control" 
                         required 
                         min="7"
                         max="50" 
@@ -25,7 +25,6 @@
                         class="form-control"
                         id="LevelHeight"
                         type="number" 
-                        value="15" 
                         required 
                         min="7" 
                         max="50" 

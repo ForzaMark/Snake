@@ -10,14 +10,14 @@ import { Router } from '../../../node_modules/@angular/router';
 })
 export class SnakeEditorComponent implements OnInit {
   @ViewChild('editorCanvas') canvasReference: ElementRef;
-  private levelWidth: number;
-  private levelHeight: number;
+  private levelWidth = 20;
+  private levelHeight = 15;
   private screenWidth = 800;
   private screenHeight = 600;
   private drawTimer: any;
-  private router: Router;
 
-  constructor(private configData: ConfigDataService) { }
+  constructor(private configData: ConfigDataService,
+              private router: Router) {  }
 
   ngOnInit() {
     if (!this.configData.data) {
@@ -33,10 +33,8 @@ export class SnakeEditorComponent implements OnInit {
     editorCanvas.height = this.screenHeight;
     const context = editorCanvas.getContext('2d');
     const framesPerSec = 30;
-
     const level = new EditorLevel(this.screenWidth, this.screenHeight,
                                   this.configData);
-
     document.addEventListener('keyup', e => level.onKeyUp(e as KeyboardEvent));
 
     this.drawTimer = setInterval(() => {
