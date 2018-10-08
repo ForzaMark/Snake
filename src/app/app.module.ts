@@ -8,6 +8,7 @@ import { SnakeMenuComponent } from './snake-menu/snake-menu.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SnakeEditorComponent } from './snake-editor/snake-editor.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SnakeEditorComponent } from './snake-editor/snake-editor.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    AngularFontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
