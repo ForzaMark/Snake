@@ -60,7 +60,7 @@ export class EditorLevel {
         }
         this.preview.draw(context, this.widthDifference / 2, this.heightDifference / 2,
                           this.cellWidth, this.cellHeight,
-                          this.configData.data.levelWidth, this.configData.data.levelHeight);
+                          levelWidth, levelHeight);
     }
 
     onKeyUp(key: KeyboardEvent) {

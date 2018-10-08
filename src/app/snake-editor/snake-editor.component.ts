@@ -25,7 +25,6 @@ export class SnakeEditorComponent implements OnInit {
     }
   }
 
-
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit(): void {
     const editorCanvas = this.canvasReference.nativeElement as HTMLCanvasElement;
