@@ -52,7 +52,20 @@ export class Snake {
     draw(context: CanvasRenderingContext2D,
          cellWidth: number, cellHeight: number,
          snakeNumber: number, color: string,
-         widthCorrecture: number, heightCorrecture: number): void {
+         widthCorrecture: number, heightCorrecture: number,
+         fieldWidth: number, fieldHeight: number): void {
+            if (this.snakeHead.x > fieldWidth - 1) {
+                this.snakeHead.x = fieldWidth - 1;
+            }
+            if (this.snakeHead.x < 0 ) {
+                this.snakeHead.x = 0;
+            }
+            if (this.snakeHead.y < 0) {
+                this.snakeHead.y = 0;
+            }
+            if (this.snakeHead.y > fieldHeight - 1 ) {
+                this.snakeHead.y = fieldHeight - 1;
+            }
         for (let i = 0; i < this.snakeParts.length; i++) {
             if (snakeNumber === 0) {
                 context.fillStyle = color;

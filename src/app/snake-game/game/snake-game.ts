@@ -129,7 +129,8 @@ export class SnakeGame {
         for (let i = 0; i < this.multiSnake.length; i++) {
             this.multiSnake[i].draw(context, this.cellWidth, this.cellHeight,
                                     i, this.configuration.color,
-                                    this.widthDifference / 2, this.heightDifference / 2);
+                                    this.widthDifference / 2, this.heightDifference / 2,
+                                    this.configuration.levelWidth, this.configuration.levelHeight);
         }
 
         this.food.draw(context, this.widthDifference / 2, this.heightDifference / 2,
