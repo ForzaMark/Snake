@@ -80,9 +80,8 @@ export class EditorLevel {
         if (key.code === 'Delete') {
             this.level.removeObstacle(this.cursor.x, this.cursor.y);
             this.food.removeFood(this.cursor.x, this.cursor.y);
-            if (this.playerMarker[1].removeMarker(this.cursor.x, this.cursor.y) ||
-                this.playerMarker[0].removeMarker(this.cursor.x, this.cursor.y)) {
-                this.levelConfiguration.playerCount--;
+            if (this.playerMarker[1].removeMarker(this.cursor.x, this.cursor.y)) {
+                this.levelConfiguration.playerCount = 1;
             }
         }
         if (key.code === 'KeyF') {
@@ -94,13 +93,13 @@ export class EditorLevel {
         }
         if (key.code === 'KeyS') {
             if (!(this.cursor.intersects(this.food) || this.level.intersects(this.cursor))) {
-                this.levelConfiguration.playerCount++;
+                this.levelConfiguration.playerCount = 1;
                 this.playerMarker[0].placeNewMarker(this.cursor);
             }
         }
         if (key.code === 'KeyX') {
             if ( !(this.cursor.intersects(this.food) || this.level.intersects(this.cursor))) {
-                this.levelConfiguration.playerCount++;
+                this.levelConfiguration.playerCount = 2;
                 this.playerMarker[1].placeNewMarker(this.cursor);
             }
         }

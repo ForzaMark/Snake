@@ -55,7 +55,6 @@ export class SnakeGame {
         this.grid = new SnakeGrid(this.configuration.grid);
         this.food = new Food(this.configuration.levelWidth, this.configuration.levelHeight);
         this.level = new Level(this.configuration.levelWidth, this.configuration.levelHeight);
-
         for (let i = 0; i < this.configuration.playerCount; i++) {
             this.multiSnake.push(new Snake(this.configuration.levelWidth,
                                            this.configuration.levelHeight,
