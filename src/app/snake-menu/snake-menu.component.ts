@@ -24,20 +24,19 @@ export class SnakeGameConfigurationData {
   styleUrls: ['./snake-menu.component.css']
 })
 export class SnakeMenuComponent implements OnInit {
-
-  private configuration: SnakeGameConfiguration;
-  configurationData: SnakeGameConfigurationData = new SnakeGameConfigurationData();
-  alertState = false;
-  score: number;
-  constructor(private service: ConfigDataService, private router: Router) {
+  private configurationData: SnakeGameConfigurationData = new SnakeGameConfigurationData();
+  private snakeConfiguration: SnakeGameConfiguration;
+  public alertState = false;
+  public score: number;
+  constructor(private configurationService: ConfigDataService, private router: Router) {
   }
   ngOnInit() {
-    this.configuration = this.service.getGameConfiguration();
-    if (this.configuration) {
+    this.snakeConfiguration = this.configurationService.getGameConfiguration();
+    if (this.snakeConfiguration) {
       this.alertState = true;
     }
-    if (!this.configuration) {
-      this.configuration = {
+    if (!this.snakeConfiguration) {
+      this.snakeConfiguration = {
         levelWidth: 20,
         levelHeight: 15,
         snakeLength: 1,
@@ -65,38 +64,38 @@ export class SnakeMenuComponent implements OnInit {
       };
     }
 
-    this.configurationData.levelWidth = this.configuration.levelWidth.toString();
-    this.configurationData.levelHeight = this.configuration.levelHeight.toString();
-    this.configurationData.snakeLength = this.configuration.snakeLength.toString();
-    this.configurationData.skillLevel = this.configuration.skillLevel.toString();
-    this.configurationData.playerCount = this.configuration.playerCount.toString();
-    this.configurationData.speed = this.configuration.speed.toString();
-    this.configurationData.wall = this.configuration.wall;
-    this.configurationData.grid = this.configuration.grid;
-    this.configurationData.player1Keys = [this.configuration.playerInputs[0].up,
-                                          this.configuration.playerInputs[0].down,
-                                          this.configuration.playerInputs[0].left,
-                                          this.configuration.playerInputs[0].right];
-    this.configurationData.player2Keys = [this.configuration.playerInputs[1].up,
-                                          this.configuration.playerInputs[1].down,
-                                          this.configuration.playerInputs[1].left,
-                                          this.configuration.playerInputs[1].right];
-    this.configurationData.color = this.configuration.color;
-    this.configurationData.lives = this.configuration.lives;
-    this.service.saveGameConfiguration(this.configuration);
+    this.configurationData.levelWidth = this.snakeConfiguration.levelWidth.toString();
+    this.configurationData.levelHeight = this.snakeConfiguration.levelHeight.toString();
+    this.configurationData.snakeLength = this.snakeConfiguration.snakeLength.toString();
+    this.configurationData.skillLevel = this.snakeConfiguration.skillLevel.toString();
+    this.configurationData.playerCount = this.snakeConfiguration.playerCount.toString();
+    this.configurationData.speed = this.snakeConfiguration.speed.toString();
+    this.configurationData.wall = this.snakeConfiguration.wall;
+    this.configurationData.grid = this.snakeConfiguration.grid;
+    this.configurationData.player1Keys = [this.snakeConfiguration.playerInputs[0].up,
+                                          this.snakeConfiguration.playerInputs[0].down,
+                                          this.snakeConfiguration.playerInputs[0].left,
+                                          this.snakeConfiguration.playerInputs[0].right];
+    this.configurationData.player2Keys = [this.snakeConfiguration.playerInputs[1].up,
+                                          this.snakeConfiguration.playerInputs[1].down,
+                                          this.snakeConfiguration.playerInputs[1].left,
+                                          this.snakeConfiguration.playerInputs[1].right];
+    this.configurationData.color = this.snakeConfiguration.color;
+    this.configurationData.lives = this.snakeConfiguration.lives;
+    this.configurationService.saveGameConfiguration(this.snakeConfiguration);
   }
 
   startGame() {
-    this.configuration.levelWidth = parseInt(this.configurationData.levelWidth, 10);
-    this.configuration.levelHeight = parseInt(this.configurationData.levelHeight, 10);
-    this.configuration.snakeLength = parseInt(this.configurationData.snakeLength, 10);
-    this.configuration.skillLevel = parseInt(this.configurationData.skillLevel, 10);
-    this.configuration.playerCount = parseInt(this.configurationData.playerCount, 10);
-    this.configuration.speed = parseFloat(this.configurationData.speed);
-    this.configuration.wall = this.configurationData.wall;
-    this.configuration.grid = this.configurationData.grid;
+    this.snakeConfiguration.levelWidth = parseInt(this.configurationData.levelWidth, 10);
+    this.snakeConfiguration.levelHeight = parseInt(this.configurationData.levelHeight, 10);
+    this.snakeConfiguration.snakeLength = parseInt(this.configurationData.snakeLength, 10);
+    this.snakeConfiguration.skillLevel = parseInt(this.configurationData.skillLevel, 10);
+    this.snakeConfiguration.playerCount = parseInt(this.configurationData.playerCount, 10);
+    this.snakeConfiguration.speed = parseFloat(this.configurationData.speed);
+    this.snakeConfiguration.wall = this.configurationData.wall;
+    this.snakeConfiguration.grid = this.configurationData.grid;
 
-    this.configuration.playerInputs = [
+    this.snakeConfiguration.playerInputs = [
       {
         up: this.configurationData.player1Keys[0],
         down: this.configurationData.player1Keys[1],
@@ -110,10 +109,10 @@ export class SnakeMenuComponent implements OnInit {
         right: this.configurationData.player2Keys[3]
       }
     ];
-    this.configuration.color = this.configurationData.color;
-    this.configuration.lives = this.configurationData.lives;
+    this.snakeConfiguration.color = this.configurationData.color;
+    this.snakeConfiguration.lives = this.configurationData.lives;
 
-    this.service.saveGameConfiguration(this.configuration);
+    this.configurationService.saveGameConfiguration(this.snakeConfiguration);
     this.router.navigate(['/snake-game']);
   }
   startEditor() {

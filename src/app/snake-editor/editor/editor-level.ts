@@ -22,20 +22,22 @@ export class EditorLevel {
     private heightDifference: number;
     private levelWidth: number;
     private levelHeight: number;
-    private configData: SnakeGameConfiguration;
-    private levelConfig: LevelConfiguration;
+    private snakeConfiguration: SnakeGameConfiguration;
 
     constructor(private screenWidth: number,
                 private screenHeight: number,
-                private service: ConfigDataService) {
-        this.configData = service.getGameConfiguration();
+                private configurationService: ConfigDataService,
+                private levelConfiguration: LevelConfiguration) {
 
-        this.levelWidth = this.configData.levelWidth;
-        this.levelHeight = this.configData.levelHeight;
+        this.snakeConfiguration = configurationService.getGameConfiguration();
+        this.levelConfiguration = configurationService.getLevelConfiguration();
 
-        this.food = new Food(this.configData.levelWidth, this.configData.levelHeight);
+        this.levelWidth = this.snakeConfiguration.levelWidth;
+        this.levelHeight = this.snakeConfiguration.levelHeight;
+
+        this.food = new Food(this.snakeConfiguration.levelWidth, this.snakeConfiguration.levelHeight);
         this.grid = new SnakeGrid(true);
-        this.level = new Level(this.configData.levelWidth, this.configData.levelHeight);
+        this.level = new Level(this.snakeConfiguration.levelWidth, this.snakeConfiguration.levelHeight);
         this.cursor = new Cursor(0, 0);
         this.playerMarker[0] = new EditorPlayerMarker();
         this.playerMarker[1] = new EditorPlayerMarker();
@@ -73,7 +75,7 @@ export class EditorLevel {
             if (!(this.cursor.intersects(this.food) ||
                   this.cursor.intersects(this.playerMarker[0]) || this.cursor.intersects(this.playerMarker[1]))) {
                         this.level.addObstacle(this.food, false, this.cursor.x, this.cursor.y);
-                        this.levelConfig.obstaclePosition.push(this.cursor);
+                        this.levelConfiguration.obstaclePosition.push(this.cursor);
             }
         }
         if (key.code === 'Delete') {
@@ -84,21 +86,21 @@ export class EditorLevel {
             if (!(this.level.intersects(this.cursor) ||
                   this.cursor.intersects(this.playerMarker[0]) || this.cursor.intersects(this.playerMarker[1]))) {
                 this.food.placeNewFood(this.cursor.x, this.cursor.y);
-                this.levelConfig.foodPosition = this.food;
+                this.levelConfiguration.foodPosition = [this.food.x, this.food.y];
             }
         }
         if (key.code === 'KeyS') {
             if (!(this.cursor.intersects(this.food) || this.level.intersects(this.cursor))) {
-                this.levelConfig.playerCount = 1;
+                this.levelConfiguration.playerCount = 1;
                 this.playerMarker[0].placeNewMarker(this.cursor);
-                this.levelConfig.playerStartPosition[0] = this.cursor;
+                this.levelConfiguration.playerStartPosition[0] = this.cursor;
             }
         }
         if (key.code === 'KeyX') {
             if ( !(this.cursor.intersects(this.food) || this.level.intersects(this.cursor))) {
-                this.levelConfig.playerCount = 2;
+                this.levelConfiguration.playerCount = 2;
                 this.playerMarker[1].placeNewMarker(this.cursor);
-                this.levelConfig.playerStartPosition[0] = this.cursor;
+                this.levelConfiguration.playerStartPosition[0] = this.cursor;
             }
         }
     }
@@ -112,9 +114,9 @@ export class EditorLevel {
         this.heightDifference = this.screenHeight - this.gridHeight;
     }
     returnLevelCofiguration(): LevelConfiguration {
-        this.levelConfig.levelWidth = this.levelWidth;
-        this.levelConfig.levelHeight = this.levelHeight;
-        return this.levelConfig;
+        this.levelConfiguration.levelWidth = this.levelWidth;
+        this.levelConfiguration.levelHeight = this.levelHeight;
+        return this.levelConfiguration;
 
     }
 }

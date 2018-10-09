@@ -9,5 +9,5 @@ export class LevelConfiguration {
     playerCount: number;
     obstaclePosition: CellObject[] = [];
     playerStartPosition: CellObject[] = [];
-    foodPosition: CellObject;
+    foodPosition: number[];
 }
