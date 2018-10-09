@@ -3,6 +3,8 @@ import { Snake } from './snake';
 import { SnakeGrid } from './grid';
 import { Level } from './Level';
 import { SnakeGameConfiguration } from '../../services/snake-game-configuration';
+import { LevelConfiguration } from '../../services/level-configuration';
+import { ConfigDataService } from '../../services/config-data.service';
 
 export interface IMessageService {
     alert(text: string, callback: () => void);
@@ -22,13 +24,18 @@ export class SnakeGame {
     private heightDifference: number;
     private liveCounterState: boolean;
     private pauseUpdate = false;
+    private configuration: SnakeGameConfiguration;
 
     score: number[] = [];
 
     constructor(private screenWidth: number,
                 private screenHeight: number,
-                private configuration: SnakeGameConfiguration,
-                private messageService: IMessageService) {
+                private messageService: IMessageService,
+                configurationService: ConfigDataService
+                ) {
+            console.log(configurationService.getLevelConfiguration());
+            console.log(configurationService.getGameConfiguration());
+
         this.elapsedTimeSeconds = 0;
         this.liveCounterState = false;
         const cellSize = Math.min(screenWidth / this.configuration.levelWidth, screenHeight / this.configuration.levelHeight);
@@ -46,11 +53,11 @@ export class SnakeGame {
                                            i,
                                            this.configuration.playerInputs[i],
                                            this.widthDifference / 2, this.heightDifference / 2));
-            this.score[i] = configuration.snakeLength;
+            this.score[i] = this.configuration.snakeLength;
         }
 
         this.grid = new SnakeGrid(this.configuration.grid);
-        this.food = new Food(configuration.levelWidth, configuration.levelHeight);
+        this.food = new Food(this.configuration.levelWidth, this.configuration.levelHeight);
         this.level = new Level(this.configuration.levelWidth, this.configuration.levelHeight);
         this.food.createNewFood(this.multiSnake[0]);
     }

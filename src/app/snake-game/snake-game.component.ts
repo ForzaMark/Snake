@@ -4,6 +4,7 @@ import { ConfigDataService } from '../services/config-data.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SnakeGameConfiguration } from '../services/snake-game-configuration';
+import { LevelConfiguration } from '../services/level-configuration';
 
 @Component({
   selector: 'app-snake-game',
@@ -20,38 +21,40 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
   message: string;
   modal: object;
   modalBody: string;
-  configuration: SnakeGameConfiguration;
+  snakeConfiguration: SnakeGameConfiguration;
+  levelConfiguration: LevelConfiguration;
 
   constructor(
-    private configData: ConfigDataService,
+    private configurationService: ConfigDataService,
     private router: Router,
     private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
-    this.configuration = this.configData.getGameConfiguration();
-    if (!this.configuration) {
+    this.snakeConfiguration = this.configurationService.getGameConfiguration();
+    this.levelConfiguration = this.configurationService.getLevelConfiguration();
+    if (!this.snakeConfiguration && !this.levelConfiguration) {
       this.router.navigate(['/snake-menu']);
     }
   }
 
   ngAfterViewInit(): void {
-    if (!this.configuration) {
+    if (!this.snakeConfiguration) {
       return;
     }
     const mainCanvas = this.mainCanvasReference.nativeElement as HTMLCanvasElement;
     const framesPerSecond = 30;
     const screenWidth = 800;
     const screenHeight = 600;
-    for (let i = 0; i < this.configuration.playerCount; i++) {
-      this.Score.push(this.configuration.snakeLength);
+    for (let i = 0; i < this.snakeConfiguration.playerCount; i++) {
+      this.Score.push(this.snakeConfiguration.snakeLength);
     }
     mainCanvas.width = screenWidth;
     mainCanvas.height = screenHeight;
 
     const context = mainCanvas.getContext('2d');
 
-    const snakeGame = new SnakeGame(screenWidth, screenHeight, this.configuration, this);
+    const snakeGame = new SnakeGame(screenWidth, screenHeight, this, this.configurationService);
 
     document.addEventListener('keyup', e => snakeGame.onKeyUp(e as KeyboardEvent));
 

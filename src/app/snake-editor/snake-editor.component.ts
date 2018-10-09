@@ -4,7 +4,6 @@ import { ConfigDataService } from '../services/config-data.service';
 import { Router } from '@angular/router';
 import { SnakeGameConfiguration } from '../services/snake-game-configuration';
 import { LevelConfiguration } from '../services/level-configuration';
-import { CellObject } from '../snake-game/game/cell-object';
 
 @Component({
   selector: 'app-snake-editor',
@@ -69,6 +68,8 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   saveLevel(): void {
     this.configurationService.saveLevelConfiguration(this.level.returnLevelCofiguration());
-    console.log(this.configurationService.getLevelConfiguration());
+  }
+  playCustomLevel(): void {
+    this.router.navigate(['/snake-game']);
   }
 }
