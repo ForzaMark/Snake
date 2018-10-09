@@ -1,5 +1,7 @@
 import { Snake } from './snake';
 import { CellObject } from './cell-object';
+import { Obstacle } from './obstacle';
+import { Level } from './Level';
 
 export class Food implements CellObject {
     x: number;
@@ -10,13 +12,15 @@ export class Food implements CellObject {
         return this.x === other.x && this.y === other.y;
     }
 
-    createNewFood(snake: Snake): void {
-        let isOnSnake = true;
-        while (isOnSnake) {
+    createNewFood(snake: Snake, obstacles: Level): void {
+       let isOnObstacle = true;
+       let isOnSnake = true;
+       while (isOnObstacle || isOnSnake) {
             this.x = Math.floor(Math.random() * this.fieldWidth);
             this.y = Math.floor(Math.random() * this.fieldHeight);
             isOnSnake = snake.isOnSnake(this);
-        }
+            isOnObstacle = obstacles.intersects(this);
+       }
     }
 
     draw(context: CanvasRenderingContext2D,  widthCorrecture: number, heightCorrecture: number,

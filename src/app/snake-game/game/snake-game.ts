@@ -66,7 +66,7 @@ export class SnakeGame {
         this.grid = new SnakeGrid(this.configuration.grid);
         this.food = new Food(this.configuration.levelWidth, this.configuration.levelHeight);
         this.level = new Level(this.configuration.levelWidth, this.configuration.levelHeight);
-        this.food.createNewFood(this.multiSnake[0]);
+        this.food.createNewFood(this.multiSnake[0], this.level);
         if (this.customLevelType) {
             this.level.intialAdding(this.configuration.obstaclePosition);
         }
@@ -95,10 +95,12 @@ export class SnakeGame {
             if (this.multiSnake[i].isOnSnake(this.food)) {
                 this.score[i]++;
                 this.multiSnake[i].grow();
-                this.food.createNewFood(this.multiSnake[i]);
-                if ((this.multiSnake[i].getSnakeLength() % this.configuration.skillLevel === 0)
-                    || this.multiSnake[i].getSnakeLength() === this.configuration.snakeLength + 1
+                this.food.createNewFood(this.multiSnake[i], this.level);
+                if (((this.multiSnake[i].getSnakeLength() % this.configuration.skillLevel === 0)
+                    || (this.multiSnake[i].getSnakeLength() === this.configuration.snakeLength + 1))
                     && !this.customLevelType) {
+                        console.log('in');
+                        
                     this.level.addObstacle(this.food, true, undefined, undefined, this.multiSnake[i]);
                 } else {
                     if (!this.customLevelType) {
