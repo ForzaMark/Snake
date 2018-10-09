@@ -24,7 +24,7 @@ export class SnakeGame {
     private heightDifference: number;
     private liveCounterState: boolean;
     private pauseUpdate = false;
-    private configuration: SnakeGameConfiguration;
+    private configuration: any;
 
     score: number[] = [];
 
@@ -35,6 +35,11 @@ export class SnakeGame {
                 ) {
             console.log(configurationService.getLevelConfiguration());
             console.log(configurationService.getGameConfiguration());
+        if (configurationService.getLevelConfiguration()) {
+            this.configuration = configurationService.getLevelConfiguration();
+        } else {
+            this.configuration = configurationService.getGameConfiguration();
+        }
 
         this.elapsedTimeSeconds = 0;
         this.liveCounterState = false;

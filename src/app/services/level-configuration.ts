@@ -1,7 +1,5 @@
-import { Obstacle } from '../snake-game/game/obstacle';
-import { EditorPlayerMarker } from '../snake-editor/editor/playerMarker';
-import { Food } from '../snake-game/game/food';
 import { CellObject } from '../snake-game/game/cell-object';
+import { SnakeInputConfiguration } from './snake-game-configuration';
 
 export class LevelConfiguration {
     levelWidth: number;
@@ -10,4 +8,11 @@ export class LevelConfiguration {
     obstaclePosition: CellObject[] = [];
     playerStartPosition: CellObject[] = [];
     foodPosition: number[];
+    wall: boolean;
+    skillLevel: number;
+    speed: number;
+    grid: boolean;
+    playerInputs: SnakeInputConfiguration[];
+    color: string;
+    lives: number;
 }

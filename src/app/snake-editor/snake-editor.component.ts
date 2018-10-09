@@ -38,7 +38,27 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
         playerCount: 1,
         obstaclePosition: [],
         playerStartPosition: [],
-        foodPosition: []
+        foodPosition: [],
+        wall: false,
+        skillLevel: 5,
+        speed: 0.25,
+        grid: true,
+        playerInputs: [
+          {
+            up: 'ArrowUp',
+            down: 'ArrowDown',
+            left: 'ArrowLeft',
+            right: 'ArrowRight'
+          },
+          {
+            up: 'KeyW',
+            down: 'KeyS',
+            left: 'KeyA',
+            right: 'KeyD',
+          }
+        ],
+        color: '#33beff',
+        lives: 1
       };
       this.configurationService.saveLevelConfiguration(this.levelConfiguration);
     }
