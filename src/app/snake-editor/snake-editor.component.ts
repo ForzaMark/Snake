@@ -31,10 +31,15 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.snakeConfiguration) {
       this.router.navigate(['/snake-menu']);
     }
+    if (this.levelConfiguration) {
+      this.levelConfiguration.obstaclePosition = [];
+      this.levelConfiguration.playerStartPosition = [];
+    }
     if (!this.levelConfiguration) {
       this.levelConfiguration = {
         levelWidth: 20,
         levelHeight: 15,
+        snakeLength: 1,
         playerCount: 1,
         obstaclePosition: [],
         playerStartPosition: [],

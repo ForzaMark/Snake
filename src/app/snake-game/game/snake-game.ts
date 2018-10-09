@@ -25,6 +25,7 @@ export class SnakeGame {
     private liveCounterState: boolean;
     private pauseUpdate = false;
     private configuration: any;
+    customLevelType = false;
 
     score: number[] = [];
 
@@ -33,12 +34,12 @@ export class SnakeGame {
                 private messageService: IMessageService,
                 configurationService: ConfigDataService
                 ) {
-            console.log(configurationService.getLevelConfiguration());
-            console.log(configurationService.getGameConfiguration());
         if (configurationService.getLevelConfiguration()) {
             this.configuration = configurationService.getLevelConfiguration();
+            this.customLevelType = true;
         } else {
             this.configuration = configurationService.getGameConfiguration();
+            this.customLevelType = false;
         }
 
         this.elapsedTimeSeconds = 0;
@@ -50,6 +51,7 @@ export class SnakeGame {
         this.gridHeight = this.cellHeight * this.configuration.levelHeight;
         this.widthDifference = screenWidth - this.gridWidth;
         this.heightDifference = screenHeight - this.gridHeight;
+
 
         for (let i = 0; i < this.configuration.playerCount; i++) {
             this.multiSnake.push(new Snake(this.configuration.levelWidth,
@@ -65,6 +67,9 @@ export class SnakeGame {
         this.food = new Food(this.configuration.levelWidth, this.configuration.levelHeight);
         this.level = new Level(this.configuration.levelWidth, this.configuration.levelHeight);
         this.food.createNewFood(this.multiSnake[0]);
+        if (this.customLevelType) {
+            this.level.intialAdding(this.configuration.obstaclePosition);
+        }
     }
 
     update(deltaSeconds: number): boolean {

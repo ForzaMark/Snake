@@ -8,11 +8,11 @@ export class Level implements CellObject {
     y: number;
     private obstacles: Obstacle[] = [];
 
-    constructor( private fieldWidth: number,
-        private fieldHeight: number) {
+    constructor(private fieldWidth: number,
+                private fieldHeight: number) {
         }
 
-    addObstacle(food: Food, random: boolean, fixedX?: number, fixedY?: number, snake?: Snake): void {
+    addObstacle(food: Food, random: boolean, fixedX?: number, fixedY?: number, snake?: Snake): CellObject[] {
         let isOnSnakeOrFood = true;
         let obstacle: Obstacle;
         if (random) {
@@ -31,6 +31,7 @@ export class Level implements CellObject {
         } else {
             obstacle = new Obstacle(fixedX, fixedY);
             this.obstacles.push(obstacle);
+            return this.obstacles;
         }
     }
 
@@ -88,5 +89,13 @@ export class Level implements CellObject {
              return this.obstacles[i].x === other.x && this.obstacles[i].y === other.y;
         }
         return false;
+    }
+    intialAdding(obstalePositions: CellObject[]): void {
+        this.obstacles = [];
+        let obstacle: Obstacle;
+        for (let i = 0; i < obstalePositions.length; i++) {
+            obstacle = new Obstacle(obstalePositions[i].x, obstalePositions[i].y);
+            this.obstacles.push(obstacle);
+        }
     }
 }

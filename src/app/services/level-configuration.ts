@@ -4,6 +4,7 @@ import { SnakeInputConfiguration } from './snake-game-configuration';
 export class LevelConfiguration {
     levelWidth: number;
     levelHeight: number;
+    snakeLength: number;
     playerCount: number;
     obstaclePosition: CellObject[] = [];
     playerStartPosition: CellObject[] = [];

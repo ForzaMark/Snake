@@ -74,8 +74,7 @@ export class EditorLevel {
         if (key.code === 'Space') {
             if (!(this.cursor.intersects(this.food) ||
                   this.cursor.intersects(this.playerMarker[0]) || this.cursor.intersects(this.playerMarker[1]))) {
-                        this.level.addObstacle(this.food, false, this.cursor.x, this.cursor.y);
-                        this.levelConfiguration.obstaclePosition.push(this.cursor);
+                        this.levelConfiguration.obstaclePosition = this.level.addObstacle(this.food, false, this.cursor.x, this.cursor.y);
             }
         }
         if (key.code === 'Delete') {
