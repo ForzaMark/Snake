@@ -26,7 +26,6 @@ export class Snake {
         this.witdhCorrecture = widthCorrectur;
         this.heightCorrecture = heightCorrecture;
         this.lives = 0;
-        console.log(startPosition);
 
         this.addPart(startPosition.x, startPosition.y);
         this.snakeHead = this.snakeParts[0];

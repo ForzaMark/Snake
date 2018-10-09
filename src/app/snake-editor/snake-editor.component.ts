@@ -31,10 +31,6 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.snakeConfiguration) {
       this.router.navigate(['/snake-menu']);
     }
-    if (this.levelConfiguration) {
-      this.levelConfiguration.obstaclePosition = [];
-      this.levelConfiguration.playerStartPosition = [];
-    }
     if (!this.levelConfiguration) {
       this.levelConfiguration = {
         levelWidth: 20,
@@ -65,6 +61,8 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
         color: '#33beff',
         lives: 1
       };
+      this.levelConfiguration.obstaclePosition = [];
+      this.levelConfiguration.playerStartPosition = [];
       this.configurationService.saveLevelConfiguration(this.levelConfiguration);
     }
   }

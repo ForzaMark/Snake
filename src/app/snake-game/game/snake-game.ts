@@ -2,8 +2,6 @@ import { Food } from './food';
 import { Snake } from './snake';
 import { SnakeGrid } from './grid';
 import { Level } from './Level';
-import { SnakeGameConfiguration } from '../../services/snake-game-configuration';
-import { LevelConfiguration } from '../../services/level-configuration';
 import { ConfigDataService } from '../../services/config-data.service';
 
 export interface IMessageService {
@@ -25,7 +23,7 @@ export class SnakeGame {
     private liveCounterState: boolean;
     private pauseUpdate = false;
     private configuration: any;
-    customLevelType = false;
+    private customLevelType = false;
 
     score: number[] = [];
 
@@ -44,13 +42,7 @@ export class SnakeGame {
 
         this.elapsedTimeSeconds = 0;
         this.liveCounterState = false;
-        const cellSize = Math.min(screenWidth / this.configuration.levelWidth, screenHeight / this.configuration.levelHeight);
-        this.cellWidth = cellSize;
-        this.cellHeight = cellSize;
-        this.gridWidth = this.cellWidth * this.configuration.levelWidth;
-        this.gridHeight = this.cellHeight * this.configuration.levelHeight;
-        this.widthDifference = screenWidth - this.gridWidth;
-        this.heightDifference = screenHeight - this.gridHeight;
+        this.setDrawVariables(screenWidth, screenHeight);
 
         this.grid = new SnakeGrid(this.configuration.grid);
         this.food = new Food(this.configuration.levelWidth, this.configuration.levelHeight);
@@ -181,5 +173,14 @@ export class SnakeGame {
         } else {
             this.elapsedTimeSeconds -= updateThresholdSeconds;
         }
+    }
+    private setDrawVariables(screenWidth: number, screenHeight: number): void {
+        const cellSize = Math.min(screenWidth / this.configuration.levelWidth, screenHeight / this.configuration.levelHeight);
+        this.cellWidth = cellSize;
+        this.cellHeight = cellSize;
+        this.gridWidth = this.cellWidth * this.configuration.levelWidth;
+        this.gridHeight = this.cellHeight * this.configuration.levelHeight;
+        this.widthDifference = screenWidth - this.gridWidth;
+        this.heightDifference = screenHeight - this.gridHeight;
     }
 }
