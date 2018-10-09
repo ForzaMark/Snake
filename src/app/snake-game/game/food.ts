@@ -12,15 +12,20 @@ export class Food implements CellObject {
         return this.x === other.x && this.y === other.y;
     }
 
-    createNewFood(snake: Snake, obstacles: Level): void {
-       let isOnObstacle = true;
-       let isOnSnake = true;
-       while (isOnObstacle || isOnSnake) {
-            this.x = Math.floor(Math.random() * this.fieldWidth);
-            this.y = Math.floor(Math.random() * this.fieldHeight);
-            isOnSnake = snake.isOnSnake(this);
-            isOnObstacle = obstacles.intersects(this);
-       }
+    createNewFood(snake: Snake, obstacles: Level, fixedPosition?: number[]): void {
+        if (fixedPosition) {
+            this.x = fixedPosition[0];
+            this.y = fixedPosition[1];
+        } else {
+            let isOnObstacle = true;
+            let isOnSnake = true;
+            while (isOnObstacle || isOnSnake) {
+                    this.x = Math.floor(Math.random() * this.fieldWidth);
+                    this.y = Math.floor(Math.random() * this.fieldHeight);
+                    isOnSnake = snake.isOnSnake(this);
+                    isOnObstacle = obstacles.intersects(this);
+            }
+        }
     }
 
     draw(context: CanvasRenderingContext2D,  widthCorrecture: number, heightCorrecture: number,
