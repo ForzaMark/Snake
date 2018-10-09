@@ -17,7 +17,7 @@ export class EditorPlayerMarker implements CellObject {
         fieldWidth: number, fieldHeight: number, player: number): void {
         if (this.x > fieldWidth - 1 || this.x < 0
             || this.y < 0 ||  this.y > fieldHeight - 1 ) {
-            this.removeMarker();
+            this.removeMarker(this.x, this.y);
         }
         if (player === 0) {
             context.fillStyle = '#33beff';
@@ -27,9 +27,12 @@ export class EditorPlayerMarker implements CellObject {
         context.fillRect(this.x * cellWidth + widthCorrecture, this.y * cellHeight + heightCorrecture, cellWidth, cellHeight);
         context.fillStyle = 'black';
     }
-    removeMarker() {
-        this.x = undefined;
-        this.y = undefined;
+    removeMarker(x: number, y: number): boolean {
+        if (x === this.x && y === this.y) {
+            this.x = undefined;
+            this.y = undefined;
+            return true;
+        }
     }
 }
 
