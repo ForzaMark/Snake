@@ -97,10 +97,13 @@ export class SnakeGame {
                 this.multiSnake[i].grow();
                 this.food.createNewFood(this.multiSnake[i]);
                 if ((this.multiSnake[i].getSnakeLength() % this.configuration.skillLevel === 0)
-                    || this.multiSnake[i].getSnakeLength() === this.configuration.snakeLength + 1) {
+                    || this.multiSnake[i].getSnakeLength() === this.configuration.snakeLength + 1
+                    && !this.customLevelType) {
                     this.level.addObstacle(this.food, true, undefined, undefined, this.multiSnake[i]);
                 } else {
-                    this.level.changeObstaclePosition(this.multiSnake[i], this.food);
+                    if (!this.customLevelType) {
+                        this.level.changeObstaclePosition(this.multiSnake[i], this.food);
+                    }
                 }
             }
 

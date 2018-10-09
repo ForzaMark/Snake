@@ -44,7 +44,7 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
         obstaclePosition: [],
         playerStartPosition: [],
         foodPosition: [],
-        wall: false,
+        wall: true,
         skillLevel: 5,
         speed: 0.25,
         grid: true,
