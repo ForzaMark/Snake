@@ -20,22 +20,15 @@ export class Snake {
     constructor(private fieldWidth: number,
                 private fieldHeight: number,
                 snakeSize: number,
-                startPos: number,
+                startPosition: CellObject,
                 private input: SnakeInputConfiguration,
                 widthCorrectur: number, heightCorrecture: number) {
         this.witdhCorrecture = widthCorrectur;
         this.heightCorrecture = heightCorrecture;
         this.lives = 0;
+        console.log(startPosition);
 
-        for (let i = 0; i < snakeSize; i++) {
-            if (startPos === 0) {
-                this.addPart(0, startPos);
-            } else {
-                this.addPart(fieldWidth, fieldHeight - 1);
-                this.direction = Direction.left;
-            }
-        }
-
+        this.addPart(startPosition.x, startPosition.y);
         this.snakeHead = this.snakeParts[0];
     }
 

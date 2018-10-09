@@ -92,14 +92,12 @@ export class EditorLevel {
             if (!(this.cursor.intersects(this.food) || this.level.intersects(this.cursor))) {
                 this.levelConfiguration.playerCount = 1;
                 this.playerMarker[0].placeNewMarker(this.cursor);
-                this.levelConfiguration.playerStartPosition[0] = this.cursor;
             }
         }
         if (key.code === 'KeyX') {
             if ( !(this.cursor.intersects(this.food) || this.level.intersects(this.cursor))) {
                 this.levelConfiguration.playerCount = 2;
                 this.playerMarker[1].placeNewMarker(this.cursor);
-                this.levelConfiguration.playerStartPosition[0] = this.cursor;
             }
         }
     }
@@ -113,6 +111,8 @@ export class EditorLevel {
         this.heightDifference = this.screenHeight - this.gridHeight;
     }
     returnLevelCofiguration(): LevelConfiguration {
+        this.levelConfiguration.playerStartPosition[0] = this.playerMarker[0];
+        this.levelConfiguration.playerStartPosition[1] = this.playerMarker[1];
         this.levelConfiguration.levelWidth = this.levelWidth;
         this.levelConfiguration.levelHeight = this.levelHeight;
         return this.levelConfiguration;
