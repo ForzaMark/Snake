@@ -34,13 +34,14 @@ export class SnakeGame {
     constructor(private screenWidth: number,
                 private screenHeight: number,
                 private messageService: IMessageService,
-                configurationService: ConfigDataService
+                configurationService: ConfigDataService,
+                private routerDirection: boolean
                 ) {
 
         // this.startPositionArr.push(this.playerStartPosition);
         // this.startPositionArr.push(this.playerStartPosition);
 
-        if (configurationService.getLevelConfiguration()) {
+        if (this.routerDirection) {
             this.configuration = configurationService.getLevelConfiguration();
             this.customLevelType = true;
             this.playerStartPosition.x  = this.configuration.playerStartPosition[0].x;
@@ -101,9 +102,6 @@ export class SnakeGame {
         }
 
         for (let i = 0; i < this.multiSnake.length; i++) {
-            if (this.multiSnake[i].lives >= this.configuration.lives && !this.pauseUpdate) {
-                return false;
-            }
             if (!this.multiSnake[i].move(this.configuration.wall)) {
                 this.multiSnake[i].lives++;
                 this.liveCounterState = true;
@@ -154,7 +152,10 @@ export class SnakeGame {
                                 (this.configuration.lives - this.multiSnake[i].lives), () => this.pauseUpdate = false);
                 }
             }
-
+            if (this.multiSnake[i].lives >= this.configuration.lives && !this.pauseUpdate) {
+                this.pauseUpdate = true;
+                return false;
+            }
         }
         return true;
     }

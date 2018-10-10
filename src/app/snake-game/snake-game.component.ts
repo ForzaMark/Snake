@@ -1,10 +1,11 @@
 import { Component, AfterViewInit, ElementRef, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { SnakeGame, IMessageService } from './game/snake-game';
 import { ConfigDataService } from '../services/config-data.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SnakeGameConfiguration } from '../services/snake-game-configuration';
 import { LevelConfiguration } from '../services/level-configuration';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-snake-game',
@@ -23,11 +24,13 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
   modalBody: string;
   snakeConfiguration: SnakeGameConfiguration;
   levelConfiguration: LevelConfiguration;
+  routerDirection = false;
 
   constructor(
     private configurationService: ConfigDataService,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +42,12 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
   }
 
   ngAfterViewInit(): void {
+    this.route.queryParams.pipe(
+      filter(params => params.fromCustom)
+    ).subscribe(params => {
+        this.routerDirection = params.fromCustom === 'true';
+      });
+
     if (!this.snakeConfiguration) {
       return;
     }
@@ -54,7 +63,7 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
 
     const context = mainCanvas.getContext('2d');
 
-    const snakeGame = new SnakeGame(screenWidth, screenHeight, this, this.configurationService);
+    const snakeGame = new SnakeGame(screenWidth, screenHeight, this, this.configurationService, this.routerDirection);
 
     document.addEventListener('keyup', e => snakeGame.onKeyUp(e as KeyboardEvent));
 

@@ -113,7 +113,7 @@ export class SnakeMenuComponent implements OnInit {
     this.snakeConfiguration.lives = this.configurationData.lives;
 
     this.configurationService.saveGameConfiguration(this.snakeConfiguration);
-    this.router.navigate(['/snake-game']);
+    this.router.navigate(['/snake-game'], { queryParams: { fromCustom: false }});
   }
   startEditor() {
     this.router.navigate(['/snake-editor']);
