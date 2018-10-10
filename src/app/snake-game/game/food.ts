@@ -1,6 +1,5 @@
 import { Snake } from './snake';
 import { CellObject } from './cell-object';
-import { Obstacle } from './obstacle';
 import { Level } from './Level';
 
 export class Food implements CellObject {
