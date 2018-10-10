@@ -24,8 +24,11 @@ export class SnakeGame {
     private pauseUpdate = false;
     private configuration: any;
     private customLevelType = false;
-    startPosition: number[];
-
+    private playerStartPosition = {
+        x: 0,
+        y: 0
+    };
+    // startPositionArr: any[] = [];
     score: number[] = [];
 
     constructor(private screenWidth: number,
@@ -33,15 +36,35 @@ export class SnakeGame {
                 private messageService: IMessageService,
                 configurationService: ConfigDataService
                 ) {
+
+        // this.startPositionArr.push(this.playerStartPosition);
+        // this.startPositionArr.push(this.playerStartPosition);
+
         if (configurationService.getLevelConfiguration()) {
             this.configuration = configurationService.getLevelConfiguration();
             this.customLevelType = true;
-            this.startPosition = [3, 3];
+            this.playerStartPosition.x  = this.configuration.playerStartPosition[0].x;
+            this.playerStartPosition.y = this.configuration.playerStartPosition[0].y;
         } else {
             this.configuration = configurationService.getGameConfiguration();
             this.customLevelType = false;
-            this.startPosition = [0, 0];
+            this.playerStartPosition.x = 0;
+            this.playerStartPosition.y = 0;
         }
+
+        // if (this.customLevelType) {
+        //     this.startPositionArr[0].x = 2;
+        //     this.startPositionArr[0].y = 2;
+        //     this.startPositionArr[1].x = this.configuration.playerStartPosition[1].x;
+        //     this.startPositionArr[1].y = this.configuration.playerStartPosition[1].y;
+        //     console.log(this.startPositionArr);
+
+        // } else {
+        //     this.startPositionArr[0].x = 0;
+        //     this.startPositionArr[0].y = 0;
+        //     this.startPositionArr[1].x = 3;
+        //     this.startPositionArr[1].y = 3;
+        // }
 
         this.elapsedTimeSeconds = 0;
         this.liveCounterState = false;
@@ -57,7 +80,7 @@ export class SnakeGame {
                                            i,
                                            this.configuration.playerInputs[i],
                                            this.widthDifference / 2, this.heightDifference / 2,
-                                           this.startPosition)
+                                           this.playerStartPosition)
                                 );
             this.score[i] = this.configuration.snakeLength;
             this.food.createNewFood(this.multiSnake[i], this.level, this.configuration.foodPosition);

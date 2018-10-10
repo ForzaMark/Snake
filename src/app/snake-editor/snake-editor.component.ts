@@ -93,6 +93,6 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.configurationService.saveLevelConfiguration(this.level.returnLevelCofiguration());
   }
   playCustomLevel(): void {
-    this.router.navigate(['/snake-game']);
+    this.router.navigate(['/snake-game'], { queryParams: { fromCustom: true }});
   }
 }

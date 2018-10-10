@@ -22,10 +22,12 @@ export class Snake {
                 snakeSize: number,
                 i: number,
                 private input: SnakeInputConfiguration,
-                widthCorrectur: number, heightCorrecture: number, startPosition: number[]) {
+                widthCorrectur: number, heightCorrecture: number, startPosition: any) {
         this.witdhCorrecture = widthCorrectur;
         this.heightCorrecture = heightCorrecture;
         this.lives = 0;
+        console.log(startPosition);
+        
         this.figureOutStartPosition(startPosition);
         this.snakeHead = this.snakeParts[0];
     }
@@ -314,7 +316,7 @@ export class Snake {
         this.snakeHead.x = x;
         this.snakeHead.y = y;
     }
-    private figureOutStartPosition( startPosition: number[]): void {
-        this.addPart(startPosition[0], startPosition[1]);
+    private figureOutStartPosition( startPosition: any): void {
+        this.addPart(startPosition.x, startPosition.y);
     }
 }
