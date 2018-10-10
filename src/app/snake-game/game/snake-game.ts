@@ -28,7 +28,7 @@ export class SnakeGame {
         x: 0,
         y: 0
     };
-    // startPositionArr: any[] = [];
+    startPositionArr: any[] = [];
     score: number[] = [];
 
     constructor(private screenWidth: number,
@@ -46,11 +46,13 @@ export class SnakeGame {
             this.customLevelType = true;
             this.playerStartPosition.x  = this.configuration.playerStartPosition[0].x;
             this.playerStartPosition.y = this.configuration.playerStartPosition[0].y;
+            this.startPositionArr.push(this.configuration.playerStartPosition[0]);
+            this.startPositionArr.push(this.configuration.playerStartPosition[1]);
         } else {
             this.configuration = configurationService.getGameConfiguration();
             this.customLevelType = false;
-            this.playerStartPosition.x = 0;
-            this.playerStartPosition.y = 0;
+            this.startPositionArr.push(this.playerStartPosition);
+            this.startPositionArr.push(this.playerStartPosition);
         }
 
         // if (this.customLevelType) {
@@ -81,7 +83,7 @@ export class SnakeGame {
                                            i,
                                            this.configuration.playerInputs[i],
                                            this.widthDifference / 2, this.heightDifference / 2,
-                                           this.playerStartPosition)
+                                           this.startPositionArr[i], this.customLevelType)
                                 );
             this.score[i] = this.configuration.snakeLength;
             this.food.createNewFood(this.multiSnake[i], this.level, this.configuration.foodPosition);

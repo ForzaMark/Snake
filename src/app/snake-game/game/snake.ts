@@ -20,11 +20,23 @@ export class Snake {
     constructor(private fieldWidth: number,
                 private fieldHeight: number,
                 snakeSize: number,
-                i: number,
+                private player: number,
                 private input: SnakeInputConfiguration,
-                widthCorrectur: number, heightCorrecture: number, startPosition: any) {
+                widthCorrectur: number, heightCorrecture: number,
+                startPosition: any,
+                private customLeveltype: boolean) {
+
         this.witdhCorrecture = widthCorrectur;
         this.heightCorrecture = heightCorrecture;
+
+        // for (let i = 0; i < snakeSize; i++) {
+        //     if (startPosition.x === 0) {
+        //         this.addPart(0, startPosition.y);
+        //     } else {
+        //         this.addPart(fieldWidth, fieldHeight - 1);
+        //         this.direction = Direction.left;
+        //     }
+        // }
         this.lives = 0;
         this.figureOutStartPosition(startPosition);
         this.snakeHead = this.snakeParts[0];
@@ -315,6 +327,16 @@ export class Snake {
         this.snakeHead.y = y;
     }
     private figureOutStartPosition( startPosition: any): void {
-        this.addPart(startPosition.x, startPosition.y);
+        if (this.customLeveltype) {
+            this.addPart(startPosition.x, startPosition.y);
+        } else {
+            if (this.player === 0) {
+                this.addPart(0, 0);
+            }
+            if (this.player === 1) {
+                this.addPart(this.fieldWidth, this.fieldHeight - 1);
+                this.direction = Direction.left;
+            }
+        }
     }
 }
