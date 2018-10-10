@@ -27,6 +27,7 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
               private router: Router) {  }
 
   ngOnInit() {
+
     this.snakeConfiguration = this.configurationService.getGameConfiguration();
     this.levelConfiguration = this.configurationService.getLevelConfiguration(0);
     this.configurationNumber = 1;
@@ -83,6 +84,12 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     document.addEventListener('keyup', e => {
       this.level.onKeyUp(e as KeyboardEvent);
     });
+    window.addEventListener('keydown', e => {
+      // space and arrow keys
+      if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+          e.preventDefault();
+      }
+  }, false);
 
     this.drawTimer = setInterval(() => {
       this.level.draw(context, this.levelWidth, this.levelHeight);
