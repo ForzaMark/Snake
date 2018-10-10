@@ -14,7 +14,6 @@ export class Snake {
     };
     private witdhCorrecture: number;
     private heightCorrecture: number;
-
     lives: number;
 
     constructor(private fieldWidth: number,

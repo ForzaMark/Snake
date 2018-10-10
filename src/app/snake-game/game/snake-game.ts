@@ -23,8 +23,7 @@ export class SnakeGame {
     private liveCounterState: boolean;
     private pauseUpdate = false;
     private configuration: any;
-    private customLevelType = false;
-    startPositionArr: any[] = [];
+    private startPositionArr: any[] = [];
     score: number[] = [];
 
     constructor(private screenWidth: number,
@@ -37,12 +36,10 @@ export class SnakeGame {
 
         if (this.routerDirection) {
             this.configuration = configurationService.getLevelConfiguration(this.configurationNumber);
-            this.customLevelType = true;
             this.startPositionArr.push(this.configuration.playerStartPosition[0]);
             this.startPositionArr.push(this.configuration.playerStartPosition[1]);
         } else {
             this.configuration = configurationService.getGameConfiguration();
-            this.customLevelType = false;
             this.startPositionArr.push(undefined);
             this.startPositionArr.push(undefined);
         }
@@ -61,13 +58,13 @@ export class SnakeGame {
                                            i,
                                            this.configuration.playerInputs[i],
                                            this.widthDifference / 2, this.heightDifference / 2,
-                                           this.startPositionArr[i], this.customLevelType)
+                                           this.startPositionArr[i], this.routerDirection)
                                 );
             this.score[i] = this.configuration.snakeLength;
             this.food.createNewFood(this.multiSnake[i], this.level, this.configuration.foodPosition);
         }
 
-        if (this.customLevelType) {
+        if (this.routerDirection) {
             this.level.intialAdding(this.configuration.obstaclePosition);
         }
     }
@@ -95,10 +92,10 @@ export class SnakeGame {
                 this.food.createNewFood(this.multiSnake[i], this.level);
                 if (((this.multiSnake[i].getSnakeLength() % this.configuration.skillLevel === 0)
                     || (this.multiSnake[i].getSnakeLength() === this.configuration.snakeLength + 1))
-                    && !this.customLevelType) {
+                    && !this.routerDirection) {
                     this.level.addObstacle(this.food, true, undefined, undefined, this.multiSnake[i]);
                 } else {
-                    if (!this.customLevelType) {
+                    if (!this.routerDirection) {
                         this.level.changeObstaclePosition(this.multiSnake[i], this.food);
                     }
                 }
