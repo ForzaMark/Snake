@@ -30,6 +30,12 @@ export class SnakeGrid {
                 context.moveTo(cellWidth * fieldWidth + widthCorrecture, heightCorrecture);
                 context.lineTo(cellWidth * fieldWidth + widthCorrecture, fieldHeight * cellHeight + heightCorrecture);
                 context.stroke();
+                context.moveTo(widthCorrecture, heightCorrecture);
+                context.lineTo(cellWidth * fieldWidth + widthCorrecture, heightCorrecture);
+                context.stroke();
+                context.moveTo(widthCorrecture, cellHeight * fieldHeight + heightCorrecture);
+                context.lineTo(cellWidth * fieldWidth + widthCorrecture, cellHeight * fieldHeight + heightCorrecture);
+                context.stroke();
         }
     }
 }
