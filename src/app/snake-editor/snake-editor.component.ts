@@ -21,13 +21,15 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   private levelConfiguration: LevelConfiguration;
   private level: EditorLevel;
   private inputValidation = false;
+  private configurationNumber: number;
 
   constructor(private configurationService: ConfigDataService,
               private router: Router) {  }
 
   ngOnInit() {
     this.snakeConfiguration = this.configurationService.getGameConfiguration();
-    this.levelConfiguration = this.configurationService.getLevelConfiguration();
+    this.levelConfiguration = this.configurationService.getLevelConfiguration(0);
+    this.configurationNumber = 1;
 
     if (!this.snakeConfiguration) {
       this.router.navigate(['/snake-menu']);
@@ -95,6 +97,6 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.configurationService.saveLevelConfiguration(this.level.returnLevelCofiguration());
   }
   playCustomLevel(): void {
-    this.router.navigate(['/snake-game'], { queryParams: { fromCustom: true }});
+    this.router.navigate(['/snake-game'], { queryParams: { fromCustom: true, configNumber: this.configurationNumber } });
   }
 }

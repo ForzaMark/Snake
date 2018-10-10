@@ -31,11 +31,12 @@ export class SnakeGame {
                 private screenHeight: number,
                 private messageService: IMessageService,
                 configurationService: ConfigDataService,
-                private routerDirection: boolean
+                private routerDirection: boolean,
+                private configurationNumber: number
                 ) {
 
         if (this.routerDirection) {
-            this.configuration = configurationService.getLevelConfiguration();
+            this.configuration = configurationService.getLevelConfiguration(this.configurationNumber);
             this.customLevelType = true;
             this.startPositionArr.push(this.configuration.playerStartPosition[0]);
             this.startPositionArr.push(this.configuration.playerStartPosition[1]);

@@ -56,6 +56,16 @@
                 </div>
         </div>   
     </div>
+    <div class="card mt-3">
+        <div class="card-header">Or select a predefined Configuration</div>
+        <div class="card-body">
+            <p>There are {{this.configurationService.levelConfigs.length - 1}} Configurations available</p>
+            <input type="number" #ConfigurationNumber
+            min="1"
+            max="this.configurationService.levelConfigs.length"
+             [(ngModel)]="this.configurationNumber">
+        </div>
+    </div>
 
         </div>
         <button routerLink='/snake-menu' class="btn btn-secondary btn-block">Back to Main Menu</button>

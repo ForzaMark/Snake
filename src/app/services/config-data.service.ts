@@ -7,7 +7,7 @@ import { LevelConfiguration } from './level-configuration';
 })
 export class ConfigDataService {
   private data: SnakeGameConfiguration;
-  private levelConfig: LevelConfiguration;
+  levelConfigs: LevelConfiguration[] = [];
   constructor() { }
 
   getGameConfiguration(): SnakeGameConfiguration {
@@ -18,11 +18,20 @@ export class ConfigDataService {
     this.data = configuration;
   }
 
-  getLevelConfiguration(): LevelConfiguration {
-    return this.levelConfig;
+  getLevelConfiguration(selectedConfig: number): LevelConfiguration {
+    return this.levelConfigs[selectedConfig];
   }
 
   saveLevelConfiguration(configuration: LevelConfiguration): void {
-    this.levelConfig = configuration;
+    this.levelConfigs.push(this.cloneConfigurationToPush(configuration));
+  }
+  cloneConfigurationToPush(configuration: LevelConfiguration): any {
+    const clone = {};
+    for ( const key in configuration) {
+        if (configuration.hasOwnProperty(key)) {
+          clone[key] = configuration[key];
+        }
+    }
+    return clone;
   }
 }

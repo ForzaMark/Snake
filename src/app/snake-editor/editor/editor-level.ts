@@ -23,6 +23,7 @@ export class EditorLevel {
     private levelWidth: number;
     private levelHeight: number;
     private snakeConfiguration: SnakeGameConfiguration;
+    
 
     constructor(private screenWidth: number,
                 private screenHeight: number,
@@ -30,7 +31,7 @@ export class EditorLevel {
                 private levelConfiguration: LevelConfiguration) {
 
         this.snakeConfiguration = configurationService.getGameConfiguration();
-        this.levelConfiguration = configurationService.getLevelConfiguration();
+        this.levelConfiguration = configurationService.getLevelConfiguration(0);
 
         this.levelWidth = this.snakeConfiguration.levelWidth;
         this.levelHeight = this.snakeConfiguration.levelHeight;
@@ -121,7 +122,7 @@ export class EditorLevel {
         return this.levelConfiguration;
     }
     prooveInput(): boolean {
-        if (!this.playerMarker[0].x || !this.food.x) {
+        if ((this.playerMarker[0].x === undefined) || !this.food.x) {
             return false;
         } else {
             return true;

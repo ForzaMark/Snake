@@ -25,6 +25,7 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
   snakeConfiguration: SnakeGameConfiguration;
   levelConfiguration: LevelConfiguration;
   routerDirection = false;
+  configurationNumber: number;
 
   constructor(
     private configurationService: ConfigDataService,
@@ -35,18 +36,19 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
 
   ngOnInit(): void {
     this.snakeConfiguration = this.configurationService.getGameConfiguration();
-    this.levelConfiguration = this.configurationService.getLevelConfiguration();
+    this.levelConfiguration = this.configurationService.getLevelConfiguration(0);
     if (!this.snakeConfiguration && !this.levelConfiguration) {
       this.router.navigate(['/snake-menu']);
     }
   }
 
   ngAfterViewInit(): void {
-    this.route.queryParams.pipe(
-      filter(params => params.fromCustom)
-    ).subscribe(params => {
-        this.routerDirection = params.fromCustom === 'true';
+    this.route.queryParams.pipe()
+    .subscribe(parametersFromOtherComponent => {
+        this.routerDirection = parametersFromOtherComponent.fromCustom === 'true';
+        this.configurationNumber = parametersFromOtherComponent.configNumber;
       });
+
 
     if (!this.snakeConfiguration) {
       return;
@@ -63,7 +65,9 @@ export class SnakeGameComponent implements OnInit, AfterViewInit, OnDestroy, IMe
 
     const context = mainCanvas.getContext('2d');
 
-    const snakeGame = new SnakeGame(screenWidth, screenHeight, this, this.configurationService, this.routerDirection);
+    const snakeGame = new SnakeGame(screenWidth, screenHeight,
+                                    this, this.configurationService,
+                                    this.routerDirection, this.configurationNumber);
 
     document.addEventListener('keyup', e => snakeGame.onKeyUp(e as KeyboardEvent));
 
