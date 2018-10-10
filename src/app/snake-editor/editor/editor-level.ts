@@ -23,7 +23,6 @@ export class EditorLevel {
     private levelWidth: number;
     private levelHeight: number;
     private snakeConfiguration: SnakeGameConfiguration;
-    
 
     constructor(private screenWidth: number,
                 private screenHeight: number,
