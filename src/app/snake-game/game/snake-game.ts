@@ -110,7 +110,9 @@ export class SnakeGame {
                 this.pauseUpdate = true;
                 this.messageService.alert('Snake collides with obstacle  \nScore : ' + this.score[i] +
                         ' \nremaining lives : ' + (this.configuration.lives - this.multiSnake[i].lives), () => this.pauseUpdate = false );
-                this.level.changeObstaclePosition(this.multiSnake[i], this.food);
+                if (this.routerDirection) {
+                    this.level.changeObstaclePosition(this.multiSnake[i], this.food);
+                }
             }
 
             if (this.multiSnake[i].collidesWithItself()) {
