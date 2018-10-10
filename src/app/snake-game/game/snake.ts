@@ -28,17 +28,11 @@ export class Snake {
 
         this.witdhCorrecture = widthCorrectur;
         this.heightCorrecture = heightCorrecture;
-
-        // for (let i = 0; i < snakeSize; i++) {
-        //     if (startPosition.x === 0) {
-        //         this.addPart(0, startPosition.y);
-        //     } else {
-        //         this.addPart(fieldWidth, fieldHeight - 1);
-        //         this.direction = Direction.left;
-        //     }
-        // }
         this.lives = 0;
         this.figureOutStartPosition(startPosition);
+        for (let i = 0; i < snakeSize; i++) {
+            this.grow();
+        }
         this.snakeHead = this.snakeParts[0];
     }
 

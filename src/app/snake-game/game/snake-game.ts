@@ -24,10 +24,6 @@ export class SnakeGame {
     private pauseUpdate = false;
     private configuration: any;
     private customLevelType = false;
-    private playerStartPosition = {
-        x: 0,
-        y: 0
-    };
     startPositionArr: any[] = [];
     score: number[] = [];
 
@@ -38,36 +34,17 @@ export class SnakeGame {
                 private routerDirection: boolean
                 ) {
 
-        // this.startPositionArr.push(this.playerStartPosition);
-        // this.startPositionArr.push(this.playerStartPosition);
-
         if (this.routerDirection) {
             this.configuration = configurationService.getLevelConfiguration();
             this.customLevelType = true;
-            this.playerStartPosition.x  = this.configuration.playerStartPosition[0].x;
-            this.playerStartPosition.y = this.configuration.playerStartPosition[0].y;
             this.startPositionArr.push(this.configuration.playerStartPosition[0]);
             this.startPositionArr.push(this.configuration.playerStartPosition[1]);
         } else {
             this.configuration = configurationService.getGameConfiguration();
             this.customLevelType = false;
-            this.startPositionArr.push(this.playerStartPosition);
-            this.startPositionArr.push(this.playerStartPosition);
+            this.startPositionArr.push(undefined);
+            this.startPositionArr.push(undefined);
         }
-
-        // if (this.customLevelType) {
-        //     this.startPositionArr[0].x = 2;
-        //     this.startPositionArr[0].y = 2;
-        //     this.startPositionArr[1].x = this.configuration.playerStartPosition[1].x;
-        //     this.startPositionArr[1].y = this.configuration.playerStartPosition[1].y;
-        //     console.log(this.startPositionArr);
-
-        // } else {
-        //     this.startPositionArr[0].x = 0;
-        //     this.startPositionArr[0].y = 0;
-        //     this.startPositionArr[1].x = 3;
-        //     this.startPositionArr[1].y = 3;
-        // }
 
         this.elapsedTimeSeconds = 0;
         this.liveCounterState = false;

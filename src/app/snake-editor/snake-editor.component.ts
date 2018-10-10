@@ -36,7 +36,7 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
       this.levelConfiguration = {
         levelWidth: 20,
         levelHeight: 15,
-        snakeLength: 1,
+        snakeLength: 3,
         playerCount: 0,
         obstaclePosition: [],
         playerStartPosition: [],
