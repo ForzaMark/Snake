@@ -20,6 +20,7 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   private snakeConfiguration: SnakeGameConfiguration;
   private levelConfiguration: LevelConfiguration;
   private level: EditorLevel;
+  private inputValidation = false;
 
   constructor(private configurationService: ConfigDataService,
               private router: Router) {  }
@@ -83,6 +84,7 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.drawTimer = setInterval(() => {
       this.level.draw(context, this.levelWidth, this.levelHeight);
+      this.inputValidation = this.level.prooveInput();
     }, 1000 / framesPerSec);
 
   }

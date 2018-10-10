@@ -86,7 +86,9 @@ export class Level implements CellObject {
     }
     intersects(other: CellObject) {
         for (let i = 0; i < this.obstacles.length; i++) {
-             return this.obstacles[i].x === other.x && this.obstacles[i].y === other.y;
+            if (this.obstacles[i].x === other.x && this.obstacles[i].y === other.y) {
+              return true;
+            }
         }
         return false;
     }

@@ -49,8 +49,11 @@
         <div class="card-header text-white bg-info">Snake Editor</div>
         <div class="card-body">
             <canvas #editorCanvas class="text-center mb-3 canvas-style"></canvas>
-            <button class="btn btn-primary btn-block mt-3 mb-3" (click)="saveLevel()">Save Level</button>
-            <button class="btn btn-info mb-3" (click)="playCustomLevel()">play custom level</button>
+            <button *ngIf="this.inputValidation" class="btn btn-primary btn-block mt-3 mb-3" (click)="saveLevel()">Save Level</button>
+            <button *ngIf="this.inputValidation" class="btn btn-info mb-3" (click)="playCustomLevel()">play custom level</button>
+            <div class="alert alert-danger text-center" *ngIf="!this.inputValidation" role="alert">
+                    <p>Please set at least one Playermarker and one food to start the game !</p>
+                </div>
         </div>   
     </div>
 

@@ -119,6 +119,12 @@ export class EditorLevel {
         this.levelConfiguration.levelWidth = this.levelWidth;
         this.levelConfiguration.levelHeight = this.levelHeight;
         return this.levelConfiguration;
-
+    }
+    prooveInput(): boolean {
+        if (!this.playerMarker[0].x || !this.food.x) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
