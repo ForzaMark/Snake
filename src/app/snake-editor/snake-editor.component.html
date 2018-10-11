@@ -61,9 +61,17 @@
         <div class="card-body">
             <p>There are {{this.configurationService.levelConfigs.length - 1}} Configurations available</p>
             <input type="number" #ConfigurationNumber
+            class="form-control"
             min="1"
             max="this.configurationService.levelConfigs.length"
              [(ngModel)]="this.configurationNumber">
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-header">Preview of last three configured Levels</div>
+        <div class="card-body">
+            <button (click)="showconfig()"></button>
+            <canvas #previewCanvas class="text-center canvas-style"></canvas>
         </div>
     </div>
 

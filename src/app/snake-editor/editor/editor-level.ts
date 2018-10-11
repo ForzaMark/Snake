@@ -27,10 +27,11 @@ export class EditorLevel {
     constructor(private screenWidth: number,
                 private screenHeight: number,
                 private configurationService: ConfigDataService,
-                private levelConfiguration: LevelConfiguration) {
+                private levelConfiguration: LevelConfiguration,
+                private configurationNumber: number) {
 
         this.snakeConfiguration = configurationService.getGameConfiguration();
-        this.levelConfiguration = configurationService.getLevelConfiguration(0);
+        this.levelConfiguration = configurationService.getLevelConfiguration(configurationNumber);
 
         this.levelWidth = this.snakeConfiguration.levelWidth;
         this.levelHeight = this.snakeConfiguration.levelHeight;
@@ -39,6 +40,7 @@ export class EditorLevel {
         this.grid = new SnakeGrid(true);
         this.level = new Level(this.snakeConfiguration.levelWidth, this.snakeConfiguration.levelHeight);
         this.cursor = new Cursor(0, 0);
+        this.playerMarker.push(new EditorPlayerMarker());
         this.playerMarker[0] = new EditorPlayerMarker();
         this.playerMarker[1] = new EditorPlayerMarker();
     }

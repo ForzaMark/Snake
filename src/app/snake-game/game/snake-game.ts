@@ -62,7 +62,6 @@ export class SnakeGame {
                                 );
             this.score[i] = this.configuration.snakeLength;
             this.food.createNewFood(this.multiSnake[i], this.level, this.configuration.foodPosition);
-            console.log(this.multiSnake[i].getSnakeLength());
         }
 
         if (this.fromLevelEditorComponent) {
@@ -81,7 +80,6 @@ export class SnakeGame {
 
         for (let i = 0; i < this.multiSnake.length; i++) {
             if (this.multiSnake[i].lives >= this.configuration.lives && !this.pauseUpdate) {
-                console.log('in');
                 this.pauseUpdate = true;
                 return false;
             }

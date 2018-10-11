@@ -100,4 +100,7 @@ export class Level implements CellObject {
             this.obstacles.push(obstacle);
         }
     }
+    clear(): void {
+        this.obstacles = [];
+    }
 }
