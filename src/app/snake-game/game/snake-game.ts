@@ -62,6 +62,7 @@ export class SnakeGame {
                                 );
             this.score[i] = this.configuration.snakeLength;
             this.food.createNewFood(this.multiSnake[i], this.level, this.configuration.foodPosition);
+            console.log(this.multiSnake[i].getSnakeLength());
         }
 
         if (this.routerDirection) {
@@ -90,6 +91,9 @@ export class SnakeGame {
                 this.score[i]++;
                 this.multiSnake[i].grow();
                 this.food.createNewFood(this.multiSnake[i], this.level);
+                console.log(this.multiSnake[i].getSnakeLength());
+                console.log(this.configuration.snakeLength + 1);
+
                 if (((this.multiSnake[i].getSnakeLength() % this.configuration.skillLevel === 0)
                     || (this.multiSnake[i].getSnakeLength() === this.configuration.snakeLength + 1))
                     && !this.routerDirection) {

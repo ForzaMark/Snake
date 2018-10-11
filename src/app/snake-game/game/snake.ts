@@ -29,7 +29,7 @@ export class Snake {
         this.heightCorrecture = heightCorrecture;
         this.lives = 0;
         this.figureOutStartPosition(startPosition);
-        for (let i = 0; i < snakeSize; i++) {
+        for (let i = 1; i < snakeSize; i++) {
             this.grow();
         }
         this.snakeHead = this.snakeParts[0];

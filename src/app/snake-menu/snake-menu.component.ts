@@ -41,7 +41,7 @@ export class SnakeMenuComponent implements OnInit {
         levelHeight: 15,
         snakeLength: 1,
         wall: true,
-        skillLevel: 10,
+        skillLevel: 5,
         playerCount: 1,
         speed: 0.25,
         grid: true,
