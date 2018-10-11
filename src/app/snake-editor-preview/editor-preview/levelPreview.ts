@@ -26,7 +26,6 @@ export class LevelPreview {
     }
     setObjects(configuration: LevelConfiguration) {
         this.level.clear();
-        console.log(configuration.obstaclePosition);
         this.food.placeNewFood(configuration.foodPosition[0], configuration.foodPosition[1]);
         this.playerMarker[0].placeNewMarker(configuration.playerStartPosition[0]);
         this.playerMarker[1].placeNewMarker(configuration.playerStartPosition[1]);

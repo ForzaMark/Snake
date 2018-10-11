@@ -2,22 +2,19 @@
     <div class="jumbotron">
             <h1 class="text-center">Let`s Build!</h1>
     </div>
-    <div class="card mt-3">
-        <div class="card-header">Or select a predefined Configuration</div>
+    <div class="card mt-3 col-sm-6">
+        <div class="card-header">Preview of last configured Levels</div>
         <div class="card-body">
-            <p>There are {{this.configurationService.levelConfigs.length - 1}} Configurations available</p>
-            <input type="number" #ConfigurationNumber
-            class="form-control"
-            min="1"
-            max="this.configurationService.levelConfigs.length"
-             [(ngModel)]="this.configurationNumber">
+            <canvas #previewCanvas class="text-center canvas-style"></canvas>
+            <button (click)="showconfig()" class="btn btn-info mt-3 mb-3">showConfigs</button>
         </div>
     </div>
-    <div class="card mt-3">
-        <div class="card-header">Preview of last three configured Levels</div>
+    <div class="card mt-3 col-sm-6">
+        <div class="card-header">Levels :</div>
         <div class="card-body">
-            <button (click)="showconfig()"></button>
-            <canvas #previewCanvas class="text-center canvas-style"></canvas>
+            <ul>
+                <li *ngFor="let Level of this.configurationService.levelConfigs" (click)="playConfig(Level)">Level : {{ Level.levelWidth }} x {{Level.levelHeight}}</li>
+            </ul>
         </div>
     </div>
 </div>
