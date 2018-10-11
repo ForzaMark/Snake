@@ -13,7 +13,7 @@ import { LevelPreview } from './editor/levelPreview';
 })
 export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('editorCanvas') canvasReference: ElementRef;
-  @ViewChild('previewCanvas') previewCanvasReference: ElementRef;
+  // @ViewChild('previewCanvas') previewCanvasReference: ElementRef;
 
   private levelWidth: number;
   private levelHeight: number;
@@ -36,7 +36,7 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.snakeConfiguration = this.configurationService.getGameConfiguration();
     this.levelConfiguration = this.configurationService.getLevelConfiguration(0);
-    this.configurationNumber = 0;
+    // this.configurationNumber = 0;
 
     if (!this.snakeConfiguration) {
       this.router.navigate(['/snake-menu']);
@@ -81,13 +81,13 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.levelWidth = this.snakeConfiguration.levelWidth;
     this.levelHeight = this.snakeConfiguration.levelHeight;
     const editorCanvas = this.canvasReference.nativeElement as HTMLCanvasElement;
-    const previewCanvas = this.previewCanvasReference.nativeElement as HTMLCanvasElement;
+    // const previewCanvas = this.previewCanvasReference.nativeElement as HTMLCanvasElement;
     editorCanvas.width = this.screenWidth;
     editorCanvas.height = this.screenHeight;
-    previewCanvas.width = this.screenWidth / this.minimizingFactor;
-    previewCanvas.height = this.screenHeight / this.minimizingFactor;
+    // previewCanvas.width = this.screenWidth / this.minimizingFactor;
+    // previewCanvas.height = this.screenHeight / this.minimizingFactor;
     const context = editorCanvas.getContext('2d');
-    this.previewContext = previewCanvas.getContext('2d');
+    // this.previewContext = previewCanvas.getContext('2d');
     const framesPerSec = 30;
     this.level = new EditorLevel(this.screenWidth, this.screenHeight,
                                   this.configurationService, this.levelConfiguration,
@@ -112,18 +112,26 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     clearInterval(this.drawTimer);
   }
-  saveLevel(): void {
-    this.configurationService.saveLevelConfiguration(this.level.returnLevelCofiguration());
-  }
   playCustomLevel(): void {
+    this.configurationService.saveLevelConfiguration(this.level.returnLevelCofiguration());
     this.router.navigate(['/snake-game'], { queryParams: { fromCustom: true, configNumber: this.configurationNumber } });
-  }
-  showconfig() {
+
     console.log(this.configurationNumber);
     console.log(this.configurationService.getLevelConfiguration(this.configurationNumber));
-    this.levelPreview.setObjects(this.configurationService.getLevelConfiguration(this.configurationNumber));
-    this.levelPreview.draw(this.previewContext,
-                           this.configurationService.getLevelConfiguration(this.configurationNumber).levelWidth,
-                           this.configurationService.getLevelConfiguration(this.configurationNumber).levelHeight);
+    this.configurationNumber++;
   }
+
+  playPreviousLevel(): void {
+    console.log(this.configurationNumber - 1);
+    
+    this.router.navigate(['/snake-game'], { queryParams: { fromCustom: true, configNumber: this.configurationNumber - 1 } });
+  }
+  // showconfig() {
+  //   console.log(this.configurationNumber);
+  //   console.log(this.configurationService.getLevelConfiguration(this.configurationNumber));
+  //   this.levelPreview.setObjects(this.configurationService.getLevelConfiguration(this.configurationNumber));
+  //   this.levelPreview.draw(this.previewContext,
+  //                          this.configurationService.getLevelConfiguration(this.configurationNumber).levelWidth,
+  //                          this.configurationService.getLevelConfiguration(this.configurationNumber).levelHeight);
+  // }
 }
