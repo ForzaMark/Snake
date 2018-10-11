@@ -184,6 +184,7 @@
                         <input type="submit" value="Play with these settings" class="btn btn-primary btn" *ngIf="LevelWidth.valid && LevelHeight.valid && snakelength.valid"  
                                 (click)="startGame()">
                         <input class="btn btn-info ml-5" type="submit" value="Create a custom Level" (click)="startEditor()">
+                        <input class="btn btn-info ml-5" type="submit" value="Load a Level from Memory" (click)="levelSelection()">
                         
                 </div>
         </div>
