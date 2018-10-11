@@ -2,7 +2,7 @@ import { SnakeGrid } from '../../snake-game/game/grid';
 import { LevelConfiguration } from '../../services/level-configuration';
 import { Level } from '../../snake-game/game/Level';
 import { Food } from '../../snake-game/game/food';
-import { EditorPlayerMarker } from './playerMarker';
+import { EditorPlayerMarker } from '../../snake-editor/editor/playerMarker';
 
 export class LevelPreview {
     private grid: SnakeGrid;
