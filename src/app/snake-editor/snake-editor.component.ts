@@ -24,9 +24,6 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   private level: EditorLevel;
   private inputValidation = false;
   private configurationNumber: number;
-  private levelPreview: LevelPreview;
-  private minimizingFactor = 2;
-  private previewContext: any;
 
   constructor(private configurationService: ConfigDataService,
               private router: Router) {  }
@@ -110,8 +107,5 @@ export class SnakeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   playCustomLevel(): void {
     this.configurationService.saveLevelConfiguration(this.level.returnLevelCofiguration());
     this.router.navigate(['/snake-game'], { queryParams: { fromCustom: true, configNumber: this.configurationNumber } });
-    console.log(this.configurationNumber);
-    console.log(this.configurationService.getLevelConfiguration(this.configurationNumber));
-    this.configurationNumber++;
   }
 }
