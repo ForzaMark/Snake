@@ -30,11 +30,11 @@ export class SnakeGame {
                 private screenHeight: number,
                 private messageService: IMessageService,
                 configurationService: ConfigDataService,
-                private routerDirection: boolean,
+                private fromLevelEditorComponent: boolean,
                 private configurationNumber: number
                 ) {
 
-        if (this.routerDirection) {
+        if (this.fromLevelEditorComponent) {
             this.configuration = configurationService.getLevelConfiguration(this.configurationNumber);
             this.startPositionArr.push(this.configuration.playerStartPosition[0]);
             this.startPositionArr.push(this.configuration.playerStartPosition[1]);
@@ -58,14 +58,14 @@ export class SnakeGame {
                                            i,
                                            this.configuration.playerInputs[i],
                                            this.widthDifference / 2, this.heightDifference / 2,
-                                           this.startPositionArr[i], this.routerDirection)
+                                           this.startPositionArr[i], this.fromLevelEditorComponent)
                                 );
             this.score[i] = this.configuration.snakeLength;
             this.food.createNewFood(this.multiSnake[i], this.level, this.configuration.foodPosition);
             console.log(this.multiSnake[i].getSnakeLength());
         }
 
-        if (this.routerDirection) {
+        if (this.fromLevelEditorComponent) {
             this.level.intialAdding(this.configuration.obstaclePosition);
         }
     }
@@ -80,6 +80,11 @@ export class SnakeGame {
         }
 
         for (let i = 0; i < this.multiSnake.length; i++) {
+            if (this.multiSnake[i].lives >= this.configuration.lives && !this.pauseUpdate) {
+                console.log('in');
+                this.pauseUpdate = true;
+                return false;
+            }
             if (!this.multiSnake[i].move(this.configuration.wall)) {
                 this.multiSnake[i].lives++;
                 this.liveCounterState = true;
@@ -91,15 +96,13 @@ export class SnakeGame {
                 this.score[i]++;
                 this.multiSnake[i].grow();
                 this.food.createNewFood(this.multiSnake[i], this.level);
-                console.log(this.multiSnake[i].getSnakeLength());
-                console.log(this.configuration.snakeLength + 1);
 
                 if (((this.multiSnake[i].getSnakeLength() % this.configuration.skillLevel === 0)
                     || (this.multiSnake[i].getSnakeLength() === this.configuration.snakeLength + 1))
-                    && !this.routerDirection) {
+                    && !this.fromLevelEditorComponent) {
                     this.level.addObstacle(this.food, true, undefined, undefined, this.multiSnake[i]);
                 } else {
-                    if (!this.routerDirection) {
+                    if (!this.fromLevelEditorComponent) {
                         this.level.changeObstaclePosition(this.multiSnake[i], this.food);
                     }
                 }
@@ -111,7 +114,7 @@ export class SnakeGame {
                 this.pauseUpdate = true;
                 this.messageService.alert('Snake collides with obstacle  \nScore : ' + this.score[i] +
                         ' \nremaining lives : ' + (this.configuration.lives - this.multiSnake[i].lives), () => this.pauseUpdate = false );
-                if (this.routerDirection) {
+                if (!this.fromLevelEditorComponent) {
                     this.level.changeObstaclePosition(this.multiSnake[i], this.food);
                 }
             }
@@ -134,10 +137,6 @@ export class SnakeGame {
                                 ' \nremaining lives : ' +
                                 (this.configuration.lives - this.multiSnake[i].lives), () => this.pauseUpdate = false);
                 }
-            }
-            if (this.multiSnake[i].lives >= this.configuration.lives && !this.pauseUpdate) {
-                this.pauseUpdate = true;
-                return false;
             }
         }
         return true;
