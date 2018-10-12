@@ -13,7 +13,7 @@
         <div class="card-header">Levels :</div>
         <div class="card-body">
             <ul>
-                <li *ngFor="let Level of this.configurationService.levelConfigs" (click)="playConfig(Level)">Level : {{ Level.levelWidth }} x {{Level.levelHeight}}</li>
+                <li *ngFor="let Level of this.configurationService.levelConfigs; index as i" (click)="showconfig(Level)">Level {{i}} : {{ Level.levelWidth }} x {{Level.levelHeight}}</li>
             </ul>
         </div>
     </div>

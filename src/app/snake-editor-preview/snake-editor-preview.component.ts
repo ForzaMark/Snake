@@ -4,6 +4,7 @@ import { ConfigDataService } from '../services/config-data.service';
 import { Router } from '../../../node_modules/@angular/router';
 import { LevelConfiguration } from '../services/level-configuration';
 
+
 @Component({
   selector: 'app-snake-editor-preview',
   templateUrl: './snake-editor-preview.component.html',
@@ -17,8 +18,9 @@ private levelPreview: LevelPreview;
 private previewContext: CanvasRenderingContext2D;
 private level: LevelConfiguration[];
 
+
   constructor(private configurationService: ConfigDataService,
-              private router: Router) { }
+              private router: Router) {}
 
   ngOnInit() {
   }
@@ -33,14 +35,14 @@ private level: LevelConfiguration[];
     this.levelPreview = new LevelPreview(this.screenWidth, this.screenHeight);
   }
 
-  showconfig() {
-    this.levelPreview.setObjects(this.configurationService.getLevelConfiguration(1));
+  showconfig(configuration: LevelConfiguration) {
+    this.levelPreview.setObjects(configuration);
     this.levelPreview.draw(this.previewContext,
-                           this.configurationService.getLevelConfiguration(1).levelWidth,
-                           this.configurationService.getLevelConfiguration(1).levelHeight);
+                           configuration.levelWidth,
+                           configuration.levelHeight);
   }
-  playConfig(configuration: LevelConfiguration) {
-
+  playConfig(configurationNumber: number) {
+    this.router.navigate(['/snake-game'], { queryParams: { fromCustom: true, configNumber: configurationNumber } });
   }
 
 }
